@@ -1,21 +1,21 @@
 
-	import { GLTFLoader } from '/three/examples/jsm/loaders/GLTFLoader.js';
+	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-	import { OrbitControls } from '/three/examples/jsm/controls/OrbitControls.js';
+	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-    import { EffectComposer } from '/three/examples/jsm/postprocessing/EffectComposer.js';
-    import { RenderPass } from '/three/examples/jsm/postprocessing/RenderPass.js';
-    import { ShaderPass } from '/three/examples/jsm/postprocessing/ShaderPass.js';
+    import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+    import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 
-	import { MaskPass, ClearMaskPass } from '/three/examples/jsm/postprocessing/MaskPass.js';
-	import { TexturePass } from '/three/examples/jsm/postprocessing/TexturePass.js';
-    import { HorizontalBlurShader } from '/three/examples/jsm/shaders/HorizontalBlurShader.js';
-    import { VerticalBlurShader } from '/three/examples/jsm/shaders/VerticalBlurShader.js';
-	import { RGBShiftShader } from '/three/examples/jsm/shaders/RGBShiftShader.js';
-    import { BleachBypassShader } from '/three/examples/jsm/shaders/BleachBypassShader.js';
-    import { VignetteShader } from '/three/examples/jsm/shaders/VignetteShader.js';
-	import { FilmPass } from '/three/examples/jsm/postprocessing/FilmPass.js';
-	import { GammaCorrectionShader } from '/three/examples/jsm/shaders/GammaCorrectionShader.js';
+	import { MaskPass, ClearMaskPass } from 'three/examples/jsm/postprocessing/MaskPass.js';
+	import { TexturePass } from 'three/examples/jsm/postprocessing/TexturePass.js';
+    import { HorizontalBlurShader } from 'three/examples/jsm/shaders/HorizontalBlurShader.js';
+    import { VerticalBlurShader } from 'three/examples/jsm/shaders/VerticalBlurShader.js';
+	import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader.js';
+    import { BleachBypassShader } from 'three/examples/jsm/shaders/BleachBypassShader.js';
+    import { VignetteShader } from 'three/examples/jsm/shaders/VignetteShader.js';
+	import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js';
+	import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 
 	{ //globals
 	var permanent = document.getElementById( 'permanent' );
