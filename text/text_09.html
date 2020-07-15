@@ -1,0 +1,143 @@
+<html>
+	<head>
+		<title>מלכת אמבטיה 2020</title>
+		<style>
+            /* width */
+            
+            ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+}
+			
+			@font-face {
+    		font-family: FrankG;
+    		src: url("../fonts/FrankG_Regular.otf") format("opentype");
+			}					
+
+			#run_text {
+				user-select: none;
+				
+				color: #cccccc;
+				position: relative;
+
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+				font-size: 1.4vw;
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+
+				column-count: 4;
+
+				/* background-color: powderblue; */
+				}
+
+				#run_text2 {
+				user-select: none;
+				
+				color: #cccccc;
+				position: relative;
+
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+				font-size: 4.1vw;
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+
+				}
+
+				#run_text3 {
+				user-select: none;
+				
+				color: #cccccc;
+				position: relative;
+
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+				font-size: 1.4vw;
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+
+				column-count: 3;
+				width: 80%;
+				/*background-color: darkblue; */
+				}
+
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+	</head>
+	<body>
+		<!--
+			<canvas id="canvas" width="10" height="100"></canvas>
+		-->
+
+			<div id="run_text" style="font-family:FrankG" >
+				
+				כאשר חובלתי ברחם אמי<br>
+				תשעה חודשים הפוך על ראשי,<br>
+				היה זה הגטו שלי,<br>
+				<br>
+				כאשר ניסיתי ליישר את האף<br>
+				גילו אצלי מאחור גם זנב,<br>
+				והיה זה הגטו שלי.<br>
+				<br>
+				עברו שנים והיום כבר ברור:<br>
+				אין לי זנב והאף בסדר גמור,<br>
+				אך נשאר לי הגטו שלי.<br>
+				<br>
+				וכאשר יום אחד יגיע יומי,<br>
+				לשכב פרקדן ודומם על גבי –<br>
+				אז אשוב אל הגטו שלי.<br>
+			</div>
+			<div id="run_text2" style="font-family:FrankG" >
+				
+				גטו מר, גטו מתוק,
+				גטו שנוא, גטו אהוב,
+				גטו ממנו יצאתי כדי לשוב
+			</div>
+			<div id="run_text3" style="font-family:FrankG" >
+				<br>
+				אחרי שיצאתי לאוויר העולם<br>
+				אמרו לי שאפי שונה משל כולם,<br>
+				והיה זה הגטו שלי.<br>
+				<br>
+				עם אף כמו שלי וזנב מאחור<br>
+				מפני אור השמש חיפשתי מסתור,<br>
+				והיה זה הגטו שלי.<br>
+				<br>
+				כי אחרי זמן כה רב, אם להיות גלוי לב,<br>
+				את הגטו התחלתי כבר קצת לחבב,<br>
+				הן היה זה הגטו שלי.<br>
+				
+			</div>
+
+
+			<script>
+				var info = document.getElementById('run_text');
+				info.x = 0;
+				info.y = 0;
+
+				function tellPos(p){
+					info.x = p.clientX;
+					info.y = p.clientY;
+				}
+				addEventListener('mousemove', tellPos, false);
+			</script>
+
+	</body>
+</html>

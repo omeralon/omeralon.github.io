@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<title>מלכת אמבטיה 2020</title>
+		<style>
+            /* width */
+            
+            ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+}
+			
+			@font-face {
+    		font-family: FrankG;
+    		src: url("../fonts/FrankG_Bold.otf") format("opentype");
+			}					
+
+			#run_text {
+				user-select: none;
+				text-align: center;
+				color: #ff0000;
+				position: relative;
+
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+
+				font-size: min(8vh, 50px);
+
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+                opacity: 85%;
+				display: block;
+
+				/* background-color: powderblue; */
+				}
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+	</head>
+	<body>
+		<!--
+			<canvas id="canvas" width="10" height="100"></canvas>
+		-->
+			<div id="run_text" style="font-family:FrankG" >
+                האתר נבנה על ידי עומר אלון<br>
+                 במסגרת פרויקט גמר במחלקה לתקשורת חזותית, <br>
+                בצלאל אקדמיה לאמנות ועיצוב  <br>
+                מנחה: בן לב<br>
+                ייעוץ טכני: צח וינברג<br>
+                <br>
+ <img src="/img/copyright2-01.png" class="img" width="32" height="32"> חנוך לוין
+
+
+			</div>
+
+			<script>
+				var info = document.getElementById('run_text');
+				info.x = 0;
+				info.y = 0;
+
+				function tellPos(p){
+					info.x = p.clientX;
+					info.y = p.clientY;
+				}
+				addEventListener('mousemove', tellPos, false);
+			</script>
+
+	</body>
+</html>

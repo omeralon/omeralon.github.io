@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<title>מלכת אמבטיה 2020</title>
+		<style>
+            /* width */
+            
+            ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+}
+			
+			@font-face {
+    		font-family: FrankG;
+    		src: url("../fonts/FrankG_Regular.otf") format("opentype");
+			}					
+
+			#run_text {
+				user-select: none;
+				
+				color: #bbbbbb;
+				position: relative;
+
+
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 2px;
+				font-size: 5.2vw;
+				line-height: 1.6;
+				word-spacing: 1px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+
+				/* background-color: powderblue;*/
+				}
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+	</head>
+	<body>
+		<!--
+			<canvas id="canvas" width="10" height="100"></canvas>
+		-->
+			<div id="run_text" style="font-family:FrankG" >
+				פגשתי תותח ביישן, <br>
+				תותח עם נקודת-חן;<br>
+				הוא אמר שמאוד לא נעים לו<br>
+				להכניס פגז לכולכם.<br>
+				<br>
+				אז הֱיוּ חביבים אליו<br>
+				כאשר תקבלו את שלכם;<br>
+				הן זהו תותח ביישן,<br>
+				תותח עם נקודת-חן.
+
+			</div>
+
+			<script>
+				var info = document.getElementById('run_text');
+				info.x = 0;
+				info.y = 0;
+
+				function tellPos(p){
+					info.x = p.clientX;
+					info.y = p.clientY;
+				}
+				addEventListener('mousemove', tellPos, false);
+			</script>
+	</body>
+</html>

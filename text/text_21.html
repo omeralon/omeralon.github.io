@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<title>מלכת אמבטיה 2020</title>
+		<style>
+            /* width */
+            
+            ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+}
+			
+			@font-face {
+    		font-family: FrankG;
+    		src: url("../fonts/FrankG_Bold.otf") format("opentype");
+			}					
+
+			#run_text {
+
+				user-select: none;
+				/* font-weight: bold; */
+				color:white;
+				position: relative;
+                /*
+				bottom: 200px;
+				top: 200px;
+				left: 200px;
+				width: 500px;
+				height: 700px;
+                padding: 10px;
+                */
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+				/* font-size: 42px; */
+				font-size: 2.9vw;
+				line-height: 1.4;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				column-count: 2;
+
+				display: block;
+
+				/* background-color: powderblue; */
+				}
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+	</head>
+	<body>
+		<!--
+			<canvas id="canvas" width="10" height="100"></canvas>
+		-->
+			<div id="run_text" style="font-family:FrankG" >
+				יום יבוא וכל הסיבות<br>
+				וכל הכוונות הטובות והרעות<br>
+				יהיו לאבק פורח,<br>
+				וגם מן הנוד, באשר הוא נוד,<br>
+				לא ייוותרו הרבה כוונות,<br>
+				אבל יישאר הריח.<br>
+				<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;אך נומה ילד, אל תפחד,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;הרי המלכות היא שלמה,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;לרוב הדודים יש רק רגל אחת,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;אבל המלכות היא שלמה,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;וכל הדודות מסביב לבור<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;מחכות לך, ילד גיבור,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;אבל המלכות היא שלמה.<br>
+				
+				מה נאמר לבנינו ביום ההוא,<br>
+				כשכל הסיבות שהיו לנו<br>
+				ייהפכו לאבק פורח?<br>
+				שרצינו בטוב, בלב תמים,<br>
+				ועכשיו בעצמנו איננו יודעים<br>
+				איך נשאר לנו רק הריח.<br>
+				<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;אך נומה ילד, אל תפחד,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;הרי המלכות היא שלמה,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;לרוב הדודים יש רק רגל אחת,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;אבל המלכות היא שלמה,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;וכל הדודות מסביב לבור<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;מחכות לך, ילד גיבור,<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;	אבל המלכות היא שלמה.
+
+			</div>
+
+
+			<script>
+				var info = document.getElementById('run_text');
+				info.x = 0;
+				info.y = 0;
+
+				function tellPos(p){
+					//console.warn(p.clientX)
+					info.x = p.clientX;
+					info.y = p.clientY;
+				}
+				addEventListener('mousemove', tellPos, false);
+			</script>
+	</body>
+</html>

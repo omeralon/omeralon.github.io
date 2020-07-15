@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<title>מלכת אמבטיה 2020</title>
+		<style>
+            /* width */
+            
+            ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+}
+			
+			@font-face {
+    		font-family: FrankG;
+    		src: url("../fonts/FrankG_Regular.otf") format("opentype");
+			}					
+
+
+			#run_text {
+				user-select: none;
+				
+				color:black;
+				position: relative;
+
+
+				direction: rtl;
+				letter-spacing: 1px;
+				font-size: 1.45vw;
+				font-size: 2.6vh;
+
+				line-height: 1.4;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+				column-count: 4;
+				/* background-color: powderblue; */
+				}
+
+
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+	</head>
+	<body>
+		<!--
+			<canvas id="canvas" width="10" height="100"></canvas>
+		-->
+			<div id="run_text" style="font-family:FrankG" >
+				אנחנו אחים צ'מבלולו,<br>
+				אנחנו נופלים על הראש,<br>
+				אנחנו נופלים לנו בשלווה<br>
+				בחיים רעים וחסרי תקוה,<br>
+				כי אנחנו אחים צ'מבלולו,<br>
+				אנחנו נופלים על הראש.<br>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				פעם בעשר שנים<br>
+				עושים לנו מלחמה,<br>
+				ורגע אחד, קטן וחולף,<br>
+				אנחנו איחכם כתף-אל-כתף,<br>
+				כי אנחנו אחים צ'מבלולו,<br>
+				אנחנו נופלים על הראש.<br>
+				
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				
+				&emsp;&emsp;&emsp;&emsp;אחר-כך אנחנו חוזרים<br>
+				&emsp;&emsp;&emsp;&emsp;(לא כולם, כמובן),<br>
+				&emsp;&emsp;&emsp;&emsp;אתם לכאן ואנחנו לשם<br>
+				&emsp;&emsp;&emsp;&emsp;וחול רב מכסה את הדם,<br>
+				&emsp;&emsp;&emsp;&emsp;כי אנחנו אחים צ'מבלולו,<br>
+				&emsp;&emsp;&emsp;&emsp;אנחנו נופלים על הראש.<br>
+				
+				<!---
+				<p class="center">■</p>
+				
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>--->
+			</div>
+
+
+
+			<script>
+				var info = document.getElementById('run_text');
+				info.x = 0;
+				info.y = 0;
+
+				function tellPos(p){
+					info.x = p.clientX;
+					info.y = p.clientY;
+				}
+				addEventListener('mousemove', tellPos, false);
+			</script>
+
+
+
+	</body>
+</html>

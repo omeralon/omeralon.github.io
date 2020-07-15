@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<title>מלכת אמבטיה 2020</title>
+		<style>
+            /* width */
+            
+            ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+}
+			
+			@font-face {
+    		font-family: FrankG;
+    		src: url("../fonts/FrankG_Regular.otf") format("opentype");
+			}					
+
+			#run_text {
+				user-select: none;
+				
+				color: #cccccc;
+				position: relative;
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1.2px;
+				font-size: 1.93vh;
+				line-height: 1.5;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+
+				/* background-color: powderblue; */
+				}
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+	</head>
+	<body>
+		<!--
+			<canvas id="canvas" width="10" height="100"></canvas>
+		-->
+			<div id="run_text" style="font-family:FrankG" >
+				<p>
+				בלילה בלילה, באין רואה,<br>
+				לאור ירח חיוור,<br>
+				יוצאים אנשי בסדר לגן<br>
+				לתקוע נודות כחלחלים של סיפוק עצמי<br>
+				לגביעי הפרחים.<br>
+			</p><p>
+				אנחנו אנשי בסדר,<br>
+				אנשי בסדר גמור,<br>
+				דור הולך ודור בא<br>
+				ואנו עומדים לעולם.<br>
+			</p><p>
+				אנחנו אנשי בסדר,<br>
+				אנשי בסדר גמור,<br>
+				אצבע בתחת ושיר בגרון<br>
+				כי טוב מסריח וחם.<br>
+			</p><p>
+				בעלות השחר, בטרם אור,<br>
+				מופיע מלאך קטן,<br>
+				קופץ חיש חיש מאיש לאיש,<br>
+				מקיש במקל ארוך על כל הביצים<br>
+				ברכת בוקר טוב.<br>
+			</p><p>
+				אנחנו אנשי בסדר,<br>
+				אנשי בסדר גמור,<br>
+				אצבע בתחת ושיר בגרון<br>
+				כי טוב מסריח וחם.<br>
+			</p><p>
+				אינני יודע את שם המלאך<br>
+				ומהו רוחב כנפיו,<br>
+				אבל יודע אני היטב היטב<br>
+				לתקוע נודות כחלחלים של סיפוק עצמי<br>
+				לגביעי הפרחים.<br>
+			</p><p>
+				אנחנו אנשי בסדר,<br>
+				אנשי בסדר גמור,<br>
+				אצבע בתחת ושיר בגרון<br>
+				כי טוב מסריח וחם.			
+			</p>
+			</div>
+
+
+
+			<script>
+				var info = document.getElementById('run_text');
+				info.x = 0;
+				info.y = 0;
+
+				function tellPos(p){
+					info.x = p.clientX;
+					info.y = p.clientY;
+				}
+				addEventListener('mousemove', tellPos, false);
+			</script>
+
+	</body>
+</html>
