@@ -1281,7 +1281,7 @@
 			{
 				readClick(intersects[index].object.sceneName);
 			}
-			if ((intersects[ index ].object.geometry.type == 'BoxGeometry') && (!readMode))
+			if ((intersects[ index ].object.geometry.type == 'BoxGeometry') && (!readMode) && (!start))
 			{
 				currentCube.position.y = 3;
 				currentCube.dual.position.y = 3;
@@ -2346,7 +2346,7 @@
 				index = 1;
 			}
 			
-				if(intersects[ index ].object.geometry.type=='BoxGeometry'){
+				if((intersects[ index ].object.geometry.type=='BoxGeometry') && (!start)){
 					if ( INTERSECTED != intersects[ index ].object ) {
 						if ( INTERSECTED )
 						{
