@@ -11,9 +11,12 @@
 			
 			@font-face {
     		font-family: FrankG;
-    		src: url("../fonts/FrankG_Regular.otf") format("opentype");
+    		src: url("../fonts/Blender_Regular.otf") format("opentype");
 			}					
-
+			@font-face {
+    		font-family: FrankGB;
+    		src: url("../fonts/Blender_Bold.otf") format("opentype");
+			}			
 			#run_text {
 				user-select: none;
 				
@@ -46,7 +49,7 @@
 
 				direction: rtl;
 				letter-spacing: 1px;
-				font-size: 4.1vw;
+				font-size: 3.4vw;
 				line-height: 1.6;
 				word-spacing: 0px;
 				unicode-bidi: bidi-override;
@@ -77,6 +80,23 @@
 				/*background-color: darkblue; */
 				}
 
+				#title {
+				user-select: none;
+				
+				color: #cccccc;
+				position: relative;
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1.2px;
+				font-size: 1.4vw;
+				line-height: 1;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+				}
+
 			body { margin: 0; }
 			canvas { display: block; }
 		</style>
@@ -85,6 +105,7 @@
 		<!--
 			<canvas id="canvas" width="10" height="100"></canvas>
 		-->
+		<div id="title" style="font-family:FrankGB" ><p>הגטו שלי</p><br><br></div>
 
 			<div id="run_text" style="font-family:FrankG" >
 				

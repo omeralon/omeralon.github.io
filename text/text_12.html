@@ -11,9 +11,13 @@
 			
 			@font-face {
     		font-family: FrankG;
-    		src: url("../fonts/FrankG_Regular.otf") format("opentype");
+    		src: url("../fonts/Blender_Regular.otf") format("opentype");
 			}					
 
+			@font-face {
+    		font-family: FrankGB;
+    		src: url("../fonts/Blender_Bold.otf") format("opentype");
+			}	
 
 			#run_text {
 				user-select: none;
@@ -25,17 +29,36 @@
 				direction: rtl;
 				letter-spacing: 1px;
 				font-size: 1.45vw;
-				font-size: 2.6vh;
+				font-size: 2.5vh; 
+
+
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+				/*column-count: 4;*/
+				/* background-color: powderblue; */
+				}
+
+				#title {
+				user-select: none;
+				
+				color:black;
+				position: relative;
+
+				font-size: 3vh; 
+
+				direction: rtl;
+
+				font-size: 3vh; 
 
 				line-height: 1.4;
 				word-spacing: 0px;
 				unicode-bidi: bidi-override;
 
 				display: block;
-				column-count: 4;
-				/* background-color: powderblue; */
 				}
-
 
 			body { margin: 0; }
 			canvas { display: block; }
@@ -45,6 +68,7 @@
 		<!--
 			<canvas id="canvas" width="10" height="100"></canvas>
 		-->
+		<!--
 			<div id="run_text" style="font-family:FrankG" >
 				אנחנו אחים צ'מבלולו,<br>
 				אנחנו נופלים על הראש,<br>
@@ -69,12 +93,35 @@
 				&emsp;&emsp;&emsp;&emsp;כי אנחנו אחים צ'מבלולו,<br>
 				&emsp;&emsp;&emsp;&emsp;אנחנו נופלים על הראש.<br>
 				
-				<!---
-				<p class="center">■</p>
-				
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>--->
+			
 			</div>
+		-->
+		<div id="title" style="font-family:FrankGB" > <p>אחים צ'מבלולו</p></div>
 
+			<div id="run_text" style="font-family:FrankG" >
+				אנחנו אחים צ'מבלולו,<br>
+				אנחנו נופלים על הראש,<br>
+				אנחנו נופלים לנו בשלווה<br>
+				בחיים רעים וחסרי תקוה,<br>
+				כי אנחנו אחים צ'מבלולו,<br>
+				אנחנו נופלים על הראש.<br>
+				<br>
+				פעם בעשר שנים<br>
+				עושים לנו מלחמה,<br>
+				ורגע אחד, קטן וחולף,<br>
+				אנחנו איחכם כתף-אל-כתף,<br>
+				כי אנחנו אחים צ'מבלולו,<br>
+				אנחנו נופלים על הראש.<br>
+				<br>
+				אחר-כך אנחנו חוזרים<br>
+				(לא כולם, כמובן),<br>
+				אתם לכאן ואנחנו לשם<br>
+				וחול רב מכסה את הדם,<br>
+				כי אנחנו אחים צ'מבלולו,<br>
+				אנחנו נופלים על הראש.<br>
+				
+			
+			</div>
 
 
 			<script>

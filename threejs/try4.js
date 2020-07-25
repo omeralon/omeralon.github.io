@@ -1472,7 +1472,7 @@
 	}
 
 	function onMouseDoubleClick( ev ) {
-		if (true)
+		if (false)
 		{
 			cameraCubeAnimation(start_cube);
 			FogFade(2500, 11000, 20);
@@ -1553,7 +1553,7 @@
 				}
 				if (firstCube)
 				{
-					FogFade(2500, 11000, 120);
+					FogFade(2500, 11000, 60);
 					firstCube = false;
 				}
 				else
@@ -1613,8 +1613,8 @@
 			var x_from_top = '5%';
 			var x_from_right = '2.5%';
 
-			cameraPos = [-600, 2200, 400];       //[2700, 800, 2000]
-			cameraPosLookAt = [-900, 200, 400];	 // 0    200    800
+			cameraPos = [-600, 2200, 250];       //-600, 2200, 400
+			cameraPosLookAt = [-900, 200, 250];	 //-900, 200, 400
 			text = "text_02";
 
 			posShift = 5;
@@ -1710,7 +1710,7 @@
 				setTimeout(fadeIntensity, 10);
 			}
 			fadeIntensity();
-			setTimeout(function() { sound_10.play(); }, 20000);
+			setTimeout(function() {if((readMode)&&(currentCube.scene==10)) {sound_10.play();} }, 7000);
 			
 		}
 		else if (scene == 11) // צמבלולו
@@ -1752,8 +1752,8 @@
 		}
 		else if (scene == 12) // אחים
 		{
-			cameraPos = [-6400, 1400, -4750];		//  [-9000, 800, -4500]
-			cameraPosLookAt = [-5900, 300, -4350];  // [-5400, 200, -4300]
+			cameraPos = [-6200, 1400, -4150];		// [-6400, 1400, -4750];
+			cameraPosLookAt = [-5700, 300, -3750];  // [-5900, 300, -4350];
 			text = "text_12";
 			nearF = 5300;
 			farF = 6300;
@@ -1793,12 +1793,12 @@
 			fadeIntensity();
 			//mainSL3.intensity = 2;
 
-			setTimeout(function() { sound_13.play(); }, 7000);
+			setTimeout(function() {if((readMode)&&(currentCube.scene==13)) {sound_13.play();} }, 7000);
 		}
 		else if (scene == 14) // רגעים
 		{
-			cameraPos = [-650, 600, -3250];		//  [600, 800, -3900]
-			cameraPosLookAt = [-2650, 500, -1250];  // [-2600, 200, -1600];
+			cameraPos = [-850, 600, -3450];		//  [600, 800, -3900]
+			cameraPosLookAt = [-2850, 500, -1450];  // [-2600, 200, -1600];
 			text = "text_14";
 			nearF = 3250;
 			farF = 3350;
@@ -2631,7 +2631,7 @@
 			switch(currntFrame) {
 				case "text_02":
 					left = 0.7;
-					top = 0.06;
+					top = 0.05;
 					break;
 				case "text_06":
 					var changeY = (58 + comptY * 3);
@@ -2643,13 +2643,13 @@
 					top = 0.58;
 				 	break;
 				case "text_09":
-					var changeY = (15 + comptY * 1.5);
+					var changeY = (5 + comptY * 1.5);
 					info2.style.top = changeY+'%';
 					var changeXZ = (0 - comptXZ * 1.2);
 					info2.style.left = changeXZ+'%';
 					//
 					left = 0.15;
-					top = 0.15;
+					top = 0.05;
 					break;
 				case "text_10":
 					left = 0.2;
@@ -2660,25 +2660,25 @@
 					top = 0.0;
 					break;
 				case "text_12":
-					var changeY = (30 - comptY * 0.1);
-					info2.style.top = changeY+'%';
-					var changeXZ = (-1 + comptXZ * 0.1);
-					info2.style.left = changeXZ+'%';
-					//
-					left = 0.2;
-					top = 0.3;
+					//var changeY = (7 - comptY * 0.1);
+					//info2.style.top = changeY+'%';
+					//var changeXZ = (30 + comptXZ * 0.1);
+					//info2.style.left = changeXZ+'%';
+					///
+					left = 0.6;
+					top = 0.1;
 					break;
 				case "text_13":
 					left = 0.325;
 					top = 0.55;
 				break;
 				case "text_14":
-					left = 0.22;
+					left = 0.55;
 					top = 0.05;
 				break;
 				case "text_21":
 					left = 0.09;
-					top = 0.12;
+					top = 0.02;
 					break;
 				default:
 				  // code block

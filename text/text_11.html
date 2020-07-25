@@ -11,8 +11,32 @@
 			
 			@font-face {
     		font-family: FrankG;
-    		src: url("../fonts/FrankG_Regular.otf") format("opentype");
+    		src: url("../fonts/Blender_Regular.otf") format("opentype");
 			}					
+			@font-face {
+    		font-family: FrankGB;
+    		src: url("../fonts/Blender_Bold.otf") format("opentype");
+			}					
+
+			#title {
+				user-select: none;
+				
+				color: #222222;
+				position: relative;
+
+				direction: rtl;
+				letter-spacing: 1px;
+				font-size: max(3.06vw, 14px);
+				font-size: 4.6vw;
+
+				line-height: 1.4;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+
+				/* background-color: powderblue; */
+				}
 
 
 			#run_text {
@@ -24,7 +48,9 @@
 				direction: rtl;
 				letter-spacing: 1px;
 				font-size: max(3.06vw, 14px);
-				line-height: 1.4;
+				font-size: 3.06vw;
+
+				line-height: 1.6;
 				word-spacing: 0px;
 				unicode-bidi: bidi-override;
 
@@ -40,6 +66,8 @@
 				#run_text em
 				{
 					font-size: max(2.7vw, 12px);
+					font-size: 2.7vw;
+
 					font-style: normal;
 					margin-left: 2px;
 
@@ -47,6 +75,8 @@
 				#run_text b
 				{
 					font-size: max(3.6vw, 16px);
+					font-size: 3.6vw;
+
 					margin-left: 2px;
 
 				}
@@ -66,8 +96,12 @@
 			<canvas id="canvas" width="10" height="100"></canvas>
 		--><div class="table-responsive">
 
+			<br><br><br><br><br><br><br><br><br>
+
+			<div id="title" style="font-family:FrankGB"><p>צ'מבלולו</p></div>
+
 			<div id="run_text" style="font-family:FrankG" >
-				<br><br><br><br><br><br><br>
+				<br>
 <p>
 	<em>[חולדה וזאב נכנסים שלובי-זרוע ופוגשים בצ'מבלולו הבא מן הכיוון הנגדי]</em>
 </p><br><br><p>

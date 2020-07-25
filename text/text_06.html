@@ -11,8 +11,12 @@
 			
 			@font-face {
     		font-family: FrankG;
-    		src: url("../fonts/FrankG_Regular.otf") format("opentype");
-			}					
+    		src: url("../fonts/Blender_Regular.otf") format("opentype");
+			}		
+			@font-face {
+    		font-family: FrankGB;
+    		src: url("../fonts/Blender_Bold.otf") format("opentype");
+			}				
 
 			#run_text {
 				user-select: none;
@@ -25,7 +29,7 @@
 
 				direction: rtl;
 				letter-spacing: 2px;
-				font-size: 5.2vw;
+				font-size: 5.7vh;
 				line-height: 1.6;
 				word-spacing: 1px;
 				unicode-bidi: bidi-override;
@@ -34,6 +38,25 @@
 
 				/* background-color: powderblue;*/
 				}
+
+				#title {
+				user-select: none;
+				
+				color: #bbbbbb;
+				position: relative;
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1.2px;
+				font-size: 7.2vh;
+				line-height: 1;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+				display: block;
+				}
+
+
 			body { margin: 0; }
 			canvas { display: block; }
 		</style>
@@ -42,6 +65,7 @@
 		<!--
 			<canvas id="canvas" width="10" height="100"></canvas>
 		-->
+		<div id="title" style="font-family:FrankGB" ><p>פגשתי תותח ביישן</p></div>
 			<div id="run_text" style="font-family:FrankG" >
 				פגשתי תותח ביישן, <br>
 				תותח עם נקודת-חן;<br>
