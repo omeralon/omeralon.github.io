@@ -11,13 +11,13 @@
 			
 			@font-face {
     		font-family: FrankG;
-    		src: url("../fonts/FrankG_Bold.otf") format("opentype");
+    		src: url("../fonts/Blender_Black.otf") format("opentype");
 			}					
 
 			#run_text {
 				user-select: none;
 				text-align: center;
-				color: #ff0000;
+				color: #ff0090; /* ff8800 */ /*ff00ff*/
 				position: relative;
 
 				margin: auto;
@@ -25,17 +25,23 @@
 				direction: rtl;
 				letter-spacing: 1px;
 
-				font-size: min(8vh, 50px);
+				font-size: 5vh;
 
 				line-height: 1.6;
 				word-spacing: 0px;
 				unicode-bidi: bidi-override;
 
-                opacity: 85%;
+                opacity: 100%; /* 85% */
 				display: block;
 
 				/* background-color: powderblue; */
 				}
+
+				.bottom{
+				position: absolute;
+				bottom: 5%;
+				}
+
 			body { margin: 0; }
 			canvas { display: block; }
 		</style>
@@ -48,13 +54,23 @@
                 האתר נבנה על ידי עומר אלון<br>
                  במסגרת פרויקט גמר במחלקה לתקשורת חזותית, <br>
                 בצלאל אקדמיה לאמנות ועיצוב  <br>
-                מנחה: בן לב<br>
+                הנחיה: בן לב<br>
                 ייעוץ טכני: צח וינברג<br>
                 <br>
- <img src="../img/copyright2-01.png" class="img" width="32" height="32"> חנוך לוין
-
-
+ מחזה וטקסטים: חנוך לוין<br>
+ לחנים: זוהר לוי<br>
+ שחקנים: ז'רמן אוניקובסקי, ישראל גוריון, יוסי גרבר, תיקי דיין, נחום שליט<br>
+ <br>
+ <img src="../img/credits.png" class="img" height="15%">
+		<!--
+			Артур Мигранов
+			Paul Chen
+			nixor(Никита)
+		-->
 			</div>
+			<div class="bottom">
+				
+			   </div>
 
 			<script>
 				var info = document.getElementById('run_text');

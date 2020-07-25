@@ -23,7 +23,7 @@
 
 				direction: rtl;
 				letter-spacing: 1px;
-				font-size: max(2.04vw, 14px);
+				font-size: max(2.91vw, 14px);
 				line-height: 1.4;
 				word-spacing: 0px;
 				unicode-bidi: bidi-override;
@@ -39,14 +39,14 @@
 				}
 				#run_text em
 				{
-					font-size: max(1.8vw, 12px);
+					font-size: max(2.57vw, 12px);
 					font-style: normal;
 					margin-left: 2px;
 
 				}
 				#run_text b
 				{
-					font-size: max(2.4vw, 16px);
+					font-size: max(3.42vw, 16px);
 					margin-left: 2px;
 
 				}
@@ -66,6 +66,7 @@
 			<canvas id="canvas" width="10" height="100"></canvas>
 		-->
 			<div id="run_text" style="font-family:FrankG" >
+				<br><br><br><br><br><br><br><br><br><br><br><br>
 <p>
 	<em>[הגברת טוֹבְלָה והגברת יוֹפילָה יושבות בבית-קפה על מדרכה. סמטוכה מפנה כלים מלוכלכים מן השולחנות]</em>
 </p><p><br>
@@ -163,6 +164,15 @@
 
 
 			<script>
+
+			function scroll() {
+						window.scrollBy(0, 1);
+						setTimeout(scroll, 100);
+						}
+						
+			scroll();
+
+
 				var info = document.getElementById('run_text');
 				info.x = 0;
 				info.y = 0;

@@ -1,8 +1,6 @@
 
 	import { GLTFLoader } from '../three/examples/jsm/loaders/GLTFLoader.js';
 
-	import { OrbitControls } from '../three/examples/jsm/controls/OrbitControls.js';
-
     import { EffectComposer } from '../three/examples/jsm/postprocessing/EffectComposer.js';
     import { RenderPass } from '../three/examples/jsm/postprocessing/RenderPass.js';
     import { ShaderPass } from '../three/examples/jsm/postprocessing/ShaderPass.js';
@@ -26,20 +24,19 @@
 	var camera, MainScene, renderer;
 	var overlayScene, OverlayComposer, newComposer;
 	var ground;
-	var controls;
 	var composer;
 
-	var start = true;
+	var firstCube = true;
+	var startBool = true;
 	var start_cube;
+	var cube3;
 
-	var spotLightsList = [];
-	var testLight;
 	var mainSL1, mainSL2, mainSL3;
 	var sp02D;
 	var sp12d;
 
-	
 	var listener;
+	var sound_opening;
 	var sound_02, sound_06, sound_09, sound_10, sound_12, sound_13, sound_21;
 	var cup, head;
 	var mat_video_11, video_11, video11_Sprite;
@@ -51,14 +48,19 @@
 
 	var OrangeMaterial, PinkeMaterial, whiteMaterial;
 
-	var CubeMaterial_O, CubeMaterial_P;
+	var CubeMaterial_O, CubeMaterial_P, MaterialX;
 	var mouse = new THREE.Vector2();
 	var prev_frame_mouse = new THREE.Vector2();
 
 
 	var animation_mixers = {};
+	var buttons = {};
+	var buttonsPlus = -1;
 
-	var cameraPosVec = new THREE.Vector3(-300, 19900, 10);   // מבט על
+
+
+
+	var cameraPosVec = new THREE.Vector3(-3000, 20900, 10);   // מבט על
 	var cameraLookAt = new THREE.Vector3(-3000, 200, 800);   // מבט על
 
 
@@ -68,6 +70,12 @@
 
 	var cameraLookAt = new THREE.Vector3(4000, -200, 800);  // כותרת
 	var cameraPosVec = new THREE.Vector3(8500, 1200, 600); // כותרת
+
+
+	var cameraLookAt = new THREE.Vector3(38000, -200, 800);  // קדימה יותר
+	var cameraPosVec = new THREE.Vector3(42500, 1200, 0); // קדימה יותר
+
+
 
 
 
@@ -85,12 +93,10 @@
 	var clock = new THREE.Clock();
 
 	var raycaster;
-	var INTERSECTED0, INTERSECTED, INTERSECTED2;
+	var INTERSECTED0, INTERSECTED, INTERSECTED2, INTERSECTEDc;
 	var CAMERACHANGE = false;
 	var postP = false;
 	var readMode = false;
-
-	var allModelsLoaded = false;
 
 	var DarkPinkMaterial;
 
@@ -102,9 +108,9 @@
 		//SCENE
 		MainScene = new THREE.Scene();
 		MainScene.background = new THREE.Color('black');
-		MainScene.fog = new THREE.Fog( 0x000000, 4500, 7000 ); //2500, 11000
+		MainScene.fog = new THREE.Fog( 0x000000, 4500, 7000 ); //4500, 7000
 		overlayScene = new THREE.Scene();
-		overlayScene.fog = new THREE.Fog( 0x000000, 4500, 7000 ); //2500, 11000
+		overlayScene.fog = new THREE.Fog( 0x000000, 4500, 7000 ); //4500, 7000
 
         
 		//AXES
@@ -122,7 +128,7 @@
 		
 
 		//CAMERA
-		camera = new THREE.PerspectiveCamera( 35, window.innerWidth/window.innerHeight, 40, 30000 );
+		camera = new THREE.PerspectiveCamera( 35, window.innerWidth/window.innerHeight, 40, 90000 );
 		//camera.rotation.x +=  90*Math.PI/180;
 		//camera.rotation.y +=  30*Math.PI/180;
 		//camera.rotation.z +=  45*Math.PI/180;
@@ -283,7 +289,7 @@
 		groundMaterial.reflectivity = 1;
 
 		ground = new THREE.Mesh(
-		new THREE.PlaneGeometry(50000, 50000, 100, 100), groundMaterial)
+		new THREE.PlaneGeometry(100000, 100000, 100, 100), groundMaterial)
 		// When we use a ground plane we use directional lights, so illuminating
 		// just the corners is sufficient.
 		// Use MeshPhongMaterial if you want to capture per-pixel lighting:
@@ -313,7 +319,7 @@
 		imageSprite = new THREE.Sprite( material );
 		imageSprite.scale.set(800*scalar,595*scalar,1);
 		imageSprite.position.set(100, 0, 500)
-		overlayScene.add( imageSprite );
+		//overlayScene.add( imageSprite );
 
 		var map2 = new THREE.TextureLoader().load( "img/tonia-1.jpg" );
 		var scalar2 = 0.2;
@@ -322,16 +328,25 @@
 		imageSprite2.scale.set(1900*scalar2,1700*scalar2,1);
 		imageSprite2.position.set(0, 0, 1200)
 
-		overlayScene.add( imageSprite2 );
+		//overlayScene.add( imageSprite2 );
 	}
 
 	function creatElementsInScene()
 	{
+		var buttonSpriteMap = new THREE.TextureLoader().load( "img/red_circle.png" );
+
 		// CUBES geometry and material
 		//
 		var geometry = new THREE.BoxGeometry(100, 100, 100);
-		var geometryX = new THREE.BoxGeometry(120, 6, 12);
+		var geometryX = new THREE.BoxGeometry(150, 6, 15);
 		var cubeHeight = 3;
+
+		var geometryCylinder = new THREE.CylinderGeometry( 140, 140, 40, 32 );
+		var cylinderHeight = 5;
+		var materialcylinder = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+		materialcylinder.transparent = true;
+		materialcylinder.opacity = 0;
+		materialcylinder.fog = false;
 		//
 		CubeMaterial_O = new THREE.MeshLambertMaterial( { color: 0xff6600 } );
 		CubeMaterial_O.emissive.setHex( 0xff0000 );
@@ -354,7 +369,7 @@
 		DarkPinkMaterial = new THREE.MeshPhongMaterial( { color: 0x060503, reflectivity: 1, shininess: 1} );
 		DarkPinkMaterial.emissive.setHex( 0x000000 )
 
-		var MaterialX = new THREE.MeshLambertMaterial( { color: 0x060503, reflectivity: 2 } );
+		MaterialX = new THREE.MeshLambertMaterial( { color: 0x060503, reflectivity: 2 } );
 		MaterialX.emissive.setHex( 0x000000 )
 		
 		var MnaMaterial = new THREE.MeshPhongMaterial( { color: 0x0000D6, reflectivity: 1  } );
@@ -362,19 +377,34 @@
 		MnaMaterial.shininess = 5;
 
 
-		//tifora
 
+		//MAIN LIGHTS
+		//mainSL1 = createSpotLight("00_A", [6700,1000,700], [5220, 220, 1600]);
+		//mainSL2 = createSpotLight("00_B", [7000,1000,450], [5220, 220, 750]);
+		//mainSL3 = createSpotLight("00_C", [6700,1000,200], [5220, 220, 200]);
+
+
+
+		mainSL1 = createSpotLight("00_A", [39700,1000,700], [39220, 220, 1600], false);
+		mainSL2 = createSpotLight("00_B", [40000,1000,450], [39220, 220, 750], false);
+		mainSL3 = createSpotLight("00_C", [39700,1000,-200], [38220, 220, 0], false);
+		mainSL1.intensity = 0;
+		mainSL2.intensity = 0;
+		mainSL3.intensity = 0;
+		//
+		mainSL1.castShadow = true;
+		mainSL2.castShadow = true;
+		mainSL3.castShadow = true;
+
+		//tifora
 
 		// 00 אמבטיה
 		loadModelAndAnimation(false, 'models/TITLE4.gltf', OrangeMaterial, [5000, 2, 0], [0,0,0], 1);
 		loadModelAndAnimation(false, 'models/TITLE4-Y.gltf', OrangeDarkMaterial, [5000, 2, 0], [0,0,0], 1);
-		//
-		mainSL1 = createSpotLight("00_A", [6700,1000,700], [5220, 220, 1600]);
-		mainSL2 = createSpotLight("00_B", [7000,1000,450], [5220, 220, 750]);
-		mainSL3 = createSpotLight("00_C", [6700,1000,200], [5220, 220, 200]);
-		mainSL1.castShadow = true;
-		mainSL2.castShadow = true;
-		mainSL3.castShadow = true;
+		//loadModelAndAnimation(false, 'models/start_dark.gltf', OrangeDarkMaterial, [5000, 2, 1500], [0,15,15], 0.3);
+		//loadModelAndAnimation(false, 'models/start_orange.gltf', OrangeMaterial, [5000, 2, 1500], [0,15,15], 0.3);
+		//loadModelAndAnimation(false, 'models/start_pink.gltf', PinkeMaterial, [5000, 2, 1500], [0,15,15], 0.3);
+
 		//
 		// A
 		//		
@@ -386,6 +416,7 @@
 		cube1.cameraCords = [8500, 1400, -1000];
 		cube1.cameraLookAt = [5000, 0, 800];
 		cube1.cameraTurn = [0, 200, -400];
+		cube1.ignore = true;
 		//cube1.lights = [L_02_A];
 		MainScene.add( cube1 );
 		//		
@@ -399,12 +430,13 @@
 		cube2.cameraCords = [8500, 1400, 2000];
 		cube2.cameraLookAt = [5000, 0, 800];
 		cube2.cameraTurn = [0, 200, -400];
+		cube2.ignore = true;
 		//cube2.lights = [];
 		MainScene.add( cube2 );
 		//		
 		// C
 		//		
-		var cube3 = new THREE.Mesh( geometry, CubeMaterial_O );
+		cube3 = new THREE.Mesh( geometry, CubeMaterial_O );
 		cube3.position.set(5690, 51,630);
 		cube3.rotation.y = 15*Math.PI/180;
 		cube3.receiveShadow = true;
@@ -412,11 +444,14 @@
 		cube3.cameraCords = [8500, 1200, 600];
 		cube3.cameraLookAt = [5000, -200, 800];
 		cube3.cameraTurn = [0, 200, -400];
+		cube3.ignore = true;
 		//cube3.lights = [L_02_A, L_02_B, L_02_C];
 		MainScene.add( cube3 );
 		//
 		currentCube = cube3;
-		//
+
+		
+
 
 		/*
 
@@ -455,6 +490,7 @@
 		cube1.cameraLookAt = [0, 200, 800];
 		cube1.cameraTurn = [0, 200, -400];
 		cube1.lights = [sp02a, sp02b, sp02c];
+		cube1.scene = 2;
 		MainScene.add( cube1 );
 		//		
 		var cube1X = new THREE.Mesh( geometryX, MaterialX );
@@ -466,10 +502,17 @@
 		cube1X.cameraLookAt = [0, 200, 800];
 		cube1X.cameraTurn = [0, 200, -400];
 		cube1X.lights = [sp02a, sp02b, sp02c];
+		cube1X.scene = 2;
 		MainScene.add( cube1X );
 		//
 		cube1X.dual = cube1;
 		cube1.dual = cube1X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(700, cylinderHeight, 230);
+		cylinder.cube = cube1;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
 		//		
 		// B
 		//		
@@ -482,6 +525,7 @@
 		cube2.cameraLookAt = [0, 200, 800];
 		cube2.cameraTurn = [0, 200, -400];
 		cube2.lights = [sp02a, sp02b, sp02c];
+		cube2.scene = 2;
 		MainScene.add( cube2 );
 		//
 		var cube2X = new THREE.Mesh( geometryX, MaterialX );
@@ -493,23 +537,31 @@
 		cube2X.cameraLookAt = [0, 200, 800];
 		cube2X.cameraTurn = [0, 200, -400];
 		cube2X.lights = [sp02a, sp02b, sp02c];
+		cube2X.scene = 2;
 		MainScene.add( cube2X );
 		//
 		cube2X.dual = cube2;
 		cube2.dual = cube2X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(800, cylinderHeight, 1090);
+		cylinder.cube = cube2;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
 		//		
 		// C
 		//		
-		var cube3 = new THREE.Mesh( geometryX, MaterialX );
-		cube3.position.set(590, cubeHeight,730);
-		cube3.rotation.y = 15*Math.PI/180;
-		cube3.receiveShadow = true;
-        cube3.castShadow = true;
-		cube3.cameraCords = [2700, 800, 600];
-		cube3.cameraLookAt = [0, 200, 800];
-		cube3.cameraTurn = [0, 200, -700];
-		cube3.lights = [sp02a, sp02b, sp02c];
-		MainScene.add( cube3 );
+		var cube3a = new THREE.Mesh( geometryX, MaterialX );
+		cube3a.position.set(590, cubeHeight,730);
+		cube3a.rotation.y = 15*Math.PI/180;
+		cube3a.receiveShadow = true;
+        cube3a.castShadow = true;
+		cube3a.cameraCords = [2700, 800, 600];
+		cube3a.cameraLookAt = [0, 200, 800];
+		cube3a.cameraTurn = [0, 200, -300];
+		cube3a.lights = [sp02a, sp02b, sp02c];
+		cube3a.scene = 2;
+		MainScene.add( cube3a );
 		//		
 		var cube3X = new THREE.Mesh( geometryX, MaterialX );
 		cube3X.position.set(590, cubeHeight,730);
@@ -518,31 +570,39 @@
         cube3X.castShadow = true;
 		cube3X.cameraCords = [2700, 800, 600];
 		cube3X.cameraLookAt = [0, 200, 800];
-		cube3X.cameraTurn = [0, 200, -700];
+		cube3X.cameraTurn = [0, 200, -300];
 		cube3X.lights = [sp02a, sp02b, sp02c];
+		cube3X.scene = 2;
 		MainScene.add( cube3X );
 		//
-		cube3X.dual = cube3;
-		cube3.dual = cube3X;
+		cube3X.dual = cube3a;
+		cube3a.dual = cube3X;
 		//
-		start_cube = cube3;
+		start_cube = cube3a;
 		//
-		var geometry = new THREE.CylinderGeometry( 64, 64, 5, 32 );
-		var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
-		material.transparent = true;
-		material.opacity = 0.6;
-		var sphere = new THREE.Mesh( geometry, material );
-		sphere.position.set(270, 3,420);
-		//MainScene.add( sphere );
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(590, cylinderHeight, 730);
+		cylinder.cube = cube3a;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
 		//
-		var spriteMap = new THREE.TextureLoader().load( "img/red_circle.png" );
-		var spriteMaterial = new THREE.SpriteMaterial( { map: spriteMap } );
-		spriteMaterial.opacity = 0.6;
-		var sprite = new THREE.Sprite( spriteMaterial );
-		sprite.position.set(270, 280,450);
-		sprite.scale.set(50, 50, 1)
-		sprite.scene = 2;
-		MainScene.add( sprite );
+		//
+		var video_white = document.getElementById( 'white' );
+		var texture = new THREE.VideoTexture( video_white );
+		texture.minFilter = THREE.LinearFilter;
+		texture.magFilter = THREE.LinearFilter;
+		texture.format = THREE.RGBAFormat;
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.transparent = true;
+		buttonSprite.position.set(270, 280,450);
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 2;
+		MainScene.add( buttonSprite );
+		buttons[2] = buttonSprite;
+		buttonSprite.visible = false;
 
 
 		// 03 החיזור
@@ -567,6 +627,7 @@
 		cube_06.cameraLookAt = [-2000, 200, 4800];
 		cube_06.cameraTurn = [0, 200, -400];
 		cube_06.lights = [sp06a, sp06b, sp06c];
+		cube_06.scene = 6;
 		MainScene.add( cube_06 );
 		//		
 		var cube_06X = new THREE.Mesh( geometryX, MaterialX );
@@ -578,10 +639,17 @@
 		cube_06X.cameraLookAt = [-2000, 200, 4800];
 		cube_06X.cameraTurn = [0, 200, -400];
 		cube_06X.lights = [sp06a, sp06b, sp06c];
+		cube_06X.scene = 6;
 		MainScene.add( cube_06X );
 		//
 		cube_06X.dual = cube_06;
 		cube_06.dual = cube_06X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-1400, cylinderHeight, 4000);
+		cylinder.cube = cube_06;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
 		//
 		//
 		// השמאלי		
@@ -594,6 +662,7 @@
 		cube_06.cameraLookAt = [-2000, 200, 4800];
 		cube_06.cameraTurn = [900, 200, -400];
 		cube_06.lights = [sp06a, sp06b, sp06c];
+		cube_06.scene = 6;
 		MainScene.add( cube_06 );
 		//		
 		var cube_06X = new THREE.Mesh( geometryX, MaterialX );
@@ -605,10 +674,28 @@
 		cube_06X.cameraLookAt = [-2000, 200, 4800];
 		cube_06X.cameraTurn = [900, 200, -400];
 		cube_06X.lights = [sp06a, sp06b, sp06c];
+		cube_06X.scene = 6;
 		MainScene.add( cube_06X );
 		//
 		cube_06X.dual = cube_06;
 		cube_06.dual = cube_06X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-1100, cylinderHeight, 5900);
+		cylinder.cube = cube_06;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.renderOrder = 1;
+		buttonSprite.position.set(-1750, 750, 5300);
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 6;
+		MainScene.add( buttonSprite );
+		buttons[6] = buttonSprite;
+		buttonSprite.visible = false;
 
 		// 09 הגטו שלי
 		loadModelAndAnimation(false, 'models/scenes/09/nose.gltf', OrangeMaterial, [-5400, 0, -500], [0,10,0], 7);
@@ -629,6 +716,7 @@
 		cube_09.cameraLookAt = [-5100, 200, -400];
 		cube_09.cameraTurn = [100, 200, -800];
 		cube_09.lights = [sp09a, sp09b, sp09c];
+		cube_09.scene = 9;
 		MainScene.add( cube_09 );
 		//		
 		var cube_09X = new THREE.Mesh( geometryX, MaterialX );
@@ -640,10 +728,28 @@
 		cube_09X.cameraLookAt = [-5100, 200, -400];
 		cube_09X.cameraTurn = [100, 200, -800];
 		cube_09X.lights = [sp09a, sp09b, sp09c];
+		cube_09X.scene = 9;
 		MainScene.add( cube_09X );
 		//
 		cube_09X.dual = cube_09;
 		cube_09.dual = cube_09X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-4200, cylinderHeight, -900);
+		cylinder.cube = cube_09;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.renderOrder = 1;
+		buttonSprite.position.set(-4800, 260, -1315);
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 9;
+		MainScene.add( buttonSprite );
+		buttons[9] = buttonSprite;
+		buttonSprite.visible = false;
 		//
 
 		// 10 ספריה
@@ -665,6 +771,7 @@
 		cube_10.cameraLookAt = [-3400, 200, 2000];
 		cube_10.cameraTurn = [200, 200, -600];
 		cube_10.lights = [sp10a, sp10b, sp10c];
+		cube_10.scene = 10;
 		MainScene.add( cube_10 );
 		//		
 		var cube_10X = new THREE.Mesh( geometryX, MaterialX );
@@ -676,10 +783,28 @@
 		cube_10X.cameraLookAt = [-3400, 200, 2000];
 		cube_10X.cameraTurn = [200, 200, -600];
 		cube_10X.lights = [sp10a, sp10b, sp10c];
+		cube_10X.scene = 10;
 		MainScene.add( cube_10X );
 		//
 		cube_10X.dual = cube_10;
 		cube_10.dual = cube_10X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-2600, cylinderHeight, 2500);
+		cylinder.cube = cube_10;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.renderOrder = 1;
+		buttonSprite.position.set(-3000, 500, 1600);
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 10;
+		MainScene.add( buttonSprite );
+		buttons[10] = buttonSprite;
+		buttonSprite.visible = false;
 
 		
 		// 11 צ'מבלולו
@@ -717,6 +842,7 @@
 		cube_11.cameraLookAt = [-4000, 200, -3300];  // 0 200 800
 		cube_11.cameraTurn = [-100, 200, -1000];
 		cube_11.lights = [sp11a, sp11b, sp11c];
+		cube_11.scene = 11;
 		MainScene.add( cube_11 );
 		//
 		var cube_11X = new THREE.Mesh( geometryX, MaterialX );
@@ -728,10 +854,28 @@
 		cube_11X.cameraLookAt = [-4000, 200, -3300];  // 0 200 800
 		cube_11X.cameraTurn = [-100, 200, -1000];
 		cube_11X.lights = [sp11a, sp11b, sp11c];
+		cube_11X.scene = 11;
 		MainScene.add( cube_11X );
 		//
 		cube_11X.dual = cube_11;
 		cube_11.dual = cube_11X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-2600, cylinderHeight, -4000);
+		cylinder.cube = cube_11;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.renderOrder = 1;
+		buttonSprite.position.set(-3490, 250, -4450);
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 11;
+		MainScene.add( buttonSprite );
+		buttons[11] = buttonSprite;
+		buttonSprite.visible = false;
 		//
 		video_11 = document.getElementById( 'video11' );
 		video_11.preload = 'auto';
@@ -748,7 +892,7 @@
 		mat_video_11 = new THREE.SpriteMaterial( { map: texture11,  } );
 		video11_Sprite = new THREE.Sprite( mat_video_11 );
 		video11_Sprite.scale.set(512*8,512*4,1);
-		video11_Sprite.position.set(-3330, 500, -3000);
+		video11_Sprite.position.set(-3330, 500, -3025);
 		mat_video_11.opacity = 0.0;
 		mat_video_11.transparent = true;
 		video11_Sprite.visible = false;
@@ -760,10 +904,11 @@
 		cube_12.rotation.y = (40)*Math.PI/180;
 		cube_12.receiveShadow = true;
         cube_12.castShadow = true;
-		cube_12.cameraCords = [-9000, 800, -4500];  
-		cube_12.cameraLookAt = [-5400, 200, -4300]; 
+		cube_12.cameraCords = [-8400, 800, -4500];  //-9000 
+		cube_12.cameraLookAt = [-5000, 200, -4300]; 
 		cube_12.cameraTurn = [-100, 200, 600];
 		cube_12.lights = [sp12a, sp12b, sp12c];
+		cube_12.scene = 12;
 		MainScene.add( cube_12 );
 		//
 		var cube_12X = new THREE.Mesh( geometryX, MaterialX );
@@ -771,15 +916,33 @@
 		cube_12X.rotation.y = (130)*Math.PI/180;
 		cube_12X.receiveShadow = true;
         cube_12X.castShadow = true;
-		cube_12X.cameraCords = [-9000, 800, -4500];  
-		cube_12X.cameraLookAt = [-5400, 200, -4300]; 
+		cube_12X.cameraCords = [-8400, 800, -4500];  
+		cube_12X.cameraLookAt = [-5000, 200, -4300];  //-5400
 		cube_12X.cameraTurn = [-100, 200, 600];
 		cube_12X.lights = [sp12a, sp12b, sp12c];
+		cube_12X.scene = 12;
 		MainScene.add( cube_12X );
 		//
 		cube_12X.dual = cube_12;
 		cube_12.dual = cube_12X;
-		//		
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-6800, cylinderHeight, -4000);
+		cylinder.cube = cube_12;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.renderOrder = 1;
+		buttonSprite.position.set(-4450, 275, -3250);   //(-4450, 335, -4000)
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 12;
+		MainScene.add( buttonSprite );
+		buttons[12] = buttonSprite;
+		buttonSprite.visible = false;
+		//	
 		//
 		//
 		var cube_112 = new THREE.Mesh( geometryX, MaterialX );
@@ -806,7 +969,12 @@
 		//
 		cube_112X.dual = cube_112;
 		cube_112.dual = cube_112X;
-
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-3900, cylinderHeight, -6200);
+		cylinder.cube = cube_112;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
 
 
 
@@ -828,6 +996,7 @@
 		cube_13.cameraLookAt = [-6500, 200, 5200];
 		cube_13.cameraTurn = [600, 200, -200];
 		cube_13.lights = [sp13a, sp13b, sp13c];
+		cube_13.scene = 13;
 		MainScene.add( cube_13 );
 		//		
 		var cube_13X = new THREE.Mesh( geometryX, MaterialX );
@@ -839,10 +1008,28 @@
 		cube_13X.cameraLookAt = [-6500, 200, 5200];
 		cube_13X.cameraTurn = [600, 200, -200];
 		cube_13X.lights = [sp13a, sp13b, sp13c];
+		cube_13X.scene = 13;
 		MainScene.add( cube_13X );
 		//
 		cube_13X.dual = cube_13;
 		cube_13.dual = cube_13X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-6200, cylinderHeight, 6600);
+		cylinder.cube = cube_13;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.renderOrder = 1;
+		buttonSprite.position.set(-5875, 240, 5200);
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 13;
+		MainScene.add( buttonSprite );
+		buttons[13] = buttonSprite;
+		buttonSprite.visible = false;
 		//
 		//
 
@@ -869,6 +1056,7 @@
 		cube_14.cameraLookAt = [-2600, 200, -1600];
 		cube_14.cameraTurn = [-400, 300, -600];
 		cube_14.lights = [sp14a, sp14b, sp14c];
+		cube_14.scene = 14;
 		MainScene.add( cube_14 );
 		//		
 		var cube_14X = new THREE.Mesh( geometryX, MaterialX );
@@ -880,9 +1068,17 @@
 		cube_14X.cameraLookAt = [-2600, 200, -1600];
 		cube_14X.cameraTurn = [-400, 300, -600];
 		cube_14X.lights = [sp14a, sp14b, sp14c];
-		MainScene.add( cube_14X );//
+		cube_14X.scene = 14;
+		MainScene.add( cube_14X );
+		//
 		cube_14X.dual = cube_14;
 		cube_14.dual = cube_14X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-1800, cylinderHeight, -2800);
+		cylinder.cube = cube_14;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
 		//
 		video_14 = document.getElementById( 'video14' );
 		video_14.preload = 'auto';
@@ -909,6 +1105,7 @@
 		cube_14b.cameraLookAt = [-2600, 200, -1600];
 		cube_14b.cameraTurn = [-400, 300, -600];
 		cube_14b.lights = [sp14a, sp14b, sp14c];
+		cube_14b.scene = 14;
 		MainScene.add( cube_14b );
 		//		
 		var cube_14bX = new THREE.Mesh( geometryX, MaterialX );
@@ -920,10 +1117,28 @@
 		cube_14bX.cameraLookAt = [-2600, 200, -1600];
 		cube_14bX.cameraTurn = [-400, 300, -600];
 		cube_14bX.lights = [sp14a, sp14b, sp14c];
+		cube_14bX.scene = 14;
 		MainScene.add( cube_14bX );
 		//
 		cube_14bX.dual = cube_14b;
 		cube_14b.dual = cube_14bX;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-1250, cylinderHeight, -2650);
+		cylinder.cube = cube_14b;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.renderOrder = 1;
+		buttonSprite.position.set(-2475, 250, -2275);
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 14;
+		MainScene.add( buttonSprite );
+		buttons[14] = buttonSprite;
+		buttonSprite.visible = false;
 		//
 
 
@@ -948,6 +1163,7 @@
 		cube_21.cameraLookAt = [-7000, 200, 2000];
 		cube_21.cameraTurn = [200, 200, 400];
 		cube_21.lights = [sp21a, sp21b, sp21c];
+		cube_21.scene = 21;
 		MainScene.add( cube_21 );
 		//
 		var cube_21X = new THREE.Mesh( geometryX, MaterialX );
@@ -959,10 +1175,17 @@
 		cube_21X.cameraLookAt = [-7000, 200, 2000];
 		cube_21X.cameraTurn = [200, 200, 400];
 		cube_21X.lights = [sp21a, sp21b, sp21c];
+		cube_21X.scene = 21;
 		MainScene.add( cube_21X );
 		//
 		cube_21X.dual = cube_21;
 		cube_21.dual = cube_21X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-7400, cylinderHeight, 3500);
+		cylinder.cube = cube_21;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
 		//
 		//
 		// השמאלי
@@ -971,10 +1194,11 @@
 		cube_21.rotation.y = (-15)*Math.PI/180;
 		cube_21.receiveShadow = true;
         cube_21.castShadow = true;
-		cube_21.cameraCords = [-10500, 800, 2200];  
+		cube_21.cameraCords = [-10000, 800, 2200];  
 		cube_21.cameraLookAt = [-7000, 200, 2000];
 		cube_21.cameraTurn = [200, 200, 400];
 		cube_21.lights = [sp21a, sp21b, sp21c];
+		cube_21.scene = 21;
 		MainScene.add( cube_21 );
 		//
 		var cube_21X = new THREE.Mesh( geometryX, MaterialX );
@@ -982,14 +1206,32 @@
 		cube_21X.rotation.y = (-105)*Math.PI/180;
 		cube_21X.receiveShadow = true;
         cube_21X.castShadow = true;
-		cube_21X.cameraCords = [-10500, 800, 2200];  
+		cube_21X.cameraCords = [-10000, 800, 2200];  
 		cube_21X.cameraLookAt = [-7000, 200, 2000];
 		cube_21X.cameraTurn = [200, 200, 400];
 		cube_21X.lights = [sp21a, sp21b, sp21c];
+		cube_21X.scene = 21;
 		MainScene.add( cube_21X );
 		//
 		cube_21X.dual = cube_21;
 		cube_21.dual = cube_21X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-8400, cylinderHeight, 1500);
+		cylinder.cube = cube_21;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+		//
+		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
+		buttonSpriteMaterial.opacity = 0.9;
+		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
+		buttonSprite.renderOrder = 1;
+		buttonSprite.position.set(-7125, 775, 1900);
+		buttonSprite.scale.set(25, 25, 1)
+		buttonSprite.scene = 21;
+		MainScene.add( buttonSprite );
+		buttons[21] = buttonSprite;
+		buttonSprite.visible = false;
 		//
 		
 
@@ -1003,26 +1245,37 @@
 	{
 		var audioLoader = new THREE.AudioLoader();
 		//
+		sound_opening = new THREE.Audio( listener );
+		audioLoader.load( 'audio/opening.mp4', function( buffer ) {sound_opening.setBuffer( buffer );});
+		//
 		sound_02 = new THREE.Audio( listener );
 		audioLoader.load( 'audio/02_song.mp3', function( buffer ) {sound_02.setBuffer( buffer );});
+		sound_02.setLoop( true );
 		//
 		sound_06 = new THREE.Audio( listener );
 		audioLoader.load( 'audio/06_song.mp3', function( buffer ) {sound_06.setBuffer( buffer );});
+		sound_06.setLoop( true );
 		//
 		sound_09 = new THREE.Audio( listener );
 		audioLoader.load( 'audio/09_song.mp3', function( buffer ) {sound_09.setBuffer( buffer );});				
+		sound_09.setLoop( true );
 		//
 		sound_10 = new THREE.Audio( listener );
 		audioLoader.load( 'audio/10_record.mp3', function( buffer ) {sound_10.setBuffer( buffer );});					
+		sound_10.setLoop( true );
 		//
 		sound_12 = new THREE.Audio( listener );
 		audioLoader.load( 'audio/12_song.mp3', function( buffer ) {sound_12.setBuffer( buffer );});			
+		sound_12.setLoop( true );
 		//
 		sound_13 = new THREE.Audio( listener );
 		audioLoader.load( 'audio/13_record.mp3', function( buffer ) {sound_13.setBuffer( buffer );});					
+		sound_13.setLoop( true );
 		//
 		sound_21 = new THREE.Audio( listener );
-		audioLoader.load( 'audio/21_song.mp3', function( buffer ) {sound_21.setBuffer( buffer );});			
+		audioLoader.load( 'audio/21_song.mp3', function( buffer ) {sound_21.setBuffer( buffer );});	
+		sound_21.setLoop( true );
+		
 	}
 
     function loadModelAndAnimation ( boolName, name, material, position, rotation, scale, timeScale, loop)
@@ -1219,11 +1472,11 @@
 	}
 
 	function onMouseDoubleClick( ev ) {
-		if (start)
+		if (true)
 		{
 			cameraCubeAnimation(start_cube);
 			FogFade(2500, 11000, 20);
-			//start = false;
+			//startBool = false;
 			return;
 		}	
 	}
@@ -1231,28 +1484,28 @@
 	function onkeydown( ev ) {
 		if (ev.keyCode == 49)  //  1
 		{
-			location.reload();
+			//location.reload();
 			return false;
 		}
 		if (ev.keyCode == 65) // a
 		{
-			readEnd();
+			//readEnd();
 			return false;
 		}
 		if (ev.keyCode == 76) // l
 		{
-			testLight.castShadow = true;
+			//testLight.castShadow = true;
 			return false;
 		}
 		if (ev.keyCode == 66) // b
 		{
-			postP = !postP;
+			//postP = !postP;
 			return false;
 		}		
 
 		if (ev.keyCode == 27) // Esc
 		{
-			
+			readEnd();
 		}
 		
 		console.log(ev.keyCode);
@@ -1269,27 +1522,57 @@
 		if ((intersects.length > 0)&&(!permanent.pp))
 		{
 			var index = 0;
-			if ((intersects[0].object.type == 'Sprite')&&(intersects[0].object.scene))
-			{
-				readClick('models/scenes/02/02_title.gltf');
-			}
-			else if (intersects[0].object.type == 'Sprite')
+			console.log(intersects[index].object);
+			if ((intersects[index].object.type == 'Sprite')&&(intersects.length > 1)&& (!intersects[ index ].object.scene) )
 			{
 				index = 1;
+				console.log(intersects[index].object);
 			}
+			
+			if ((intersects[index].object.type == 'Sprite')&&(intersects[index].object.scene))
+			{
+				readClick(intersects[index].object.scene);
+			}
+			/*
 			if((intersects[index].object.sceneName) && (!readMode))
 			{
 				readClick(intersects[index].object.sceneName);
 			}
-			if ((intersects[ index ].object.geometry.type == 'BoxGeometry') && (!readMode) && (!start))
+			*/
+			if (((intersects[ index ].object.geometry.type == 'BoxGeometry') || (intersects[ index ].object.geometry.type == 'CylinderGeometry'))
+						 && (!readMode) && (!startBool) && (!intersects[ index ].object.ignore))
 			{
-				currentCube.position.y = 3;
-				currentCube.dual.position.y = 3;
-				intersects[index].object.position.y = 0;
-				intersects[index].object.dual.position.y = 0;
-				cameraCubeAnimation(intersects[index].object);
+				if (intersects[ index ].object.geometry.type == 'BoxGeometry')
+				{
+					var cube = intersects[ index ].object;
+				}
+				else
+				{
+					console.log("CylinderGeometry!")
+					var cube = intersects[ index ].object.cube;
+				}
+				if (firstCube)
+				{
+					FogFade(2500, 11000, 120);
+					firstCube = false;
+				}
+				else
+				{
+					currentCube.position.y = 3;
+					currentCube.dual.position.y = 3;
+					cube.position.y = 0;
+					cube.dual.position.y = 0;
+
+					currentCube.material = MaterialX;
+					currentCube.dual.material = MaterialX;
+				}
+				INTERSECTEDc = null;
+				cube.material = CubeMaterial_P;
+				cube.dual.material = CubeMaterial_P;
+				
+				cameraCubeAnimation(cube);
 			}
-			console.log(intersects[index].object);
+			
 		}
 
 		if (postP)
@@ -1307,7 +1590,7 @@
         //
 	}
 	
-	function readClick(name)
+	function readClick(scene)
 	{
 		var changeDownText = true;
 
@@ -1325,7 +1608,7 @@
 		var x_from_top = '5%';
 		var x_from_right = '5%';
 		
-		if (name == 'models/scenes/02/02_title.gltf') //אנשי בסדר
+		if (scene == 2) //אנשי בסדר
 		{
 			var x_from_top = '5%';
 			var x_from_right = '2.5%';
@@ -1347,7 +1630,7 @@
 			sound_02.play();
 			sp02D.intensity = 0.3;	
 		}
-		else if (name == 'models/scenes/06/6_title.gltf') // תותחן
+		else if (scene == 6) // תותחן
 		{
 			var x_from_top = '7%';
 			var x_from_right = '7%';
@@ -1366,7 +1649,7 @@
 			cameraPosTurn = [-30, 40, -30];
 
 		}
-		else if (name == 'models/scenes/09/09_title.gltf') //גטו
+		else if (scene == 9) //גטו
 		{
 			cameraPos = [-2700, 700, 170];		
 			cameraPosLookAt = [-5100, 600, -430];  
@@ -1384,7 +1667,7 @@
 			sound_09.play();
 
 		}
-		else if (name == 'models/scenes/10/10_title.gltf')   //  ספריה
+		else if (scene == 10)   //  ספריה
 		{
 			waitFor10 = true;
 			cameraPos = [-3300, 750, 2500];		//  [-300, 800, 2100];
@@ -1427,10 +1710,10 @@
 				setTimeout(fadeIntensity, 10);
 			}
 			fadeIntensity();
-
-			sound_10.play();
+			setTimeout(function() { sound_10.play(); }, 20000);
+			
 		}
-		else if (name == 'models/scenes/11/11_title.gltf') // צמבלולו
+		else if (scene == 11) // צמבלולו
 		{
 			//var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
 
@@ -1467,7 +1750,7 @@
 			changeDownText = false;
 
 		}
-		else if (name == 'models/scenes/11/12_title.gltf') // אחים
+		else if (scene == 12) // אחים
 		{
 			cameraPos = [-6400, 1400, -4750];		//  [-9000, 800, -4500]
 			cameraPosLookAt = [-5900, 300, -4350];  // [-5400, 200, -4300]
@@ -1484,7 +1767,7 @@
 
 			cameraPosTurn = [0, 0, 8];
 		}
-		else if (name == 'models/scenes/13/13_title.gltf') // סמטוכה
+		else if (scene == 13) // סמטוכה
 		{
 			cameraPos = [-4300, 650, 6900];	
 			cameraPosLookAt = [-6500, -150, 4900]; 
@@ -1495,7 +1778,7 @@
 
 			whiteColor = 0x000000;
 
-			sound_13.play();
+
 
 			var intensity =  1;
 			function fadeIntensity() {
@@ -1510,9 +1793,9 @@
 			fadeIntensity();
 			//mainSL3.intensity = 2;
 
-
+			setTimeout(function() { sound_13.play(); }, 7000);
 		}
-		else if (name == 'models/scenes/14/text_moments_new.gltf') // רגעים
+		else if (scene == 14) // רגעים
 		{
 			cameraPos = [-650, 600, -3250];		//  [600, 800, -3900]
 			cameraPosLookAt = [-2650, 500, -1250];  // [-2600, 200, -1600];
@@ -1534,7 +1817,7 @@
 			cameraPosTurn = [-20, 20, -20];
 
 		}
-		else if (name == 'models/scenes/21/21_title.gltf')
+		else if (scene == 21)
 		{
 			//cameraPos = [-10500, 1000, 3800];		//  [-9500, 800, 4200]
 			//cameraPosLookAt = [-7000, 900, 1200];  // [-7000, 200, 200];
@@ -1706,7 +1989,8 @@
 
 	function readEnd()
 	{
-		
+		buttons[currentCube.scene].visible = true;
+		buttons[currentCube.scene].material.opacity = 0.8;
 		permanent.style.opacity = 1;
 		permanent.style.display = 'block';
 
@@ -1827,8 +2111,16 @@
 		MainScene.fog.color.setHex(0x000000);
 	}
 
-    function cameraCubeAnimation(object)
+    function cameraCubeAnimation(object, outDuration)
     {
+
+
+		console.log("cameraCubeAnimation");
+		var inDuration = 2000;
+		if (outDuration)
+		{
+			inDuration = outDuration;
+		}
 		var cameraPos = object.cameraCords;
 		var cameraPosLookAt =  object.cameraLookAt;
 		var cameraPosTurn = object.cameraTurn;
@@ -1837,7 +2129,7 @@
         var target = new THREE.Vector3(cameraPos[0], cameraPos[1], cameraPos[2]); // create on init
 		animateVector3(cameraPosVec, target, {
             
-            duration: 2000, 
+            duration: inDuration, 
             
             easing : TWEEN.Easing.Quadratic.InOut,
             
@@ -1855,7 +2147,7 @@
 		var target_L = new THREE.Vector3(cameraPosLookAt[0], cameraPosLookAt[1], cameraPosLookAt[2]); // create on init
         animateVector3(cameraLookAt, target_L, {
             
-            duration: 2000, 
+            duration: inDuration, 
             
             easing : TWEEN.Easing.Quadratic.InOut,
             
@@ -1871,7 +2163,7 @@
 		var target_T = new THREE.Vector3(cameraPosTurn[0], cameraPosTurn[1], cameraPosTurn[2]); // create on init
         animateVector3(cameraTurn, target_T, {
             
-            duration: 2000, 
+            duration: inDuration, 
             
             easing : TWEEN.Easing.Quadratic.InOut,
             
@@ -1890,7 +2182,7 @@
 		var sl1p = object.lights[0].position;
 		var target_L1 = new THREE.Vector3(sl1p.x, sl1p.y, sl1p.z);
         animateVector3(mainSL1.position, target_L1, {
-            duration: 2000, 
+            duration: inDuration, 
             easing : TWEEN.Easing.Quadratic.InOut,
             update: function(d) {
                 //console.log("Updating: " + d);
@@ -1902,7 +2194,7 @@
 		var sl1tp = object.lights[0].target.position;
 		var target_L1T = new THREE.Vector3(sl1tp.x, sl1tp.y, sl1tp.z); 
         animateVector3(mainSL1.target.position, target_L1T, {
-            duration: 2000, 
+            duration: inDuration, 
             easing : TWEEN.Easing.Quadratic.InOut,
             update: function(d) {
                 //console.log("Updating T: " + d);
@@ -1918,7 +2210,7 @@
 		var sl1p = object.lights[1].position;
 		var target_L1 = new THREE.Vector3(sl1p.x, sl1p.y, sl1p.z);
         animateVector3(mainSL2.position, target_L1, {
-            duration: 2000, 
+            duration: inDuration, 
             easing : TWEEN.Easing.Quadratic.InOut,
             update: function(d) {
                 //console.log("Updating: " + d);
@@ -1930,7 +2222,7 @@
 		var sl1tp = object.lights[1].target.position;		
 		var target_L1T = new THREE.Vector3(sl1tp.x, sl1tp.y, sl1tp.z); 
         animateVector3(mainSL2.target.position, target_L1T, {
-            duration: 2000, 
+            duration: inDuration, 
             easing : TWEEN.Easing.Quadratic.InOut,
             update: function(d) {
                 //console.log("Updating T: " + d);
@@ -1945,7 +2237,7 @@
 		var sl1p = object.lights[2].position;
 		var target_L1 = new THREE.Vector3(sl1p.x, sl1p.y, sl1p.z);
         animateVector3(mainSL3.position, target_L1, {
-            duration: 2000, 
+            duration: inDuration, 
             easing : TWEEN.Easing.Quadratic.InOut,
             update: function(d) {
                 //console.log("Updating: " + d);
@@ -1957,7 +2249,7 @@
 		var sl1tp = object.lights[2].target.position;
 		var target_L1T = new THREE.Vector3(sl1tp.x, sl1tp.y, sl1tp.z); 
 		animateVector3(mainSL3.target.position, target_L1T, {
-            duration: 2000, 
+            duration: inDuration, 
             easing : TWEEN.Easing.Quadratic.InOut,
             update: function(d) {
                 //console.log("Updating T: " + d);
@@ -1968,6 +2260,11 @@
 
 		var opacity = 0;
 		var opacity2 = 1.0;
+		var step = 0.01;
+		if (outDuration)
+		{
+			step = 0.003;
+		}
 
 		var sameLight = ((object.lights[0].position.x == mainSL1.position.x) &&
 						(object.lights[0].position.y == mainSL1.position.y) &&
@@ -1977,7 +2274,7 @@
 			if (opacity2 <= 0.0) { 
 				return; 
 			}
-			opacity2 -= 0.01;
+			opacity2 -= step;
 			object.lights[0].intensity = opacity2 ;
 			object.lights[1].intensity = opacity2 ;
 			object.lights[2].intensity = opacity2 ;
@@ -1988,33 +2285,80 @@
 			fadeOutLights();
 		}
 		
-		
+		function moveButton()
+		{
+			console.log("moveButton", object.scene);
+			if (object.scene)
+			{
+				if (currentCube.scene == object.scene)
+				{
+					return;
+				}
+				
+				function fadeInButton() {
+					if (opacity2 >= 0.9) { 
+						buttons[object.scene].material.opacity = 0.9;
+						return; 
+					}
+					opacity2 += 0.01;
+					buttons[object.scene].material.opacity = opacity2;
+					setTimeout(fadeInButton, 10);
+				}
+				var opacity2 = 0;
+				buttons[object.scene].material.opacity = 0;
+				buttons[object.scene].visible = true;
+				fadeInButton();
+			}
+			//
+		}
+
 		function fadeInLights() {
 			if (opacity >= 1) { 
-				currentCube = object;
+				moveButton();
+				if ((currentCube.scene) && (currentCube.scene != object.scene))
+						{
+							buttons[currentCube.scene].visible = false;
+							buttons[currentCube.scene].opacity = opacity;
+						}
+					
+						currentCube = object;
 				return; 
 			}
-			opacity += 0.01;
+			opacity += step;
 			currentCube.lights[0].intensity = opacity ;
 			currentCube.lights[1].intensity = opacity ;
 			currentCube.lights[2].intensity = opacity ;
 			setTimeout(fadeInLights, 10);
 		}
 
-		if (start)
+		if (startBool)
 		{
-			currentCube = object;
-			start = false;
+			moveButton();
+			if ((currentCube.scene) && (currentCube.scene != object.scene))
+						{
+							buttons[currentCube.scene].visible = false;
+							buttons[currentCube.scene].opacity = opacity;
+						}
+					
+						currentCube = object;
+			startBool = false;
 		}
 		else
 		{
-			if (!sameLight)
+			if ((!sameLight) && (currentCube.lights))
 			{
 				fadeInLights();
 			}
 			else
 			{
-				currentCube = object;
+				moveButton();
+				if ((currentCube.scene) && (currentCube.scene != object.scene))
+						{
+							buttons[currentCube.scene].visible = false;
+							buttons[currentCube.scene].opacity = opacity;
+						}
+					
+						currentCube = object;
 			}
 			
 		}
@@ -2031,13 +2375,26 @@
 			if (opacity <= 0) { 
 				permanent.style.opacity = 0; 
 				permanent.style.display = 'none';
+				
 				return; }
-				opacity -= 0.01;
-				permanent.style.opacity = opacity ;
+			opacity -= 0.01;
+			permanent.style.opacity = opacity ;
 			setTimeout(fadeOutPermanent, 10);
 		}
 		fadeOutPermanent();
 
+		function fadeOutButton() {
+			if (opacity2 <= 0) { 
+				buttons[currentCube.scene].material.opacity = 0;
+				buttons[currentCube.scene].visible = false;
+				return; 
+			}
+			opacity2 -= 0.01;
+			buttons[currentCube.scene].material.opacity = opacity2;
+			setTimeout(fadeOutButton, 10);
+		}
+		var opacity2 = 1;
+		fadeOutButton();
 
 
 
@@ -2181,7 +2538,32 @@
     }
 
 	function animate (time) {
-        requestAnimationFrame( animate );
+		requestAnimationFrame( animate );
+		
+		
+		// buttons animation
+		if(buttons[2])
+		{
+			if (buttons[2].scale.x >= 65)
+			{
+				buttonsPlus = -0.75;
+			}
+			if (buttons[2].scale.x <= 30)
+			{
+				buttonsPlus = 0.75;
+			}
+		}
+
+		for (var key in buttons) 
+		{
+			var b = buttons[key];
+			b.scale.set(b.scale.x + buttonsPlus, b.scale.y + buttonsPlus, 1)
+		}
+
+		//buttons.forEach(b => {
+		//	b.scale.set(b.scale.x + buttonsPlus, b.scale.y + buttonsPlus, 1)
+		//});
+
 
 		// check X ppress
 		var x_text_frame = document.getElementById( 'x_text_frame' );
@@ -2191,6 +2573,14 @@
 			x_text_frame.clicked = false;
 		}
 
+
+		// check reload ppress
+		var startover_frame = document.getElementById( 'startover' );
+		if (startover_frame.clicked == true)
+		{
+			setTimeout(startover, 600);
+			startover_frame.clicked = false;
+		}
 
         //tween update
 		TWEEN.update(time);
@@ -2279,7 +2669,7 @@
 					top = 0.3;
 					break;
 				case "text_13":
-					left = 0.25;
+					left = 0.325;
 					top = 0.55;
 				break;
 				case "text_14":
@@ -2319,12 +2709,17 @@
         //
 		if (( intersects.length > 0 ) && ( !readMode ) &&(!permanent.pp)) {
 			var index = 0;
-			if(intersects[ index ].object.type=='Sprite'){
+
+			if ((intersects[index].object.type == 'Sprite')&&(intersects.length > 1)&& !(intersects[ index ].object.scene) )
+			{
+				index = 1;
+			} 
+			if((intersects[ index ].object.type=='Sprite') && (intersects[ index ].object.scene)){
 				//intersects[ index ].object.material.opacity = 1;
 				if ( INTERSECTED0 != intersects[ index ].object ) {
 					if ( INTERSECTED0 )
 					{
-						INTERSECTED0.material.opacity = 0.6;
+						INTERSECTED0.material.opacity = 0.8;
 						INTERSECTED0 = null;
 					} 
 					INTERSECTED0 = intersects[index].object;
@@ -2336,17 +2731,37 @@
 			else {
 				if ( INTERSECTED0 )
 				{
-					INTERSECTED0.material.opacity = 0.6;
+					INTERSECTED0.material.opacity = 0.8;
 					INTERSECTED0 = null;
 				} 
 			}
 
-			if ((intersects[0].object.type == 'Sprite')&&(intersects.length > 1))
-			{
-				index = 1;
-			}
+
 			
-				if((intersects[ index ].object.geometry.type=='BoxGeometry') && (!start)){
+			if((intersects[ index ].object.geometry.type=='CylinderGeometry') && (!startBool) && (!intersects[ index ].object.ignore)){
+				if ( INTERSECTEDc != intersects[ index ].object ) {
+					if ( INTERSECTEDc )
+					{
+						INTERSECTEDc.cube.material = INTERSECTEDc.OldMaterial;
+						if( INTERSECTEDc.cube.dual) {INTERSECTEDc.cube.dual.material = INTERSECTEDc.OldMaterial;}
+					} 
+					INTERSECTEDc = intersects[ index ].object;
+					INTERSECTEDc.OldMaterial = INTERSECTEDc.cube.material
+					INTERSECTEDc.cube.material = CubeMaterial_P;
+					if( INTERSECTEDc.cube.dual) {INTERSECTEDc.cube.dual.material = CubeMaterial_P;}
+				}
+			}
+			else
+			{
+				if ( INTERSECTEDc )
+				{
+					INTERSECTEDc.cube.material = INTERSECTEDc.OldMaterial;
+					if( INTERSECTEDc.cube.dual) {INTERSECTEDc.cube.dual.material = INTERSECTEDc.OldMaterial;}
+
+				} 
+				INTERSECTEDc = null;
+			}			
+				if((intersects[ index ].object.geometry.type=='BoxGeometry') && (!startBool) && (!intersects[ index ].object.ignore)){
 					if ( INTERSECTED != intersects[ index ].object ) {
 						if ( INTERSECTED )
 						{
@@ -2357,7 +2772,6 @@
 						INTERSECTED.OldMaterial = INTERSECTED.material
 						INTERSECTED.material = CubeMaterial_P;
 						if( INTERSECTED.dual) {INTERSECTED.dual.material = CubeMaterial_P;}
-
 					}
 				}
 				else
@@ -2370,7 +2784,7 @@
 					} 
 					INTERSECTED = null;
 				}
-
+				/*
 				if (intersects[index].object.sceneName)
 				{
 					if ( INTERSECTED2 != intersects[ index ].object.sceneName ) {
@@ -2406,6 +2820,7 @@
 				}
 				INTERSECTED2 = null;
 			}
+			*/
 			
 		}
 		
@@ -2426,6 +2841,124 @@
 
 	}
 
+	function startover() {
+		console.log("startover!");
+
+
+		////////////////// MEDIA
+
+		//animations
+		animation_mixers['models/scenes/11/heads.gltf'].setTime(0);
+
+		//audios
+		sound_opening.stop();		
+		sound_02.play();
+		sound_02.stop();
+		sound_06.play();
+		sound_06.stop();
+		sound_09.play();
+		sound_09.stop();
+		sound_10.play();
+		sound_10.stop();
+		sound_12.play();
+		sound_12.stop();
+		sound_21.play();
+		sound_21.stop();
+		sound_21.play();
+		sound_21.stop();
+
+		//videos
+		video_11.currentTime = 0;
+		video_14.currentTime = 0;
+
+		//light
+		mainSL1.position.set(39700,1000,700);
+		mainSL2.position.set(40000,1000,450);
+		mainSL3.position.set(39700,1000,-200);
+		mainSL1.target.position.set(39220, 220, 1600);
+		mainSL2.target.position.set(39220, 220, 750);
+		mainSL3.target.position.set(38220, 220, 0);
+		mainSL1.intensity = 0;
+		mainSL2.intensity = 0;
+		mainSL3.intensity = 0;
+		if(currentCube.lights)
+		{
+			currentCube.lights[0].intensity = 1 ;
+			currentCube.lights[1].intensity = 1 ;
+			currentCube.lights[2].intensity = 1 ;
+		}
+
+		//fog
+		MainScene.fog.near = 4500;
+		MainScene.fog.far = 7000;
+
+		//current buttons
+		if (currentCube.scene)
+		{
+			buttons[currentCube.scene].visible = false;
+			buttons[currentCube.scene].opacity = 0;
+		}
+		if (currentCube.dual)
+		{
+			currentCube.material = MaterialX;
+			currentCube.dual.material = MaterialX;
+		}
+
+
+		////////////////// GLOBALS
+
+		//booleans
+		firstCube = true;
+		startBool = true;
+		waitFor10 = false;
+		CAMERACHANGE = false;
+		postP = false;
+		readMode = false;
+
+		//positions
+		cameraLookAt = new THREE.Vector3(38000, -200, 800);  // קדימה יותר
+		cameraPosVec = new THREE.Vector3(42500, 1200, 0); // קדימה יותר
+		cameraTurn = new THREE.Vector3(0, 200, -400); 
+
+		//parameters
+		posShift = 50;
+		cameraZrotate = 0;
+		currentCube = cube3;
+		currntFrame = null;
+
+
+		////////////////// HTML
+		var f_frame = document.getElementById("first_frame");
+		var startX = f_frame.contentWindow.document.getElementById('startX');
+		var all2 = document.getElementById("all2");
+		var cr = document.getElementById( 'cr_text' );
+		var x_cr = document.getElementById( 'x_cr_frame' );
+				
+		//style
+		permanent.style.opacity = 1;
+		permanent.style.display = 'none';
+		//
+		f_frame.style.opacity = 1;
+		f_frame.style.display = 'block';
+		f_frame.style.width = '100%';
+		f_frame.style.height = '100%';
+		f_frame.style.position = 'absolute';
+		//
+		all2.style.opacity = 1;
+		all2.style.display = 'block';
+		all2.style.width = '100%';
+		all2.style.height = '100%';
+		all2.style.position = 'absolute';
+		//
+		cr.style.opacity = 0;
+		x_cr.style.opacity = 0;
+
+		//booleans
+		startX.start = false;
+		permanent.pp = false;
+
+		startScene();
+	}
 
 	function loadingManager()
 	{
@@ -2437,8 +2970,17 @@
 		};
 
 		manager.onLoad = function ( ) {
-			allModelsLoaded=true;
+			//allModelsLoaded=true;
 			console.log( 'Loading complete!');
+
+
+
+			var firstFrame = document.getElementById("first_frame");
+			var startFrame = firstFrame.contentWindow.document.getElementById('click_text');
+			var loadingFrame = firstFrame.contentWindow.document.getElementById('loading_frame');
+			
+			loadingFrame.style.display = 'none';
+			startFrame.style.display = 'block';
 
 		};
 
@@ -2457,6 +2999,286 @@
 
 	}
 
+	function startSceneElements()
+	{
+		var scalar=0.7;
+		var map = new THREE.TextureLoader().load( "img/o_photo2.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1024*scalar,1024*scalar,1);
+		imageSprite.position.set(29500, 256, 600)
+		MainScene.add( imageSprite );
+
+		var map = new THREE.TextureLoader().load( "img/o_photo1.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1024*scalar,1024*scalar,1);
+		imageSprite.position.set(33000, 256, 0)
+		MainScene.add( imageSprite );
+
+		var map = new THREE.TextureLoader().load( "img/o_photo3.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1024*scalar,1024*scalar,1);
+		imageSprite.position.set(31000, 256, 1800)
+		MainScene.add( imageSprite );
+
+		var map = new THREE.TextureLoader().load( "img/o_poster.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1393/2,1024/2,1);
+		imageSprite.position.set(35000, 300, 700)
+		MainScene.add( imageSprite );
+
+		var map = new THREE.TextureLoader().load( "img/o_draw2.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(2200*scalar/2, 1811*scalar/2,1);
+		imageSprite.position.set(28000, 600, 1700)
+		MainScene.add( imageSprite );
+
+		var map = new THREE.TextureLoader().load( "img/o_draw1.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1876*scalar/2,1558*scalar/2,1);
+		imageSprite.position.set(27000, 600, -500)
+		MainScene.add( imageSprite );
+
+
+
+
+
+
+		//(8500, 1200, 600)
+
+		var map = new THREE.TextureLoader().load( "img/o_stage.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1920,1080,1);
+		imageSprite.position.set(11500, 600, 800)
+		MainScene.add( imageSprite );
+	}
+
+	function startScene()
+	{
+
+		// start
+		var f_frame = document.getElementById("first_frame");
+		var startX = f_frame.contentWindow.document.getElementById('startX');
+
+		function waitToStart()
+		{
+			if (startX.start == true)
+			{
+				start();
+			}
+			else
+			{
+				setTimeout(waitToStart, 10);
+			}
+			
+		}
+		waitToStart();
+
+		function start()
+		{
+			console.log("START");
+
+			function fadeOut() {
+				if (opacity <= 0) { 
+					f_frame.style.opacity = 0;
+					f_frame.style.display = 'none';
+					f_frame.style.width = '0%';
+					f_frame.style.height = '0%';
+					f_frame.style.position = 'relative';
+
+					var all2 = document.getElementById("all2");
+					all2.style.opacity = 0;
+					all2.style.display = 'none';
+					all2.style.width = '0%';
+					all2.style.height = '0%';
+					all2.style.position = 'relative';
+				
+					startLights();
+					startSound();
+					return; }
+				f_frame.style.opacity = (opacity -= 0.01) ;
+				setTimeout(fadeOut, 10);
+				}
+			var opacity = 1;
+			fadeOut();
+			return false;
+		}
+
+
+		function startLights()
+		{
+			console.log("startLights");
+			setTimeout(function() {startALight(mainSL2);}, 1000);
+			setTimeout(function() {startALight(mainSL3);}, 5500);
+			setTimeout(function() {startALight(mainSL1);}, 7500);
+
+			setTimeout(firstMove, 4500);
+		}
+
+		function startALight(aSpotLight)
+		{
+			console.warn();
+			function fadeIn() {
+				if (opacity >= 1) { 
+					aSpotLight.intensity = 1;
+					return; }
+				aSpotLight.intensity = (opacity += 0.001) ;
+				setTimeout(fadeIn, 10);
+				}
+			var opacity = 0;
+			fadeIn();
+		}
+
+		function startSound()
+		{
+			console.log("startSound");
+			setTimeout(function() {sound_opening.play();}, 2200);
+		}
+		//var cameraLookAt = new THREE.Vector3(4000, -200, 800);  // כותרת
+		//var cameraPosVec = new THREE.Vector3(8500, 1200, 600); // כותרת
+		//var cameraLookAt = new THREE.Vector3(38000, -200, 800);  // קדימה יותר
+		//var cameraPosVec = new THREE.Vector3(42500, 1200, 0); // קדימה יותר
+		//spotLight.position
+		//spotLight.arger.position
+
+		function firstMove()
+		{
+			console.log("firstMove");
+			var target = new THREE.Vector3(42500, 700, 0); // create on init
+			animateVector3(cameraPosVec, target, {
+				
+				duration: 10000, 
+				
+				easing : TWEEN.Easing.Quadratic.InOut,
+				
+				update: function(d) {
+					//console.log("Updating: " + d);
+				},
+				
+				callback : function(){
+					secondMove();
+	
+				}
+			});
+		}
+
+		function secondMove()
+		{
+			console.log("secondMove");
+			//lightsMove();
+			setTimeout(thirdMove, 47000);
+
+			var target = new THREE.Vector3(15500, 800, 600); 
+			animateVector3(cameraPosVec, target, {duration: 47000, easing : TWEEN.Easing.Quadratic.Out});
+
+			var target2 = new THREE.Vector3(9000, -200, 800); 
+			animateVector3(cameraLookAt, target2, {duration: 45000, easing : TWEEN.Easing.Quadratic.Out});
+		}
+
+		function lightsMove()
+		{
+			console.log("lightsMove");
+			//mainSL1 = createSpotLight("00_A", [39700,1000,700], [39220, 220, 1600], true);
+			//mainSL2 = createSpotLight("00_B", [40000,1000,450], [39220, 220, 750], true);
+			//mainSL3 = createSpotLight("00_C", [39700,1000,-200], [38220, 220, 0], true);
+			
+			var target = new THREE.Vector3(6700,1000,700);
+			animateVector3(mainSL1.position, target, {duration: 46200, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target2 = new THREE.Vector3(5220, 220, 1600); 
+			animateVector3(mainSL1.target.position, target2, {duration: 47500, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target = new THREE.Vector3(7000,1000,450); 
+			animateVector3(mainSL2.position, target, {duration: 47400, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target2 = new THREE.Vector3(5220, 220, 750); 
+			animateVector3(mainSL2.target.position, target2, {duration: 47900, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target = new THREE.Vector3(6700,1000,200); 
+			animateVector3(mainSL3.position, target, {duration: 48000, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target2 = new THREE.Vector3(5220, 220, 200);
+			animateVector3(mainSL3.target.position, target2, {duration: 48400, easing : TWEEN.Easing.Quadratic.InOut});
+		}
+
+		function thirdMove()
+		{
+			console.log("thirdMove");
+			lightsMove2();
+			setTimeout(lastMove, 5000);
+
+			var target = new THREE.Vector3(8500, 1200, 600); 
+			animateVector3(cameraPosVec, target, {duration: 2500, easing : TWEEN.Easing.Quadratic.In});
+
+			var target2 = new THREE.Vector3(4000, -200, 800); 
+			animateVector3(cameraLookAt, target2, {duration: 2500, easing : TWEEN.Easing.Quadratic.In});
+		}
+
+		function lightsMove2()
+		{
+			console.log("lightsMove2");
+		//mainSL1 = createSpotLight("00_A", [6700,1000,700], [5220, 220, 1600]);
+		//mainSL2 = createSpotLight("00_B", [7000,1000,450], [5220, 220, 750]);
+		//mainSL3 = createSpotLight("00_C", [6700,1000,200], [5220, 220, 200]);
+			
+			var target = new THREE.Vector3(6700,1000,700);
+			animateVector3(mainSL1.position, target, {duration: 1, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target2 = new THREE.Vector3(5220, 220, 1600); 
+			animateVector3(mainSL1.target.position, target2, {duration: 1, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target = new THREE.Vector3(7000,1000,450); 
+			animateVector3(mainSL2.position, target, {duration: 1, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target2 = new THREE.Vector3(5220, 220, 750); 
+			animateVector3(mainSL2.target.position, target2, {duration: 1, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target = new THREE.Vector3(6700,1000,200); 
+			animateVector3(mainSL3.position, target, {duration: 1, easing : TWEEN.Easing.Quadratic.InOut});
+
+			var target2 = new THREE.Vector3(5220, 220, 200);
+			animateVector3(mainSL3.target.position, target2, {duration: 1, easing : TWEEN.Easing.Quadratic.InOut});
+		}
+
+		function lastMove()
+		{
+			console.log("lastMove");
+
+			//setTimeout(function(){cameraCubeAnimation(start_cube, 5000);}, 3000);
+			//setTimeout(function(){FogFade(2500, 11000, 60);}, 6000);
+			startBool = false;
+			FogFade(5500, 16000, 60);
+			//currentCube = start_cube;
+
+			permanent.style.display = 'block';
+			var opacity = 0;
+			function fadeInPermanent() {
+				if (opacity >= 1) { 
+					permanent.style.opacity = 1; 
+					return; }
+				opacity += 0.01;
+				permanent.style.opacity = opacity ;
+				setTimeout(fadeInPermanent, 10);
+			}
+			fadeInPermanent();
+		}
+
+	}
+
+
 
 
     // MAIN
@@ -2468,6 +3290,9 @@
 
 	animate();
 
+	startSceneElements();
+
+	startScene();
 
 
 

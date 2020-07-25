@@ -64,9 +64,10 @@
 	<body>
 		<!--
 			<canvas id="canvas" width="10" height="100"></canvas>
-		-->
+		--><div class="table-responsive">
+
 			<div id="run_text" style="font-family:FrankG" >
-				<br><br>
+				<br><br><br><br><br><br><br>
 <p>
 	<em>[חולדה וזאב נכנסים שלובי-זרוע ופוגשים בצ'מבלולו הבא מן הכיוון הנגדי]</em>
 </p><br><br><p>
@@ -189,14 +190,22 @@
 				<br><br><br><br>
 				
 				<p class="center">■</p>
-				<br><br><br><br>
 				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			</div>
 
 
-
+		</div>
 
 			<script>
+
+			function scroll() {
+						window.scrollBy(0, 1);
+						setTimeout(scroll, 50);
+						}
+			scroll();
+			
+
+
 				var info = document.getElementById('run_text');
 				info.x = 0;
 				info.y = 0;

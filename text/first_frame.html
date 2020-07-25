@@ -1,0 +1,188 @@
+<html lang="he">
+	<head>
+		<title>מלכת אמבטיה 2020</title>
+		<style>
+            /* width */
+            
+            ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+}
+			
+			@font-face {
+    		font-family: FrankG;
+    		src: url("../fonts/Blender_Regular.otf") format("opentype");
+			}					
+
+
+
+			#run_text {
+				user-select: none;
+				text-align: center;
+				color: white;
+				position: relative;
+
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+
+				font-size: 2.3vh;
+
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+                opacity: 100%;
+				display: block;
+
+				}
+
+                #click_text 
+                {
+				user-select: none;
+				text-align: center;
+				color: white;
+				position: relative;
+
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+
+				font-size: 1.7vh;
+
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+                opacity: 100%;
+				display: none;				
+				}
+
+                #loading_frame
+                {
+				user-select: none;
+				text-align: center;
+				color: white;
+				position: relative;
+
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+
+				font-size: 1.7vh;
+
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+                opacity: 100%;
+				display: block;				
+				}
+
+				.center {
+				position: relative;
+				top: 10%;
+				}
+				.bottomright {
+				position: absolute;
+				bottom: 2%;
+				right: 2%;
+				}
+
+				#down_text 
+                {
+
+				user-select: none;
+				color: white;
+				position: relative;
+				margin: auto;
+
+				direction: rtl;
+				letter-spacing: 1px;
+
+				font-size: 1.5vh;
+
+				line-height: 1.6;
+				word-spacing: 0px;
+				unicode-bidi: bidi-override;
+
+                opacity: 100%;
+				display: block;				}
+
+                
+			body { margin: 0; }
+			canvas { display: block; }
+
+
+
+
+		</style>
+	</head>
+	<body>
+		<!--
+			<canvas id="canvas" width="10" height="100"></canvas>
+		-->
+		<div class="center">
+            <div id="run_text" style="font-family:FrankG" >
+                
+                <img src="../img/TITLE3.png" class="img" height="22%">
+                <br>
+                <br><br>
+				המחזה "מלכת אמבטיה" של חנוך לוין עלה בתיאטרון הקאמרי באפריל 
+				<span dir="ltr">1970</span>,<br>
+                שלוש שנים לאחר מלחמת ששת הימים, ובשיאה של מלחמת ההתשה, <br>
+                והוא נחשב למחזה הסאטירי הראשון בישראל.<br><br>
+                ההצגה עוררה זעם רב בציבור הישראלי ואף הובילה למהומות באולם התיאטרון,<br>
+				מה שהביא לירידתה מהבמה לאחר <span dir="ltr">19</span> הצגות בלבד.<br>
+				<br><br>
+			</div>
+			<div id="loading_frame" style="font-family:FrankG" >
+				<img src="../img/loading.svg" id= "loading" class="img" width="128" height="128" style="display: inline;">
+				<br>
+				בינתיים התחברו לאוזניות...
+			</div>
+			<div id="click_text" style="font-family:FrankG" >
+				
+				<br>
+				<img src="../img/x_pink.png" id= "startX" class="img" width="64" height="64"  onmouseover="hover(this);" onmouseout="unhover(this);" >
+				<br>				<br>
+
+				לחצו על האיקס כדי לגלות מחדש את הטקסטים העל-זמניים של המחזה 
+			</div>
+			</div>
+			<div class="bottomright">
+			<div id="down_text" style="font-family:FrankG" >
+				<br><br><br><br><br>
+				האתר פועל בצורה האופטמלית בדפדפן  <span dir="ltr">Chrome</span> על מסך מלא
+			</div>
+		</div>
+
+			<script>
+				function hover(element) {
+ 					 element.setAttribute('src', '../img/whiteX.png');
+				}
+
+				function unhover(element) {
+					element.setAttribute('src', '../img/x_pink.png');
+				}	
+
+
+				var startX = document.getElementById( 'startX' );
+				startX.start = false;
+				document.start = false;
+				// START CLICK
+				function start(p){
+					console.log("CLICK");
+					document.start = true;
+					startX.start = true;
+				}
+				startX.addEventListener( 'mousedown', start, false );
+
+
+			</script>
+
+	</body>
+</html>

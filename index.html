@@ -24,13 +24,43 @@
 				opacity: 1;
 			}
 
+			#all2
+			{
+				user-select: none;
+				width: 100%;
+				height:100%;
+				position: absolute;
+				opacity: 1;
+			}
+
 			.permanent
 			{
 				user-select: none;
 				right: 15px;
 				bottom: 15px;
 				position: absolute;
+				display:  none;
 			}
+			
+			#first_frame
+				{	
+				color:black;
+				position: absolute;
+				left: 0%;
+				right: 0%;
+				bottom: 0%;
+				top: 0%;
+
+				width: 100%; /*1400*/
+				height: 100%;
+
+				unicode-bidi: bidi-override;
+
+				display: block;
+				opacity: 1;
+
+				background-color: black; 
+				}
 
 			#cr_text
 				{	
@@ -85,7 +115,7 @@
 			{
 				unicode-bidi: bidi-override;
 				user-select: none;
-				opacity: 0.6;
+				opacity: 0.8;
 
 				transition: opacity .09s ease-out;
 				-moz-transition: opacity .09s ease-out;
@@ -94,7 +124,7 @@
 			}
 			.img:hover 
 			{
-				opacity: 0.8;
+				opacity: 1;
 				transition: opacity .09s ease-in-out;
 				-moz-transition: opacity .09s ease-in-out;
 				-webkit-transition: opacity .09s ease-in-out;
@@ -228,7 +258,7 @@
 				bottom: 0%;
 				top: 55%;
 
-				width: 50%; 
+				width: 35%; 
 				height: 45%;
 				padding: 0px;
 				margin: auto;
@@ -298,9 +328,13 @@
 		</video>
 
 
+		<video id="white" loop="anonymous" playsinline style="display:none" width="64" height="64">
+			<source src="video/white.m4v" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+		</video>
+
+
 
 		<div id="all" >	
-			
 			<iframe id="cr_text" src="text/copyright.html" width="10%" height="300" style="border:0px solid gold;" >
 			</iframe>
 		</div>
@@ -351,26 +385,32 @@
 
 		<div id="permanent" class="permanent" >
 
-			<img src="img/startover2-01.png" class="img" width="36" height="36" id="startover">
+			<img src="img/startover.png" class="img" width="40" height="40" id="startover">
 			&nbsp;
-
+<!--
 			<img src="img/info2-01.png" class="img" width="36" height="36">
 			&nbsp;
-
-			<img src="img/copyright2-01.png" class="img" width="36" height="36" id="copyright">
+-->
+			<img src="img/copyright.png" class="img" width="40" height="40" id="copyright">
 			 
 		</div>
 
+
+		<div id="all2" >	
+			<iframe id="first_frame" src="text/first_frame.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+		</div>
+
 		<div id= "x_cr_frame">
-			<img src="img/x-01.png" class="img" width="36" height="36" id="x_cr_img">
+			<img src="img/x.png" class="img" width="36" height="36" id="x_cr_img">
 		</div>
 
 		<div id= "x_text_frame">
-			<img src="img/x-01.png" class="img" width="36" height="36" id="x_text_img">
+			<img src="img/x.png" class="img" width="36" height="36" id="x_text_img">
 		</div>
 
 		
-		<script src="js/lodash.js"></script>
+		<!--<script src="js/lodash.js"></script>-->
         <script src="js/three.js"></script>
 		<script src="js/tween.umd.js"></script>
 
@@ -383,7 +423,8 @@
 
 				// START OVER
 				function reload_fanc(p){
-					location.reload();
+					//location.reload();
+					reload.clicked = true;
 					return false;
 				}
 				var reload = document.getElementById( 'startover' );
@@ -399,8 +440,9 @@
 							cr.style.opacity = 1;
 							x_cr.style.opacity = 1;
 							return; }
-						cr.style.opacity = (opacity += 0.05) ;
-						x_cr.style.opacity = (opacity += 0.05) ;
+						opacity += 0.05
+						cr.style.opacity = opacity ;
+						x_cr.style.opacity = opacity ;
 						setTimeout(fadeIn, 10);
 						}
 					var opacity = 0;
@@ -422,8 +464,9 @@
 							x_cr.style.opacity = 0;
 							permanent.pp = false;
 							return; }
-						cr.style.opacity = (opacity -= 0.05) ;
-						x_cr.style.opacity = (opacity -= 0.05) ;
+						opacity -= 0.05
+						cr.style.opacity = opacity;
+						x_cr.style.opacity = opacity;
 						setTimeout(fadeOut, 10);
 						}
 					var opacity = 1;
@@ -452,6 +495,12 @@
 
 				var x_text = document.getElementById( 'x_text_img' );
 				x_text.addEventListener( 'mousedown', x_text_fanc, false );
+
+
+
+
+
+
 
 		</script>
 	</body>
