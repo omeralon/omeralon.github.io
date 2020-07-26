@@ -1752,8 +1752,8 @@
 		}
 		else if (scene == 12) // אחים
 		{
-			cameraPos = [-6200, 1400, -4150];		// [-6400, 1400, -4750];
-			cameraPosLookAt = [-5700, 300, -3750];  // [-5900, 300, -4350];
+			cameraPos = [-6200, 1400, -4050];		// [-6400, 1400, -4750];
+			cameraPosLookAt = [-5700, 300, -3650];  // [-5900, 300, -4350];
 			text = "text_12";
 			nearF = 5300;
 			farF = 6300;
@@ -1797,8 +1797,8 @@
 		}
 		else if (scene == 14) // רגעים
 		{
-			cameraPos = [-850, 600, -3450];		//  [600, 800, -3900]
-			cameraPosLookAt = [-2850, 500, -1450];  // [-2600, 200, -1600];
+			cameraPos = [-850, 600, -3550];		//  [600, 800, -3900]
+			cameraPosLookAt = [-2850, 500, -1550];  // [-2600, 200, -1600];
 			text = "text_14";
 			nearF = 3250;
 			farF = 3350;
@@ -3002,62 +3002,176 @@
 	function startSceneElements()
 	{
 		var scalar=0.7;
-		var map = new THREE.TextureLoader().load( "img/o_photo2.png" );
-		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
-		material.fog = true;
-		var imageSprite = new THREE.Sprite( material );
-		imageSprite.scale.set(1024*scalar,1024*scalar,1);
-		imageSprite.position.set(29500, 256, 600)
-		MainScene.add( imageSprite );
 
-		var map = new THREE.TextureLoader().load( "img/o_photo1.png" );
-		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
-		material.fog = true;
-		var imageSprite = new THREE.Sprite( material );
-		imageSprite.scale.set(1024*scalar,1024*scalar,1);
-		imageSprite.position.set(33000, 256, 0)
-		MainScene.add( imageSprite );
 
-		var map = new THREE.TextureLoader().load( "img/o_photo3.png" );
-		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
-		material.fog = true;
-		var imageSprite = new THREE.Sprite( material );
-		imageSprite.scale.set(1024*scalar,1024*scalar,1);
-		imageSprite.position.set(31000, 256, 1800)
-		MainScene.add( imageSprite );
-
-		var map = new THREE.TextureLoader().load( "img/o_poster.png" );
+		var map = new THREE.TextureLoader().load( "img/opening/poster.png" );
 		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
 		material.fog = true;
 		var imageSprite = new THREE.Sprite( material );
 		imageSprite.scale.set(1393/2,1024/2,1);
-		imageSprite.position.set(35000, 300, 700)
+		imageSprite.position.set(35500, 300, 700);
 		MainScene.add( imageSprite );
 
-		var map = new THREE.TextureLoader().load( "img/o_draw2.png" );
+
+		var map = new THREE.TextureLoader().load( "img/opening/3_bikoret.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1042*scalar, 1136*scalar,1);
+		imageSprite.position.set(33000, 256, 0);
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/3_sensor.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(648, 994,1);
+		imageSprite.position.set(31000, 256, 1500);
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/photo1.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1024*scalar,1024*scalar,1);
+		imageSprite.position.set(29500, 256, 600);
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/3_bagad.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1008*scalar,980*scalar,1);
+		imageSprite.position.set(28000, 400, 1700)
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/draw2.png" );
 		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
 		material.fog = true;
 		var imageSprite = new THREE.Sprite( material );
 		imageSprite.scale.set(2200*scalar/2, 1811*scalar/2,1);
-		imageSprite.position.set(28000, 600, 1700)
+		imageSprite.position.set(27000, 300, -500)
 		MainScene.add( imageSprite );
 
-		var map = new THREE.TextureLoader().load( "img/o_draw1.png" );
+		var map = new THREE.TextureLoader().load( "img/opening/booklet.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1900*scalar/2, 1700*scalar/2,1);
+		imageSprite.position.set(26000, 300, 300)
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/2_pigur.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1081/2, 1412/2,1);
+		imageSprite.position.set(25000, 300, 1300)
+		MainScene.add( imageSprite );
+
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/2_kadosh.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(936*scalar,1052*scalar,1);
+		imageSprite.position.set(24000, 200, -400)
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/photo2.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1024*scalar,1024*scalar,1);
+		imageSprite.position.set(23500, 256, 600)
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/draw1.png" );
 		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
 		material.fog = true;
 		var imageSprite = new THREE.Sprite( material );
 		imageSprite.scale.set(1876*scalar/2,1558*scalar/2,1);
-		imageSprite.position.set(27000, 600, -500)
+		imageSprite.position.set(22500, 600, -500)
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/2_album.jpg" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(967/2, 1921/2,1);
+		imageSprite.position.set(21500, 356, 1400)
+		MainScene.add( imageSprite );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/crowd.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(2192/2, 1048/2,1);
+		imageSprite.position.set(20500, 256, 300)
 		MainScene.add( imageSprite );
 
 
 
+		var map = new THREE.TextureLoader().load( "img/opening/1_stopped.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(660,846,1);
+		imageSprite.position.set(19500, 456, 1400)
+		MainScene.add( imageSprite );
 
 
 
-		//(8500, 1200, 600)
+		var map = new THREE.TextureLoader().load( "img/opening/1_bomb.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1132/2, 1074/2,1);
+		imageSprite.position.set(18500, 156, -300)
+		MainScene.add( imageSprite );
 
-		var map = new THREE.TextureLoader().load( "img/o_stage.png" );
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/photo3.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1024*scalar,1024*scalar,1);
+		imageSprite.position.set(17500, 256, 400)
+		MainScene.add( imageSprite );
+
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/1_arrest.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(934, 704,1);
+		imageSprite.position.set(16500, 300, 1400)
+		MainScene.add( imageSprite );
+
+
+
+		var map = new THREE.TextureLoader().load( "img/opening/3_kameri_off.png" );
+		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
+		material.fog = true;
+		var imageSprite = new THREE.Sprite( material );
+		imageSprite.scale.set(1388/2,1408/2,1);
+		imageSprite.position.set(15000, 350, -200)
+		MainScene.add( imageSprite );
+
+		
+		var map = new THREE.TextureLoader().load( "img/opening/stage.png" );
 		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
 		material.fog = true;
 		var imageSprite = new THREE.Sprite( material );
