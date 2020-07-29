@@ -807,6 +807,33 @@
 		buttonSprite.visible = false;
 
 		
+		//
+		//		
+		var cube_09b = new THREE.Mesh( geometryX, MaterialX );
+		cube_09b.position.set(-5000,cubeHeight, 1800); // -800		2000
+		cube_09b.rotation.y = (5)*Math.PI/180;
+		cube_09b.receiveShadow = true;
+        cube_09b.castShadow = true;
+		cube_09b.cameraCords = [-6500, 800, 3200];
+		cube_09b.cameraLookAt = [-4100, 200, 2200];
+		cube_09b.cameraTurn = [-100, 200, 800];
+		cube_09b.lights = [sp10a, sp10b, sp10c];
+		MainScene.add( cube_09b );
+		//		
+		var cube_09bX = new THREE.Mesh( geometryX, MaterialX );
+		cube_09bX.position.set(-5000,cubeHeight, 1800);
+		cube_09bX.rotation.y = (95)*Math.PI/180;
+		cube_09bX.receiveShadow = true;
+        cube_09bX.castShadow = true;
+		cube_09bX.cameraCords = [-6500, 800, 3200];
+		cube_09bX.cameraLookAt = [-4100, 200, 2200];
+		cube_09bX.cameraTurn = [-100, 200, 800];
+		cube_09bX.lights = [sp10a, sp10b, sp10c];
+		MainScene.add( cube_09bX );
+		//
+		cube_09bX.dual = cube_09b;
+		cube_09b.dual = cube_09bX;
+
 		// 11 צ'מבלולו
 		var position_11 = [-3500,2,-4200]; //-500, 2, -3700
 		loadModelAndAnimation(true, 'models/scenes/11/11_title.gltf', PinkeMaterial, position_11, [0,0,0], 0.25);
@@ -1710,7 +1737,7 @@
 				setTimeout(fadeIntensity, 10);
 			}
 			fadeIntensity();
-			setTimeout(function() {if((readMode)&&(currentCube.scene==10)) {sound_10.play();} }, 7000);
+			setTimeout(function() {if((readMode)&&(currentCube.scene==10)) {sound_10.play();} }, 12000);
 			
 		}
 		else if (scene == 11) // צמבלולו
@@ -1793,11 +1820,11 @@
 			fadeIntensity();
 			//mainSL3.intensity = 2;
 
-			setTimeout(function() {if((readMode)&&(currentCube.scene==13)) {sound_13.play();} }, 7000);
+			setTimeout(function() {if((readMode)&&(currentCube.scene==13)) {sound_13.play();} }, 9000);
 		}
 		else if (scene == 14) // רגעים
 		{
-			cameraPos = [-850, 600, -3550];		//  [600, 800, -3900]
+			cameraPos = [-650, 600, -3450];		//  [600, 800, -3900]   -850, 600, -3550
 			cameraPosLookAt = [-2850, 500, -1550];  // [-2600, 200, -1600];
 			text = "text_14";
 			nearF = 3250;
