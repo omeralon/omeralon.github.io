@@ -36,7 +36,8 @@
 	var sp12d;
 
 	var listener;
-	var sound_opening;
+	var sound_opening, sound_noise, sound_click;
+	var default_noise_vol = 0.025;
 	var sound_02, sound_06, sound_09, sound_10, sound_12, sound_13, sound_21;
 	var cup, head;
 	var mat_video_11, video_11, video11_Sprite;
@@ -963,7 +964,7 @@
 		buttonSpriteMaterial.opacity = 0.9;
 		var buttonSprite = new THREE.Sprite( buttonSpriteMaterial );
 		buttonSprite.renderOrder = 1;
-		buttonSprite.position.set(-4450, 275, -3250);   //(-4450, 335, -4000)
+		buttonSprite.position.set(-4650, 275, -3300);   //(-4450, 335, -4000)
 		buttonSprite.scale.set(25, 25, 1)
 		buttonSprite.scene = 12;
 		MainScene.add( buttonSprite );
@@ -1169,6 +1170,44 @@
 		//
 
 
+
+		// X אחורי
+		// -4200, 0, -900 = גטו
+
+		//		
+		var cube_15 = new THREE.Mesh( geometryX, MaterialX );
+		cube_15.position.set(-4000,cubeHeight,-2100);
+		cube_15.rotation.y = (5)*Math.PI/180;
+		cube_15.receiveShadow = true;
+        cube_15.castShadow = true;
+		cube_15.cameraCords = [-5500, 800, -1500];    
+		cube_15.cameraLookAt = [-2000, 200, -2000];
+		cube_15.cameraTurn = [-600, 300, 600];
+		cube_15.lights = [sp14a, sp14b, sp14c];
+		MainScene.add( cube_15 );
+		//		
+		var cube_15X = new THREE.Mesh( geometryX, MaterialX );
+		cube_15X.position.set(-4000,cubeHeight,-2100);
+		cube_15X.rotation.y = (95)*Math.PI/180;
+		cube_15X.receiveShadow = true;
+        cube_15X.castShadow = true;
+		cube_15X.cameraCords = [-5500, 800, -1500];    
+		cube_15X.cameraLookAt = [-2000, 200, -2000];;
+		cube_15X.cameraTurn = [-600, 300, 600];
+		cube_15X.lights = [sp14a, sp14b, sp14c];
+		MainScene.add( cube_15X );
+		//
+		cube_15X.dual = cube_15;
+		cube_15.dual = cube_15X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-4000, cylinderHeight, -2100);
+		cylinder.cube = cube_15;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+
+
+
 		// 21 המלכות היא  שלמה
 		var pos_21 = [-6650, 2, 2700];  //-150,2,-200
 		var rot_21 = [0, 210, 0];
@@ -1272,8 +1311,16 @@
 	{
 		var audioLoader = new THREE.AudioLoader();
 		//
+		sound_click = new THREE.Audio( listener );
+		audioLoader.load( 'audio/click.wav', function( buffer ) {sound_click.setBuffer( buffer );});
+		sound_click.setVolume(0.004);
+		//
 		sound_opening = new THREE.Audio( listener );
 		audioLoader.load( 'audio/opening.mp4', function( buffer ) {sound_opening.setBuffer( buffer );});
+		//
+		sound_noise = new THREE.Audio( listener );
+		audioLoader.load( 'audio/noise.mp3', function( buffer ) {sound_noise.setBuffer( buffer );});
+		sound_noise.setLoop(true);
 		//
 		sound_02 = new THREE.Audio( listener );
 		audioLoader.load( 'audio/02_song.mp3', function( buffer ) {sound_02.setBuffer( buffer );});
@@ -1559,6 +1606,8 @@
 			if ((intersects[index].object.type == 'Sprite')&&(intersects[index].object.scene))
 			{
 				readClick(intersects[index].object.scene);
+				setTimeout(function() { sound_click.play();}, 50);
+
 			}
 			/*
 			if((intersects[index].object.sceneName) && (!readMode))
@@ -1597,6 +1646,7 @@
 				cube.material = CubeMaterial_P;
 				cube.dual.material = CubeMaterial_P;
 				
+				setTimeout(function() { sound_click.play();}, 100);
 				cameraCubeAnimation(cube);
 			}
 			
@@ -1619,6 +1669,55 @@
 	
 	function readClick(scene)
 	{
+		//NOISE
+		function fadeOutVol(step) 
+		{
+			if (vol <= 0.015 )
+			{
+				sound_noise.setVolume( 0 );
+				sound_noise.pause();
+				return;
+			}
+			vol -= step;
+			sound_noise.setVolume( vol );
+			setTimeout(function() {fadeOutVol(step)}, 50);
+		}
+		
+		if ((scene == 10) || (scene == 13))
+		{
+
+			function fadeInVol() 
+			{
+				if (vol2 > 0.15 )
+				{
+					sound_noise.setVolume( 0.15 );
+					return;
+				}
+				vol2 += 0.001;
+				sound_noise.setVolume( vol2 );
+				setTimeout(fadeInVol, 50);
+			}
+			var vol2 = default_noise_vol;
+			fadeInVol() 
+
+			var vol = 0.15;
+			if (scene == 10)
+			{
+				setTimeout(function() {if((readMode)&&(currentCube.scene==10)) {sound_noise.setVolume( default_noise_vol ); fadeOutVol(0.002); } }, 12000);
+			}
+			if (scene == 13)
+			{
+				setTimeout(function() {if((readMode)&&(currentCube.scene==13)) { sound_noise.setVolume( default_noise_vol ); fadeOutVol(0.002);} }, 9000);
+			}
+		}
+		else
+		{
+			var vol = default_noise_vol;
+			fadeOutVol(0.0007);
+		}
+		
+		
+
 		var changeDownText = true;
 
 		var whiteColor = 0xeeeeee;
@@ -1779,8 +1878,8 @@
 		}
 		else if (scene == 12) // אחים
 		{
-			cameraPos = [-6200, 1400, -4050];		// [-6400, 1400, -4750];
-			cameraPosLookAt = [-5700, 300, -3650];  // [-5900, 300, -4350];
+			cameraPos = [-6200, 1100, -4050];		// [-6400, 1400, -4750];
+			cameraPosLookAt = [-5800, 300, -3650];  // [-5700, 300, -4350];
 			text = "text_12";
 			nearF = 5300;
 			farF = 6300;
@@ -1792,7 +1891,7 @@
 			
 			animation_mixers['models/scenes/11/heads.gltf'].timeScale = 1;
 
-			cameraPosTurn = [0, 0, 8];
+			cameraPosTurn = [8, 8, 8];
 		}
 		else if (scene == 13) // סמטוכה
 		{
@@ -1855,7 +1954,7 @@
 			//farF = 5350;
 			nearF = 300;
 			farF = 650;
-			cameraPosTurn = [50, 40, 30];
+			cameraPosTurn = [50, 30, 30]; //40
 
 			whiteColor = 0xff0088;
 
@@ -2016,6 +2115,28 @@
 
 	function readEnd()
 	{
+		//NOISE
+		function fadeInVol() 
+		{
+			if (vol > default_noise_vol)
+			{
+				sound_noise.setVolume( default_noise_vol );
+				return;
+			}
+			vol += 0.0007;
+			sound_noise.setVolume( vol );
+			setTimeout(fadeInVol, 50);
+		}
+		var vol = 0;
+		sound_noise.setVolume( 0 );
+		if (!sound_noise.isPlaying)
+		{
+			sound_noise.play();
+		}
+		fadeInVol() 
+
+
+
 		buttons[currentCube.scene].visible = true;
 		buttons[currentCube.scene].material.opacity = 0.8;
 		permanent.style.opacity = 1;
@@ -2730,6 +2851,8 @@
 	};
 
 	function render() {
+
+
         // CUBES CHANGE COLOR ON MOUSE MOVE
 		raycaster.setFromCamera( mouse, camera );
 		var intersects = raycaster.intersectObjects( modelObjects.concat(MainScene.children) );
@@ -2878,7 +3001,9 @@
 		animation_mixers['models/scenes/11/heads.gltf'].setTime(0);
 
 		//audios
-		sound_opening.stop();		
+		sound_opening.stop();	
+		sound_noise.play();
+		sound_noise.stop();
 		sound_02.play();
 		sound_02.stop();
 		sound_06.play();
@@ -3397,6 +3522,23 @@
 		function lastMove()
 		{
 			console.log("lastMove");
+
+
+			function fadeInVol() 
+			{
+				if (vol > default_noise_vol)
+				{
+					sound_noise.setVolume( default_noise_vol );
+					return;
+				}
+				vol += 0.0005;
+				sound_noise.setVolume( vol );
+				setTimeout(fadeInVol, 50);
+			}
+			var vol = 0;
+			sound_noise.setVolume( 0 );
+			sound_noise.play();
+			fadeInVol() 
 
 			//setTimeout(function(){cameraCubeAnimation(start_cube, 5000);}, 3000);
 			//setTimeout(function(){FogFade(2500, 11000, 60);}, 6000);
