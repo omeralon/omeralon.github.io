@@ -3498,7 +3498,7 @@
 					return; 
 				}
 				f_frame.style.opacity = (opacity -= 0.01) ;
-				setTimeout(fadeOut, 10);
+				setTimeout(fadeOut, 5);
 				}
 			var opacity = 1;
 			fadeOut();
