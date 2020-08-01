@@ -112,7 +112,12 @@
                 opacity: 100%;
 				display: block;				}
 
-                
+                #startX
+				{
+					opacity: 0.8;
+				}
+
+
 			body { margin: 0; }
 			canvas { display: block; }
 
@@ -147,11 +152,13 @@
 			<div id="click_text" style="font-family:FrankG" >
 				
 				<br>
-				<img src="../img/x_pink.png" id= "startX" class="img" width="64" height="64"  onmouseover="hover(this);" onmouseout="unhover(this);" >
+				<!--<img src="../img/x_pink.png" id= "startX" class="img" width="64" height="64"  onmouseover="hover(this);" onmouseout="unhover(this);" >-->
+
+				<img src="../img/click.gif" id= "startX" class="img" width="48" height="48"  onmouseover="hover(this);" onmouseout="unhover(this);" >
 				<br>				<br>
 
-				לחצו על האיקס כדי לגלות את הטקסטים העל-זמניים של המחזה 
-				<!--				לחצו על האיקס כדי לקרוא את קטעי המחזה <span dir="ltr">50</span> שנה אחרי    -->
+				<!--				לחצו כדי לגלות את הטקסטים העל-זמניים של המחזה     -->
+				לחצו כדי לקרוא את קטעי המחזה <span dir="ltr">50</span> שנה אחרי
 			</div>
 			</div>
 			<div class="bottomright">
@@ -162,14 +169,6 @@
 		</div>
 
 			<script>
-				function hover(element) {
- 					 element.setAttribute('src', '../img/whiteX.png');
-				}
-
-				function unhover(element) {
-					element.setAttribute('src', '../img/x_pink.png');
-				}	
-
 
 				var startX = document.getElementById( 'startX' );
 				startX.start = false;
@@ -181,6 +180,19 @@
 					startX.start = true;
 				}
 				startX.addEventListener( 'mousedown', start, false );
+
+				function hover(element) {
+					  //element.setAttribute('src', '../img/whiteX.png');
+					  console.log(element);
+					  startX.style.opacity = 1;
+					  element.setAttribute('opacity', '150%');
+				}
+
+				function unhover(element) {
+					//element.setAttribute('src', '../img/x_pink.png');
+					startX.style.opacity = 0.8;
+					element.setAttribute('opacity', '80%');
+				}	
 
 
 			</script>

@@ -49,7 +49,7 @@
 
 	var OrangeMaterial, PinkeMaterial, whiteMaterial;
 
-	var CubeMaterial_O, CubeMaterial_P, MaterialX;
+	var CubeMaterial_O, CubeMaterial_P, MaterialX, MaterialXBlackPink;
 	var mouse = new THREE.Vector2();
 	var prev_frame_mouse = new THREE.Vector2();
 
@@ -604,6 +604,48 @@
 		MainScene.add( buttonSprite );
 		buttons[2] = buttonSprite;
 		buttonSprite.visible = false;
+
+
+
+		///FIRST X
+
+		MaterialXBlackPink = new THREE.MeshLambertMaterial( { color: 0x060503, reflectivity: 2 } );
+		MaterialXBlackPink.emissive.setHex( 0x000000 )
+		MaterialXBlackPink.transparent = true;
+		MaterialXBlackPink.opacity = 0;
+
+		var cube4 = new THREE.Mesh( geometryX, MaterialXBlackPink );
+		cube4.renderOrder = 1;
+		cube4.position.set(4000, cubeHeight, -600);
+		cube4.rotation.y = 45*Math.PI/180;
+		//cube4.receiveShadow = true;
+        //cube4.castShadow = true;
+		cube4.cameraCords = [4200, 800, 2000];
+		cube4.cameraLookAt = [1500, 200, 1800];
+		cube4.cameraTurn = [0, 200, -700];
+		cube4.lights = [sp02a, sp02b, sp02c];
+		MainScene.add( cube4 );
+		//
+		var cube4X = new THREE.Mesh( geometryX, MaterialXBlackPink );
+		cube4X.renderOrder = 1;
+		cube4X.position.set(4000, cubeHeight, -600);
+		cube4X.rotation.y = -	45*Math.PI/180;
+		//cube4X.receiveShadow = true;
+        //cube4X.castShadow = true;
+		cube4X.cameraCords = [4200, 800, 2000];
+		cube4X.cameraLookAt = [1500, 200, 1800];
+		cube4X.cameraTurn = [0, 200, -700];
+		cube4X.lights = [sp02a, sp02b, sp02c];
+		MainScene.add( cube4X );
+		//
+		cube4X.dual = cube4;
+		cube4.dual = cube4X;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(4000, cylinderHeight, -600);
+		cylinder.cube = cube4;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
 
 
 		// 03 החיזור
@@ -1313,7 +1355,7 @@
 		//
 		sound_click = new THREE.Audio( listener );
 		audioLoader.load( 'audio/click.wav', function( buffer ) {sound_click.setBuffer( buffer );});
-		sound_click.setVolume(0.004);
+		sound_click.setVolume(0.02);
 		//
 		sound_opening = new THREE.Audio( listener );
 		audioLoader.load( 'audio/opening.mp4', function( buffer ) {sound_opening.setBuffer( buffer );});
@@ -2686,8 +2728,80 @@
 
     }
 
+	function animateFirstCube()
+	{
+
+		//FIRST X ANIMATION
+		//CubeMaterial_P = new THREE.MeshLambertMaterial( { color: 0x0000D6 } );
+		//CubeMaterial_P.emissive.setHex( 0xD60000 );
+		//MaterialX = new THREE.MeshLambertMaterial( { color: 0x060503, reflectivity: 2 } );
+		//MaterialX.emissive.setHex( 0x000000 )
+
+
+
+		var rb = 0;
+		function blackToPink()
+		{
+			console.log(rb);
+			if (rb == 180) //215
+			{
+				console.log("blackToPink");
+				if (firstCube) {pinkToBlack();}
+				return;
+			}
+
+			MaterialXBlackPink.color =  new THREE.Color("rgb(0, 0, "+rb.toString()+")");
+			MaterialXBlackPink.emissive =  new THREE.Color("rgb("+rb.toString()+", 0, 0)");
+			rb+=2;
+
+			setTimeout(blackToPink, 7);
+		}
+
+		function pinkToBlack()
+		{
+			console.log(rb);
+			if (rb == 20) // 0
+			{
+				console.log("pinkToBlack");
+				if (firstCube) {blackToPink();}
+				return;
+			}
+
+			MaterialXBlackPink.color =  new THREE.Color("rgb(0, 0, "+rb.toString()+")");
+			MaterialXBlackPink.emissive =  new THREE.Color("rgb("+rb.toString()+", 0, 0)");
+			rb-=2;
+
+			setTimeout(pinkToBlack, 7);
+
+		}
+
+
+
+		function fadeInX()
+		{
+			if (opacity >= 1)
+			{
+				MaterialXBlackPink.transparent = false;
+				blackToPink();
+				return;
+			}
+
+			opacity += 0.01;
+			MaterialXBlackPink.opacity = opacity;
+			setTimeout(fadeInX, 7);
+		}
+
+		var opacity = 0;
+		setTimeout(fadeInX, 1000);
+
+		
+		//var color = new THREE.Color("rgb(255, 0, 0)");
+
+	}
+
 	function animate (time) {
 		requestAnimationFrame( animate );
+
 		
 		
 		// buttons animation
@@ -3056,12 +3170,14 @@
 			currentCube.material = MaterialX;
 			currentCube.dual.material = MaterialX;
 		}
-
+		MaterialXBlackPink.opacity = 0;
+		MaterialXBlackPink.transparent = true;
 
 		////////////////// GLOBALS
 
 		//booleans
-		firstCube = true;
+		firstCube = false;
+		setTimeout(function(){firstCube = true;}, 3000)
 		startBool = true;
 		waitFor10 = false;
 		CAMERACHANGE = false;
@@ -3344,7 +3460,11 @@
 		{
 			if (startX.start == true)
 			{
+				sound_click.play();
 				start();
+				setTimeout(function() {sound_click.setVolume(0.004);}, 1000);
+				
+
 			}
 			else
 			{
@@ -3375,7 +3495,8 @@
 				
 					startLights();
 					startSound();
-					return; }
+					return; 
+				}
 				f_frame.style.opacity = (opacity -= 0.01) ;
 				setTimeout(fadeOut, 10);
 				}
@@ -3524,6 +3645,8 @@
 		{
 			console.log("lastMove");
 
+			//
+			animateFirstCube();
 
 			function fadeInVol() 
 			{
