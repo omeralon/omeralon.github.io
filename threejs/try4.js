@@ -770,7 +770,7 @@
         cube_10.castShadow = true;
 		cube_10.cameraCords = [-500, 800, 2100];
 		cube_10.cameraLookAt = [-3400, 200, 2000];
-		cube_10.cameraTurn = [200, 200, -600];
+		cube_10.cameraTurn = [200, 200, -1000];
 		cube_10.lights = [sp10a, sp10b, sp10c];
 		cube_10.scene = 10;
 		MainScene.add( cube_10 );
@@ -782,7 +782,7 @@
         cube_10X.castShadow = true;
 		cube_10X.cameraCords = [-500, 800, 2100];
 		cube_10X.cameraLookAt = [-3400, 200, 2000];
-		cube_10X.cameraTurn = [200, 200, -600];
+		cube_10X.cameraTurn = [200, 200, -1000];
 		cube_10X.lights = [sp10a, sp10b, sp10c];
 		cube_10X.scene = 10;
 		MainScene.add( cube_10X );
@@ -868,7 +868,7 @@
         cube_11.castShadow = true;
 		cube_11.cameraCords = [-300, 800, -4500];  // [2700, 800, 600];
 		cube_11.cameraLookAt = [-4000, 200, -3300];  // 0 200 800
-		cube_11.cameraTurn = [-100, 200, -1000];
+		cube_11.cameraTurn = [-400, 200, -1000];
 		cube_11.lights = [sp11a, sp11b, sp11c];
 		cube_11.scene = 11;
 		MainScene.add( cube_11 );
@@ -880,7 +880,7 @@
         cube_11X.castShadow = true;
 		cube_11X.cameraCords = [-300, 800, -4500];  // [2700, 800, 600];
 		cube_11X.cameraLookAt = [-4000, 200, -3300];  // 0 200 800
-		cube_11X.cameraTurn = [-100, 200, -1000];
+		cube_11X.cameraTurn = [-400, 200, -1000];
 		cube_11X.lights = [sp11a, sp11b, sp11c];
 		cube_11X.scene = 11;
 		MainScene.add( cube_11X );
@@ -934,7 +934,7 @@
         cube_12.castShadow = true;
 		cube_12.cameraCords = [-8400, 800, -4500];  //-9000 
 		cube_12.cameraLookAt = [-5000, 200, -4300]; 
-		cube_12.cameraTurn = [-100, 200, 600];
+		cube_12.cameraTurn = [-300, 200, 800];
 		cube_12.lights = [sp12a, sp12b, sp12c];
 		cube_12.scene = 12;
 		MainScene.add( cube_12 );
@@ -946,7 +946,7 @@
         cube_12X.castShadow = true;
 		cube_12X.cameraCords = [-8400, 800, -4500];  
 		cube_12X.cameraLookAt = [-5000, 200, -4300];  //-5400
-		cube_12X.cameraTurn = [-100, 200, 600];
+		cube_12X.cameraTurn = [-300, 200, 800];
 		cube_12X.lights = [sp12a, sp12b, sp12c];
 		cube_12X.scene = 12;
 		MainScene.add( cube_12X );
@@ -1182,7 +1182,7 @@
         cube_15.castShadow = true;
 		cube_15.cameraCords = [-5500, 800, -1500];    
 		cube_15.cameraLookAt = [-2000, 200, -2000];
-		cube_15.cameraTurn = [-600, 300, 600];
+		cube_15.cameraTurn = [0, 300, 1000];
 		cube_15.lights = [sp14a, sp14b, sp14c];
 		MainScene.add( cube_15 );
 		//		
@@ -1193,7 +1193,7 @@
         cube_15X.castShadow = true;
 		cube_15X.cameraCords = [-5500, 800, -1500];    
 		cube_15X.cameraLookAt = [-2000, 200, -2000];;
-		cube_15X.cameraTurn = [-600, 300, 600];
+		cube_15X.cameraTurn = [0, 300, 1000];
 		cube_15X.lights = [sp14a, sp14b, sp14c];
 		MainScene.add( cube_15X );
 		//
@@ -1227,7 +1227,7 @@
         cube_21.castShadow = true;
 		cube_21.cameraCords = [-9500, 800, 4200];  
 		cube_21.cameraLookAt = [-7000, 200, 2000];
-		cube_21.cameraTurn = [200, 200, 400];
+		cube_21.cameraTurn = [400, 200, 1000];
 		cube_21.lights = [sp21a, sp21b, sp21c];
 		cube_21.scene = 21;
 		MainScene.add( cube_21 );
@@ -1239,7 +1239,7 @@
         cube_21X.castShadow = true;
 		cube_21X.cameraCords = [-9500, 800, 4200];  
 		cube_21X.cameraLookAt = [-7000, 200, 2000];
-		cube_21X.cameraTurn = [200, 200, 400];
+		cube_21X.cameraTurn = [400, 200, 1000];
 		cube_21X.lights = [sp21a, sp21b, sp21c];
 		cube_21X.scene = 21;
 		MainScene.add( cube_21X );
@@ -1265,7 +1265,7 @@
 		cube_21.cameraTurn = [200, 200, 400];
 		cube_21.lights = [sp21a, sp21b, sp21c];
 		cube_21.scene = 21;
-		MainScene.add( cube_21 );
+		//MainScene.add( cube_21 );
 		//
 		var cube_21X = new THREE.Mesh( geometryX, MaterialX );
 		cube_21X.position.set(-8400, cubeHeight, 1500);    /// (1180,51,800)
@@ -1277,7 +1277,7 @@
 		cube_21X.cameraTurn = [200, 200, 400];
 		cube_21X.lights = [sp21a, sp21b, sp21c];
 		cube_21X.scene = 21;
-		MainScene.add( cube_21X );
+		//MainScene.add( cube_21X );
 		//
 		cube_21X.dual = cube_21;
 		cube_21.dual = cube_21X;
@@ -1286,7 +1286,7 @@
 		cylinder.position.set(-8400, cylinderHeight, 1500);
 		cylinder.cube = cube_21;
 		cylinder.renderOrder = 1;
-		MainScene.add(cylinder);
+		//MainScene.add(cylinder);
 		//
 		var buttonSpriteMaterial = new THREE.SpriteMaterial( { map: buttonSpriteMap } );
 		buttonSpriteMaterial.opacity = 0.9;
@@ -1603,7 +1603,7 @@
 				console.log(intersects[index].object);
 			}
 			
-			if ((intersects[index].object.type == 'Sprite')&&(intersects[index].object.scene))
+			if ((intersects[index].object.type == 'Sprite')&&(intersects[index].object.scene)&&(buttons[intersects[index].object.scene].visible))
 			{
 				readClick(intersects[index].object.scene);
 				setTimeout(function() { sound_click.play();}, 50);
@@ -2502,6 +2502,7 @@
 				moveButton();
 				if ((currentCube.scene) && (currentCube.scene != object.scene))
 						{
+							console.log(currentCube.scene, "OFF");
 							buttons[currentCube.scene].visible = false;
 							buttons[currentCube.scene].opacity = opacity;
 						}
