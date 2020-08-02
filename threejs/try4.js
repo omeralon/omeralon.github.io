@@ -624,7 +624,7 @@
 		cube4.cameraLookAt = [1500, 200, 1800];
 		cube4.cameraTurn = [0, 200, -700];
 		cube4.lights = [sp02a, sp02b, sp02c];
-		MainScene.add( cube4 );
+		//MainScene.add( cube4 );
 		//
 		var cube4X = new THREE.Mesh( geometryX, MaterialXBlackPink );
 		cube4X.renderOrder = 1;
@@ -636,7 +636,7 @@
 		cube4X.cameraLookAt = [1500, 200, 1800];
 		cube4X.cameraTurn = [0, 200, -700];
 		cube4X.lights = [sp02a, sp02b, sp02c];
-		MainScene.add( cube4X );
+		//MainScene.add( cube4X );
 		//
 		cube4X.dual = cube4;
 		cube4.dual = cube4X;
@@ -645,7 +645,7 @@
 		cylinder.position.set(4000, cylinderHeight, -600);
 		cylinder.cube = cube4;
 		cylinder.renderOrder = 1;
-		MainScene.add(cylinder);
+		//MainScene.add(cylinder);
 
 
 		// 03 החיזור
@@ -1358,7 +1358,7 @@
 		sound_click.setVolume(0.02);
 		//
 		sound_opening = new THREE.Audio( listener );
-		audioLoader.load( 'audio/opening.mp4', function( buffer ) {sound_opening.setBuffer( buffer );});
+		audioLoader.load( 'audio/opening.mp3', function( buffer ) {sound_opening.setBuffer( buffer );});
 		//
 		sound_noise = new THREE.Audio( listener );
 		audioLoader.load( 'audio/noise.mp3', function( buffer ) {sound_noise.setBuffer( buffer );});
@@ -1740,7 +1740,8 @@
 				setTimeout(fadeInVol, 50);
 			}
 			var vol2 = default_noise_vol;
-			fadeInVol() 
+			//fadeInVol() 
+			sound_noise.setVolume( 0.2 );
 
 			var vol = 0.15;
 			if (scene == 10)
@@ -3272,7 +3273,6 @@
 	{
 		var scalar=0.7;
 
-
 		var map = new THREE.TextureLoader().load( "img/opening/poster.png" );
 		var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff } );
 		material.fog = true;
@@ -3455,6 +3455,7 @@
 		// start
 		var f_frame = document.getElementById("first_frame");
 		var startX = f_frame.contentWindow.document.getElementById('startX');
+		var instructions_frame = document.getElementById("instructions");
 
 		function waitToStart()
 		{
@@ -3493,18 +3494,48 @@
 					all2.style.height = '0%';
 					all2.style.position = 'relative';
 				
-					startLights();
-					startSound();
+					setTimeout(instructions, 600);
 					return; 
 				}
 				f_frame.style.opacity = (opacity -= 0.01) ;
-				setTimeout(fadeOut, 5);
+				setTimeout(fadeOut, 10);
 				}
 			var opacity = 1;
 			fadeOut();
 			return false;
 		}
 
+
+		function instructions()
+		{
+
+			function fadeIn() {
+				if (opacity >= 1) { 
+					instructions_frame.style.opacity = 1;
+					setTimeout(fadeOut, 8000);
+					return; 
+				}
+				instructions_frame.style.opacity = (opacity += 0.01) ;
+				setTimeout(fadeIn, 10);
+				}
+			var opacity = 0;
+			fadeIn();
+
+
+			function fadeOut() {
+				if (opacity <= 0) { 
+					instructions_frame.style.opacity = 0;
+
+					setTimeout(startLights, 2000);
+					setTimeout(startSound, 2000);
+					return; 
+				}
+				instructions_frame.style.opacity = (opacity -= 0.01) ;
+				setTimeout(fadeOut, 10);
+				}
+			
+
+		}
 
 		function startLights()
 		{
