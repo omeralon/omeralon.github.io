@@ -624,7 +624,7 @@
 		cube4.cameraLookAt = [1500, 200, 1800];
 		cube4.cameraTurn = [0, 200, -700];
 		cube4.lights = [sp02a, sp02b, sp02c];
-		//MainScene.add( cube4 );
+		MainScene.add( cube4 );
 		//
 		var cube4X = new THREE.Mesh( geometryX, MaterialXBlackPink );
 		cube4X.renderOrder = 1;
@@ -636,7 +636,7 @@
 		cube4X.cameraLookAt = [1500, 200, 1800];
 		cube4X.cameraTurn = [0, 200, -700];
 		cube4X.lights = [sp02a, sp02b, sp02c];
-		//MainScene.add( cube4X );
+		MainScene.add( cube4X );
 		//
 		cube4X.dual = cube4;
 		cube4.dual = cube4X;
@@ -645,7 +645,7 @@
 		cylinder.position.set(4000, cylinderHeight, -600);
 		cylinder.cube = cube4;
 		cylinder.renderOrder = 1;
-		//MainScene.add(cylinder);
+		MainScene.add(cylinder);
 
 
 		// 03 החיזור
@@ -2783,7 +2783,7 @@
 			if (opacity >= 1)
 			{
 				MaterialXBlackPink.transparent = false;
-				blackToPink();
+				//blackToPink();
 				return;
 			}
 
