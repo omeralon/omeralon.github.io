@@ -755,8 +755,8 @@
 		cube_09.rotation.y = (5)*Math.PI/180;
 		cube_09.receiveShadow = true;
         cube_09.castShadow = true;
-		cube_09.cameraCords = [-2000, 800, 200];
-		cube_09.cameraLookAt = [-5100, 200, -400];
+		cube_09.cameraCords = [-2000, 800, 700]; //, , 200
+		cube_09.cameraLookAt = [-5100, 200, 100]; // , , -400
 		cube_09.cameraTurn = [100, 200, -800];
 		cube_09.lights = [sp09a, sp09b, sp09c];
 		cube_09.scene = 9;
@@ -767,9 +767,8 @@
 		cube_09X.rotation.y = (95)*Math.PI/180;
 		cube_09X.receiveShadow = true;
         cube_09X.castShadow = true;
-		cube_09X.cameraCords = [-2000, 800, 200];
-		cube_09X.cameraLookAt = [-5100, 200, -400];
-		cube_09X.cameraTurn = [100, 200, -800];
+		cube_09X.cameraCords = [-2000, 800, 700]; //, , 200
+		cube_09X.cameraLookAt = [-5100, 200, 100]; // , , -400
 		cube_09X.lights = [sp09a, sp09b, sp09c];
 		cube_09X.scene = 9;
 		MainScene.add( cube_09X );
@@ -858,8 +857,8 @@
 		cube_09b.receiveShadow = true;
         cube_09b.castShadow = true;
 		cube_09b.cameraCords = [-6500, 800, 3200];
-		cube_09b.cameraLookAt = [-4100, 200, 2200];
-		cube_09b.cameraTurn = [-100, 200, 800];
+		cube_09b.cameraLookAt = [-4100, 200, 2000];
+		cube_09b.cameraTurn = [-200, 200, 1200];
 		cube_09b.lights = [sp10a, sp10b, sp10c];
 		MainScene.add( cube_09b );
 		//		
@@ -869,13 +868,21 @@
 		cube_09bX.receiveShadow = true;
         cube_09bX.castShadow = true;
 		cube_09bX.cameraCords = [-6500, 800, 3200];
-		cube_09bX.cameraLookAt = [-4100, 200, 2200];
-		cube_09bX.cameraTurn = [-100, 200, 800];
+		cube_09bX.cameraLookAt = [-4100, 200, 2000];
+		cube_09bX.cameraTurn = [-200, 200, 1200];
 		cube_09bX.lights = [sp10a, sp10b, sp10c];
 		MainScene.add( cube_09bX );
 		//
 		cube_09bX.dual = cube_09b;
 		cube_09b.dual = cube_09bX;
+		//
+		var cylinder = new THREE.Mesh(geometryCylinder, materialcylinder);
+		cylinder.position.set(-5000, cylinderHeight, 1800);
+		cylinder.cube = cube_09b;
+		cylinder.renderOrder = 1;
+		MainScene.add(cylinder);
+
+
 
 		// 11 צ'מבלולו
 		var position_11 = [-3500,2,-4200]; //-500, 2, -3700
