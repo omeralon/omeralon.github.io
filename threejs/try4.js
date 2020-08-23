@@ -3519,7 +3519,7 @@
 			function fadeIn() {
 				if (opacity >= 1) { 
 					instructions_frame.style.opacity = 1;
-					setTimeout(fadeOut, 8000);
+					setTimeout(fadeOut, 5000);
 					return; 
 				}
 				instructions_frame.style.opacity = (opacity += 0.01) ;
