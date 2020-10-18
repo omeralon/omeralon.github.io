@@ -6,45 +6,36 @@
 			body {
 				background-color: #000000;
 				margin: 0px;
-				user-select: none;
+				
+				/*user-select: none;*/
 			}
+
 
 			#but1
 			{
 				position: relative;
-  				left: 50%;
-			}
-
-			.img
-			{
-				unicode-bidi: bidi-override;
-				user-select: none;
-				opacity: 0.9;
 				width: 40%;
-
-				transition: opacity .09s ease-out;
-				-moz-transition: opacity .09s ease-out;
-				-webkit-transition: opacity .09s ease-out;
-				-o-transition: opacity .09s ease-out;
-
-				transition: width .19s ease-out;
-				-moz-transition: width .19s ease-out;
-				-webkit-transition: width .19s ease-out;
-				-o-transition: width .19s ease-out;
+				left: 50%
 			}
-			.img:hover 
-			{
-				width: 41%;
-				opacity: 1;
-				transition: opacity .09s ease-in-out;
-				-moz-transition: opacity .09s ease-in-out;
-				-webkit-transition: opacity .09s ease-in-out;
-				-o-transition: opacity .09s ease-in-out;
 
-				transition: width .19s ease-in-out;
-				-moz-transition: width .19s ease-in-out;
-				-webkit-transition: width .19s ease-in-out;
-				-o-transition: width .19s ease-in-out;
+			#but2
+			{
+				position: relative;
+				width: 20%;
+				left: 20%
+			}
+			
+
+			.but
+			{
+				opacity: 0.9;
+				transition: all .3s ease-out;
+
+			}
+			.but:hover 
+			{
+				transform: scale(1.1);
+				opacity: 1.1;
 			}
 
 		</style>
@@ -52,12 +43,15 @@
 	<body>
 		<img src="img/open.gif"  width="100%">
 
-		<br><br><br>
+		<br><br><br><br><br><br><br><br><br>
 
-		<img src="img/bath.png"   id="but1" class="img">
+		<img src="img/bath.png" id="but1" class="but">
 
-		my bane
-		mf<br><br>
+		<br>
+
+		<img src="img/RB.png"  id="but2"  class="but">
+
+		<br><br><br><br><br><br><br><br><br>
 	
 
 	</body>
