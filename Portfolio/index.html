@@ -7,18 +7,75 @@
 
 		<title>OMER ALON&emsp;|&emsp;עומר אלון</title>
 		<style>
+
+			@font-face {
+    		font-family: suez;
+    		src: url("fonts/SuezOne-Regular.ttf") format("truetype");
+			}					
 			
 			body {
 				background-color: #000000;
-				color: aliceblue;
+				color: #ffffff;
+				font-family: suez;
+				
 				margin: 0px;
 				
 				/*user-select: none;*/
+				
 			}
 
+			#text_bot
+			{
+				background-color: #00ff00;
+				color: #000000;
+				text-align: center;
+				user-select: text;
+			}
 
+	
+			#full_img
+			{
+				position:relative;
+				top: 0;
+  				left: 0;
+				width: 100%;
+				z-index: 1;
+			}
+
+			#text_tilte
+			{
+				font-size: 6vh;
+			}
+			#text_under
+			{
+				font-size: 3vh;
+			}
+			.full_text
+			{
+				position: absolute;
+				opacity: 0;
+				width: 100%;
+  				left: 0;
+				z-index: 2;
+
+				top:0%;
+				
+				text-align: center;
+				transition: all .7s ease-in;
+								
+				   			
+			}
+
+			.full_text:hover 
+			{	
+				transform: scale(1.05);
+				opacity: 2;
+			}
+			
+					
 			#but1
 			{
+				color: #ffffff;
 				position: relative;
 				width: 55%;
 				left: 37%
@@ -26,13 +83,18 @@
 
 			#but2
 			{
+				color: #ffffff;
 				position: relative;
 				width: 25%;
-				left: 12%
+				left: 12%;
+
+				
 			}
-			
+
 			#but3
 			{
+				color: #ffffff;
+				text-align: center;
 				position: relative;
 				width: 40%;
 				left: 45%
@@ -40,22 +102,63 @@
 
 			#but4
 			{
+				color: #ffffff;
+
 				position: relative;
-				width: 20%;
+				width: 15%;
 				left: 20%
 			}
 
 
 			.but
 			{
-				opacity: 0.9;
+				opacity: 0.8;
 				transition: all .3s ease-out;
 
 			}
 			.but:hover 
 			{
-				transform: scale(1.1);
-				opacity: 1.05;
+				transform: scale(1.05);
+				opacity:1 ;
+			}
+
+
+			.tooltip {
+			position: relative;
+			display: inline-block;
+			}
+
+			.tooltip .tooltiptext {
+			visibility: hidden;
+			width: 140px;
+			background-color: #000;
+			color: #fff;
+			text-align: center;
+			border-radius: 6px;
+			padding: 5px;
+			position: absolute;
+			z-index: 1;
+			bottom: 150%;
+			left: 1	0%;
+			margin-left: -75px;
+			opacity: 0;
+			transition: opacity 0.3s;
+			}
+
+			.tooltip .tooltiptext::after {
+			content: "";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: #000 transparent transparent transparent;
+			}
+
+			.tooltip:hover .tooltiptext {
+			visibility: visible;
+			opacity: 0.85;
 			}
 
 		</style>
@@ -63,27 +166,126 @@
 	<body>
 		<img src="img/open.gif"  width="100%">
 
-		<br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br>
 
-		<img src="img/bath.png" id="but1" class="but">
+		<a href="queen-of-bathtub/index.html">
+		<div id = "but1" class="but">
+			<div class = "full_text">
+				<br><br><br>
+				<div  id="text_tilte">מלכת אמבטיה 2020</div>
+				<div  id="text_under">איטראקטיב, תלת מימד</div>
+				<br><br><br><br>
+			</div>
+			
+			<img src="img/bath.png"  id="full_img"  >
+			
+		</div>
+		</a>
 
 		<br>
 
-		<img src="img/RB.png"  id="but2"  class="but">
+		<a href="redband/index.html">
+		<div id = "but2" class="but">
+			<div class = "full_text">
+				<br><br><br>
+				<div  id="text_tilte">Red Band</div>
+				<div  id="text_under">מיתוג</div>
+				<br><br><br>
+			</div>
+			<img src="img/RB.png"  id="full_img"  >
+		</div>
+		</a>
 
 		<br>
-		
-		<img src="img/duchess.png"  id="but3"  class="but">
 
-		<br>
-		
-		<img src="img/napp.gif"  id="but4"  class="but">
+		<a href="duchess/index.html">
+		<div id = "but3" class="but">
+			<div class = "full_text">
+				<br><br><br><br><br><br><br>
+				<div  id="text_tilte">DUCHESS</div>
+				<div  id="text_under">מיתוג, עיצוב אריזה</div>
+				<br><br><br><br><br><br><br>
+			</div>
+			<img src="img/duchess.png"  id="full_img"  >
+		</div>
+		</a>
 
-		<br><br><br><br><br><br>
+			<br>
+
+		<a href="napp/index.html">
+		<div id = "but4" class="but">
+			<div class = "full_text">
+				<br><br><br><br><br><br>
+				<div  id="text_tilte">napp</div>
+				<div  id="text_under">אפליקציה</div>
+				<br><br><br><br><br><br><br><br>
+			</div>
+			<img src="img/napp2.gif"  id="full_img"  >
+		</div>
+		</a>
+
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		
-		It's Omer!
-		<br><br><br>
+		<div id="text_bot">
+			<br><br><br>
+			<div class="tooltip">
+
+			<span class="tooltiptext" id="myTooltip">Click to copy</span>
+			
+			<div id="mail">omeralon3@gmail.com</div>
+		</div>
+			<br><br><br><br><br>
+		</div>
+		
+		
 	
+		<script>
+
+
+			function scroll() {
+					window.scrollBy(0, 1);
+					i++;
+
+					if (i < 300)
+					{
+						setTimeout(scroll, 10);
+					}
+					
+					}
+			var i = 0;
+			setTimeout(scroll, 15000);
+
+
+			function copyEmail()
+			{
+				var copyText = "omeralon3@gmail.com";
+				navigator.clipboard.writeText(copyText).then(function() {
+					var tooltip = document.getElementById("myTooltip");
+					tooltip.innerHTML = "Copied";
+						/* clipboard successfully set */
+					}, function() {
+
+						/* clipboard write failed */
+					});
+
+					
+			}
+
+
+
+			function outFunc() {
+			var tooltip = document.getElementById("myTooltip");
+			tooltip.innerHTML = "Click to copy";
+			}
+
+
+			var startX = document.getElementById( 'mail' );
+			startX.addEventListener( 'mousedown', copyEmail, false );
+			startX.addEventListener( 'mouseout', outFunc, false );
+
+
+		</script>
+
 
 	</body>
 </html>
