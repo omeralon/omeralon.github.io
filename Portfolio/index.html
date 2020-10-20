@@ -6,6 +6,7 @@
 		<link rel="shortcut icon" href="img/favicon.png">
 
 		<title>OMER ALON&emsp;|&emsp;עומר אלון</title>
+
 		<style>
 
 			@font-face {
@@ -24,6 +25,12 @@
 				
 			}
 
+			a {
+  				color: inherit;
+				text-decoration: none;
+			}
+
+			/* bottom green part */
 			#text_bot
 			{
 				background-color: #00ff00;
@@ -32,7 +39,7 @@
 				user-select: text;
 			}
 
-	
+			/* buttons - inside images and text */
 			#full_img
 			{
 				position:relative;
@@ -72,7 +79,7 @@
 				opacity: 2;
 			}
 			
-					
+			/* buttons - frames and animation */		
 			#but1
 			{
 				color: #ffffff;
@@ -109,7 +116,6 @@
 				left: 20%
 			}
 
-
 			.but
 			{
 				opacity: 0.8;
@@ -122,12 +128,12 @@
 				opacity:1 ;
 			}
 
-
+			/* tooltip = copy text hover */
 			.tooltip {
 			position: relative;
 			display: inline-block;
 			}
-
+			/**/
 			.tooltip .tooltiptext {
 			visibility: hidden;
 			width: 140px;
@@ -144,7 +150,7 @@
 			opacity: 0;
 			transition: opacity 0.3s;
 			}
-
+			/**/
 			.tooltip .tooltiptext::after {
 			content: "";
 			position: absolute;
@@ -155,7 +161,7 @@
 			border-style: solid;
 			border-color: #000 transparent transparent transparent;
 			}
-
+			/**/
 			.tooltip:hover .tooltiptext {
 			visibility: visible;
 			opacity: 0.85;
@@ -163,69 +169,80 @@
 
 		</style>
 	</head>
+
 	<body>
+
+		<!--top green part-->
 		<img src="img/open.gif"  width="100%">
 
 		<br><br><br><br><br><br><br><br><br>
 
-		<a href="queen-of-bathtub/index.html">
+
+		<!--queen of bathtub button-->
 		<div id = "but1" class="but">
-			<div class = "full_text">
-				<br><br><br>
-				<div  id="text_tilte">מלכת אמבטיה 2020</div>
-				<div  id="text_under">איטראקטיב, תלת מימד</div>
-				<br><br><br><br>
-			</div>
-			
-			<img src="img/bath.png"  id="full_img"  >
-			
+			<a href="queen-of-bathtub/">
+				<div class = "full_text">
+					<br><br><br>
+					<div  id="text_tilte">מלכת אמבטיה 2020</div>
+					<div  id="text_under">איטראקטיב, תלת מימד</div>
+					<br><br><br><br>
+				</div>
+				
+				<img src="img/bath.png"  id="full_img"  >
+			</a>
 		</div>
-		</a>
+		
 
 		<br>
 
-		<a href="redband/index.html">
+		<!--red band button-->
 		<div id = "but2" class="but">
-			<div class = "full_text">
-				<br><br><br>
-				<div  id="text_tilte">Red Band</div>
-				<div  id="text_under">מיתוג</div>
-				<br><br><br>
-			</div>
-			<img src="img/RB.png"  id="full_img"  >
+			<a href="redband/">
+				<div class = "full_text">
+					<br><br><br>
+					<div  id="text_tilte">Red Band</div>
+					<div  id="text_under">מיתוג</div>
+					<br><br><br>
+				</div>
+				<img src="img/RB.png"  id="full_img"  >
+			</a>
 		</div>
-		</a>
+		
 
 		<br>
 
-		<a href="duchess/index.html">
+		<!--duchess button-->
 		<div id = "but3" class="but">
-			<div class = "full_text">
-				<br><br><br><br><br><br><br>
-				<div  id="text_tilte">DUCHESS</div>
-				<div  id="text_under">מיתוג, עיצוב אריזה</div>
-				<br><br><br><br><br><br><br>
-			</div>
-			<img src="img/duchess.png"  id="full_img"  >
+			<a href="duchess/">
+				<div class = "full_text">
+					<br><br><br><br><br><br><br>
+					<div  id="text_tilte">DUCHESS</div>
+					<div  id="text_under">מיתוג, עיצוב אריזה</div>
+					<br><br><br><br><br><br><br>
+				</div>
+				<img src="img/duchess.png"  id="full_img"  >
+			</a>
 		</div>
-		</a>
 
 			<br>
 
-		<a href="napp/index.html">
+		<!--napp button-->
 		<div id = "but4" class="but">
-			<div class = "full_text">
-				<br><br><br><br><br><br>
-				<div  id="text_tilte">napp</div>
-				<div  id="text_under">אפליקציה</div>
-				<br><br><br><br><br><br><br><br>
-			</div>
-			<img src="img/napp2.gif"  id="full_img"  >
+			<a href="napp/">
+				<div class = "full_text">
+					<br><br><br><br><br><br>
+					<div  id="text_tilte">napp</div>
+					<div  id="text_under">אפליקציה</div>
+					<br><br><br><br><br><br><br><br>
+				</div>
+				<img src="img/napp2.gif"  id="full_img"  >
+			</a>
 		</div>
-		</a>
+		
 
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		
+		<!--bottom green part-->
 		<div id="text_bot">
 			<br><br><br>
 			<div class="tooltip">
@@ -238,10 +255,10 @@
 		</div>
 		
 		
-	
+		<!--SCRIPT SCRIPT SCRIPT-->
 		<script>
 
-
+			//scroll down after 25 seconds
 			function scroll() {
 					window.scrollBy(0, 1);
 					i++;
@@ -253,9 +270,10 @@
 					
 					}
 			var i = 0;
-			setTimeout(scroll, 15000);
+			setTimeout(scroll, 25000);
 
 
+			// copy email in the botton part
 			function copyEmail()
 			{
 				var copyText = "omeralon3@gmail.com";
@@ -267,18 +285,13 @@
 
 						/* clipboard write failed */
 					});
-
-					
 			}
-
-
-
+			//
 			function outFunc() {
 			var tooltip = document.getElementById("myTooltip");
 			tooltip.innerHTML = "Click to copy";
 			}
-
-
+			//
 			var startX = document.getElementById( 'mail' );
 			startX.addEventListener( 'mousedown', copyEmail, false );
 			startX.addEventListener( 'mouseout', outFunc, false );
