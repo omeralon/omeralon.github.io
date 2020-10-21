@@ -231,7 +231,7 @@
 				<div class = "full_text">
 					<br><br><br><br><br><br>
 					<div  id="text_tilte">napp</div>
-					<div  id="text_under">אפליקציה</div>
+					<div  id="text_under">עיצוב אפליקציה</div>
 					<br><br><br><br><br><br><br><br>
 				</div>
 				<img src="img/napp2.gif"  id="full_img"  >
@@ -259,15 +259,26 @@
 
 			//scroll down after 25 seconds
 			function scroll() {
+				if ((this.scrollY > 0) && first)
+				{
+					console.log(this.scrollY);
+					console.log("not scrolling");
+					return false;
+				}
+
+				else
+				{
+					first = false;
 					window.scrollBy(0, 1);
 					i++;
-
+				
 					if (i < 300)
 					{
 						setTimeout(scroll, 10);
 					}
-					
-					}
+				}
+			}
+			var first = true;
 			var i = 0;
 			setTimeout(scroll, 30000);
 
@@ -294,6 +305,7 @@
 			var startX = document.getElementById( 'mail' );
 			startX.addEventListener( 'mousedown', copyEmail, false );
 			startX.addEventListener( 'mouseout', outFunc, false );
+
 
 
 		</script>
