@@ -1,16 +1,377 @@
 <html>
 	<head>
-		<title>מלכת אמבטיה 2020</title>
+		<meta property="og:title" content="Omer Alon |  עומר אלון">
+		<meta property="og:image" content="../img/prev.png">
+
+		<link rel="shortcut icon" href="../img/favicon.png">
+
+		<title>OMER ALON&emsp;|&emsp;עומר אלון</title>
+		
 		<style>
+
+			@font-face 
+			{
+    		font-family: suez;
+    		src: url("../fonts/SuezOne-Regular.ttf") format("truetype");
+			}		
+
+			@font-face 
+			{
+    		font-family: varela;
+    		src: url("../fonts/VarelaRound-Regular.ttf") format("truetype");
+			}				
+			
+			a
+			{
+				color: inherit;
+				text-decoration: none;
+			}
+
+			body 
+			{
+				background-color: #000000;
+				color: #ffffff;
+				font-family: suez;
+				text-align: center;
+				margin: 0px;
+				
+				user-select: none;
+				
+			}
+
+			/* top green part */
+			#text_top
+			{
+				background-color: #00ff00;
+				color: #000000;
+				text-align:left;
+				user-select: text;
+				font-size: 8px;
+				
+			}
+			/**/
+			#home
+			{
+				font-size: 20px;
+				position:relative;
+				left: 20px;
+				width: 80%;
+			}
+
+			/* title */
+			#title
+			{
+				font-family: varela;
+				font-weight:bold;
+				font-size: 8vw;
+				letter-spacing:0.6vw;
+			}
+
+			#text
+			{
+				user-select: text;
+				font-family: varela;
+				text-transform:uppercase;
+				letter-spacing: 3px;
+				font-weight:bold;
+				
+				line-height: 2.2;
+				width: 60%;
+				margin-left: auto;
+  				margin-right: auto;
+  				font-size: max(1.4vw, 14px);
+			}
+
+
+			#text_run
+			{
+				user-select: text;
+				font-family: varela;
+				text-transform:uppercase;
+				letter-spacing: 3px;
+				font-weight:bold;
+				
+				line-height: 2;
+				width: 80%;
+				margin-left: auto;
+  				margin-right: auto;
+  				font-size: max(2vw, 14px);
+
+				margin-top: 100px;
+				margin-bottom: 75px;
+
+			}
+
+
+			#text_heb
+			{
+
+				letter-spacing: 1px;
+				line-height: 1.4;
+				direction: rtl;
+				width: 60%;
+				margin-left: auto;
+  				margin-right: auto;
+  				font-size: 30px;
+
+			}
+
+			/* bottom green part */
+			#text_bot
+			{
+				background-color: #00ff00;
+				color: #000000;
+				text-align: center;
+				user-select: text;
+				font-size: max(1.1vw,18px);;
+				
+			}
+
+			/* tooltip = copy text hover */
+			.tooltip {
+			position: relative;
+			display: inline-block;
+			}
+			/**/
+			.tooltip .tooltiptext {
+			visibility: hidden;
+			width: 140px;
+			background-color: #000;
+			color: #fff;
+			text-align: center;
+			border-radius: 6px;
+			padding: 5px;
+			position: absolute;
+			z-index: 1;
+			bottom: 150%;
+			left: 1	0%;
+			margin-left: -75px;
+			opacity: 0;
+			transition: opacity 0.3s;
+			}
+			/**/
+			.tooltip .tooltiptext::after {
+			content: "";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: #000 transparent transparent transparent;
+			}
+			/**/
+			.tooltip:hover .tooltiptext {
+			visibility: visible;
+			opacity: 0.85;
+			}
 
 		</style>
 	</head>
 	<body>
-		OMER HI
 
-	
+				<!--top green part-->
+				<div id="text_top">
+					<br>
+					
+					<div id="home">
+						<a href="javascript:history.go(-1)">
+							HOME
+						</a>	
+					</div>
+									
+				
+					<br>
+				</div>
+		
+		
+		<br><br><br><br><br><br><br>
+		
+		<img src="img/logo.gif"  width="10%" style="min-width: 130px;">
+		<br><br><br>	
 
-	
+		<!--
+		<div id="title">DUCHEES PIZZA</div>
+		-->
+		
+		<div id="text">
+			smartwatch & phone applicaion
+			<br>
+			to encourage taking a nap during the day
+			<br><br>
+			the app has an adorable leading bear character
+			<br>
+			and the interface is all based on swipe interactions
+			<br>
+			full mockup designed on figma
+			<br><br><br>
+			joint project with Yuval Gazuli
 
+		</div>
+
+
+		<br><br><br><br><br><br><br><br><br><br>
+
+
+		
+
+		<video width="80%" autoplay loop>
+			<source src="img/video.mp4" type="video/mp4">
+		</video>
+
+		<div id="text_run">
+			the main app lives on your apple watch
+		</div>
+
+		<img src="img/screens/clock-open.gif"  width="40%">
+
+
+		<div id="text_run">
+			the app will remind you to take a nap and will 
+			<br>
+			measure and summarize you nap
+			<br>
+			you will be able to share it with friends around you
+		</div>
+
+		<div style="position: inline block;">
+			<img src="img/screens/clock-reminder.gif"  width="21%"  style="vertical-align: middle;">
+			&emsp;&emsp;&emsp;&emsp;
+			<img src="img/screens/clock-sum.gif"  width="16%"  style="vertical-align: middle;">
+			&emsp;&emsp;&emsp;&emsp;
+			<img src="img/screens/clock-share.gif"  width="20%"  style="vertical-align: middle;">
+		</div>
+
+
+		<div id="text_run">
+			phone app continues the experience
+		</div>
+
+		<img src="img/screens/first.gif"  width="30%">
+
+		<div id="text_run">
+			see your latest naps
+		</div>
+
+		<div style="position: inline block;">
+			<img src="img/screens/history2.gif"  width="25%"  style="vertical-align: middle;">
+			<img src="img/screens/history1.gif"  width="30%"  style="vertical-align: middle;">
+			<img src="img/screens/history3.gif"  width="25%"  style="vertical-align: middle;">
+		</div>
+
+		<div id="text_run">
+			add friends to see who's the best napper
+		</div>
+
+		<div style="position: inline block;">
+			<img src="img/screens/friends2.gif"  width="25%"  style="vertical-align: middle;">
+			<img src="img/screens/friends1.gif"  width="30%"  style="vertical-align: middle;">
+			<img src="img/screens/friends3.gif"  width="25%"  style="vertical-align: middle;">
+		</div>
+
+		<div id="text_run">
+			watch your nap data & statistics
+		</div>
+
+		<div style="position: inline block;">
+			<img src="img/screens/stats2.gif"  width="25%"  style="vertical-align: middle;">
+			<img src="img/screens/stats1.gif"  width="30%"  style="vertical-align: middle;">
+			<img src="img/screens/stats3.gif"  width="25%"  style="vertical-align: middle;">
+		</div>
+
+		<div id="text_run">
+			share your nap through social media
+		</div>
+
+		<div style="position: inline block;">
+			<img src="img/screens/story2.gif"  width="25%"  style="vertical-align: middle;">
+			<img src="img/screens/story1.gif"  width="30%"  style="vertical-align: middle;">
+			<img src="img/screens/story3.gif"  width="25%"  style="vertical-align: middle;">
+		</div>
+
+		<br><br><br><br><br><br><br>
+
+
+		<img src="img/gifs/sleep.GIF"  width="30%" style="margin-left: 50%;">
+
+	<!--
+	<div style="text-align: right; margin-right: 5%; font-family: helvi; font-size: max(1.2vw,10px);">
+		
+		studio photos by: Daniel Hanoch
+		
+	</div>
+	-->
+				
+		<!--bottom green part-->
+		<div id="text_bot">
+
+			<br>
+
+			<div style="font-size: max(1.1vw,10px);">
+				joint project with: Yuval Gazuli
+				<br><br>
+				instructor: Ronel Mor
+
+				
+
+			</div>
+
+			<br><br><br><br><br><br>
+			<br><br><br>
+			<div class="tooltip">
+				<span class="tooltiptext" id="myTooltip">Click to copy</span>
+			<div id="mail">omeralon3@gmail.com</div>
+
+			
+		</div>
+			<br><br><br><br><br><br><br>
+			
+		</div>
+		
+		<div style="letter-spacing: 1px;">
+			<br><br>
+			<a href="javascript:gototop()">
+				BACK TO TOP
+			</a>
+			<br><br>
+		</div>
+		
+		<!--SCRIPT SCRIPT SCRIPT-->
+		<script>
+
+			// copy email in the botton part
+			function copyEmail()
+			{
+				var copyText = "omeralon3@gmail.com";
+				navigator.clipboard.writeText(copyText).then(function() {
+					var tooltip = document.getElementById("myTooltip");
+					tooltip.innerHTML = "Copied";
+						/* clipboard successfully set */
+					}, function() {
+
+						/* clipboard write failed */
+					});
+			}
+			//
+			function outFunc() {
+			var tooltip = document.getElementById("myTooltip");
+			tooltip.innerHTML = "Click to copy";
+			}
+			//
+			var startX = document.getElementById( 'mail' );
+			startX.addEventListener( 'mousedown', copyEmail, false );
+			startX.addEventListener( 'mouseout', outFunc, false );
+
+			function gototop()
+			{
+				window.scroll({
+					top: 0,
+					left: 0,
+					behavior: 'smooth'
+					});
+				
+
+			}
+		</script>
 	</body>
 </html>
