@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<link rel="shortcut icon" href="img/favicon.ico">
 		<title>מלכת אמבטיה 2020</title>
 		<style>
 			/* width */
@@ -326,11 +327,200 @@
 		</style>
 	</head>
 	<body>
-		OMER HI
+		<!--
+			<canvas id="canvas" width="10" height="100"></canvas>
+		-->
+
+
+		<video id="video11" loop="anonymous" playsinline style="display:none" width="512" height="512">
+			<source src="video/11_chamb.m4v" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+		</video>
+
+		<video id="video14" loop="anonymous" playsinline style="display:none" width="2048" height="2048">
+			<source src="video/14_moments.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+		</video>
+
+
+		<video id="white" loop="anonymous" playsinline style="display:none" width="64" height="64">
+			<source src="video/white.m4v" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+		</video>
+
+
+
+		<div id="all" >	
+			<iframe id="cr_text" src="text/copyright.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+		</div>
+
+		<div id="all" >	
+			<img src="img/intsruct.png" class="no" height="50%" id="instructions">
+		</div>
+
+		<div id="all" >
+
+		
+			<iframe id="text_02" src="text/text_02.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+
+
+			<iframe id="text_02" src="text/text_02.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+			
+			<iframe id="text_06" src="text/text_06.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+			
+			<iframe id="text_09" src="text/text_09.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+			
+			<iframe id="text_10" src="text/text_10.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+
+						
+			<iframe id="text_11" src="text/text_11.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+
+						
+			<iframe id="text_12" src="text/text_12.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+
+						
+			<iframe id="text_13" src="text/text_13.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+			
+									
+			<iframe id="text_14" src="text/text_14.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+			
+									
+			<iframe id="text_21" src="text/text_21.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+			
+
+		</div>
 
 	
 
-	
+		<div id="permanent" class="permanent" >
 
+			<img src="img/startover.png" class="img" width="40" height="40" id="startover">
+			&nbsp;
+<!--
+			<img src="img/info2-01.png" class="img" width="36" height="36">
+			&nbsp;
+		<img src="img/i-01.png" class="img" width="40" height="40" id="copyright">
+			&nbsp;
+-->	
+			<img src="img/copyright.png" class="img" width="40" height="40" id="copyright">
+			 
+		</div>
+
+
+		<div id="all2" >	
+			<iframe id="first_frame" src="text/first_frame.html" width="10%" height="300" style="border:0px solid gold;" >
+			</iframe>
+		</div>
+
+		<div id= "x_cr_frame">
+			<img src="img/x.png" class="img" width="36" height="36" id="x_cr_img">
+		</div>
+
+		<div id= "x_text_frame">
+			<img src="img/x.png" class="img" width="36" height="36" id="x_text_img">
+		</div>
+
+		
+		<!--<script src="js/lodash.js"></script>-->
+        <script src="js/three.js"></script>
+		<script src="js/tween.umd.js"></script>
+
+        <script  type="module" src="threejs/try4.js"></script>
+        
+
+		<script>
+				var permanent = document.getElementById( 'permanent' );
+				permanent.pp = false;
+
+				// START OVER
+				function reload_fanc(p){
+					//location.reload();
+					reload.clicked = true;
+					return false;
+				}
+				var reload = document.getElementById( 'startover' );
+				reload.addEventListener( 'mousedown', reload_fanc, false );
+
+				// COPYRIGHTS
+				function cr_fanc(p){
+					permanent.pp = true;
+					var cr = document.getElementById( 'cr_text' );
+					var x_cr = document.getElementById( 'x_cr_frame' );
+					function fadeIn() {
+						if (opacity >= 1) { 
+							cr.style.opacity = 1;
+							x_cr.style.opacity = 1;
+							return; }
+						opacity += 0.05
+						cr.style.opacity = opacity ;
+						x_cr.style.opacity = opacity ;
+						setTimeout(fadeIn, 10);
+						}
+					var opacity = 0;
+					if (cr.style.opacity == 0) {fadeIn();}
+					return false;
+				}
+				var copyright = document.getElementById( 'copyright' );
+				copyright.addEventListener( 'mousedown', cr_fanc, false );
+
+
+				// X_COPYRIGHTS
+				function x_cr_fanc(p){
+					
+					var cr = document.getElementById( 'cr_text' );
+					var x_cr = document.getElementById( 'x_cr_frame' );
+					function fadeOut() {
+						if (opacity <= 0) { 
+							cr.style.opacity = 0;
+							x_cr.style.opacity = 0;
+							permanent.pp = false;
+							return; }
+						opacity -= 0.05
+						cr.style.opacity = opacity;
+						x_cr.style.opacity = opacity;
+						setTimeout(fadeOut, 10);
+						}
+					var opacity = 1;
+					if (cr.style.opacity == 1) {fadeOut();}
+					return false;
+				}
+				var x_copyright = document.getElementById( 'x_cr_img' );
+				x_copyright.addEventListener( 'mousedown', x_cr_fanc, false );
+
+
+
+
+
+
+
+
+
+
+				// X_TEXT
+				function x_text_fanc(p)
+				{
+					var x_text_frame = document.getElementById( 'x_text_frame' );
+					x_text_frame.clicked = true;
+					x_text_frame.style.opacity = 0;
+				}
+
+				var x_text = document.getElementById( 'x_text_img' );
+				x_text.addEventListener( 'mousedown', x_text_fanc, false );
+
+
+
+
+
+
+
+		</script>
 	</body>
 </html>

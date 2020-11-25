@@ -1,526 +1,165 @@
 <html>
 	<head>
-		<link rel="shortcut icon" href="img/favicon.ico">
-		<title>מלכת אמבטיה 2020</title>
+		<meta property="og:title" content="Omer Alon |  עומר אלון">
+		<meta property="og:image" content="img/prev.png">
+
+		<link rel="shortcut icon" href="img/favicon.png">
+
+		<title>OMER ALON&emsp;|&emsp;עומר אלון</title>
+
+
 		<style>
-			/* width */
 
-			::-webkit-scrollbar {
-			width: 0px;
-			height: 0px;
-}
+
+        @font-face {
+            font-family: suez;
+            src: url("../Portfolio/fonts/SuezOne-Regular.ttf") format("truetype");
+            }	
+				
 			
-			@font-face {
-    		font-family: FrankG;
-    		src: url("fonts/FrankG_Regular.otf") format("opentype");
-			}					
-
-			#all
-			{
-				user-select: none;
-				width: 100%;
-				height:100%;
-				position: absolute;
-				opacity: 1;
+			body {
+				background-color: #FF00FF;
+				color: #ffffff;
+				font-family: suez;
+				
+				margin: 0px;
+				
+				/*user-select: none;*/
+				
 			}
 
-			#all2
-			{
-				user-select: none;
-				width: 100%;
-				height:100%;
-				position: absolute;
-				opacity: 1;
+			a {
+  				color: inherit;
+				text-decoration: none;
 			}
 
-			.permanent
+			/* bottom green part */
+			#left
 			{
+                position: absolute;;
+				background-color: #000000;
+				color: #ff9c00;
+				text-align: center;
 				user-select: none;
-				right: 15px;
-				bottom: 15px;
+                width: 50%;
+                height: 100%;
+
+                font-size: 30px;
+
+			}
+
+			#right
+			{
+                position:absolute;
+                right: 0%;
+				background-color: #00ff00;
+				color: #000000;
+				text-align: center;
+				user-select: none;
+                width: 50%;
+                height: 100%;
+                font-size: 30px;
+
+            }
+            
+            #inner
+            {   
+                
+                margin-top: 35%;
+                width: 40%;
+                margin-left: 30%;
+            }
+
+
+			/* buttons - inside images and text */
+			#full_img
+			{
+				position:relative;
+				top: 0;
+  				left: 0;
+				width: 100%;
+				z-index: 1;
+			}
+
+			#text_tilte
+			{
+				font-size: 6vh;
+			}
+			#text_under
+			{
+				font-size: 3vh;
+			}
+			.full_text
+			{
 				position: absolute;
-				display:  none;
+				opacity: 0;
+				width: 100%;
+  				left: 0;
+				z-index: 2;
+
+				top:0%;
+				
+				text-align: center;
+				transition: all .7s ease-in;
+								
+				   			
+			}
+
+			.full_text:hover 
+			{	
+				transform: scale(1.05);
+				opacity: 2;
 			}
 			
-			#first_frame
-				{	
-				color:black;
-				position: absolute;
-				left: 0%;
-				right: 0%;
-				bottom: 0%;
-				top: 0%;
-
-				width: 100%; /*1400*/
-				height: 100%;
-
-				unicode-bidi: bidi-override;
-
-				display: block;
-				opacity: 1;
-
-				background-color: black; 
-				}
-
-			#cr_text
-				{	
-				color:black;
-				position: relative;
-				left: -2%;
-				right: 18%;
-				bottom: 10%;
-				top: 20%;
-
-				width: 82%; /*1400*/
-				height: 60%;
-				padding: 10px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: block;
-				opacity: 0;
-				}
+			/* buttons - frames and animation */		
 
 
-				#instructions
-				{	
-				color:black;
-				position: relative;
-				top: 25%;
-
-				margin: auto;
-				unicode-bidi: bidi-override;
-
-				display: block;
-				opacity: 0;
-				}
-
-			#x_cr_img
-			{	
-				display: block;
-				
-			}
-
-			#x_cr_frame
+			.but
 			{
-				user-select: none;
-				right: 22%;
-				top: 15%;
-				position: absolute;
-				opacity: 0;
-			}
+                transition: all .9s ease-out; 
 
-			#x_text_img
-			{	
-				display: block;
-			}
 
-			#x_text_frame
+			}
+			.but:hover 
 			{
-				user-select: none;
-				right: 5%;
-				top: 5%;
-				position: absolute;
-				opacity: 0;
+				transform: scale(1.05);
+                transition: all .9s ease-out;
+
+
 			}
 
-			.img
-			{
-				unicode-bidi: bidi-override;
-				user-select: none;
-				opacity: 0.8;
-
-				transition: opacity .09s ease-out;
-				-moz-transition: opacity .09s ease-out;
-				-webkit-transition: opacity .09s ease-out;
-				-o-transition: opacity .09s ease-out;
-			}
-			.img:hover 
-			{
-				opacity: 1;
-				transition: opacity .09s ease-in-out;
-				-moz-transition: opacity .09s ease-in-out;
-				-webkit-transition: opacity .09s ease-in-out;
-				-o-transition: opacity .09s ease-in-out;
-			}
-
-
-				#text_02
-				{	
-				position: relative;
-				left: 32%;
-				right: 0%;
-				bottom: 10%;
-				top: 5%;
-
-				width: 20%; 
-				height: 90%;
-				padding: 10px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: none;
-				opacity: 0;
-				}
-
-				#text_06
-				{	
-				position: relative;
-				right: 10%;
-				left: -28%;
-				bottom: 10%;
-				top: 58%;
-
-				width: 20%; 
-				height: 28%;
-				padding: 10px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-				user-select: none;
-				display: none;
-				opacity: 0;
-				}
-
-
-				#text_09 
-				{	
-				position: relative;
-				left: 0%;
-				right: 0%;
-				bottom: 10%;
-				top: 5%;
-
-				width: 70%; 
-				height: 45%;
-				padding: 10px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: none;
-				opacity: 0;
-				}
-
-				#text_10
-				{	
-				position: relative;
-				left: -5%;
-				right: 0%;
-				bottom: 10%;
-				top: 15%; /*25*/
-				
-
-				width: 45%; 
-				height: 70%; /*50*/
-				padding: 10px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: none;
-				opacity: 0;
-				}
-
-				#text_11
-				{	
-				position: relative;
-				left: -25%;
-				right: 0%;
-				bottom: 0%;
-				top: 0%;
-
-				width: 35%; 
-				height: 100%;
-				padding: 0px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: none;
-				opacity: 0;
-				}
-
-				#text_12 
-				{	
-				position: relative;
-				left: 30%;
-				right: 0%;
-				top: 10%;
-				bottom: 0%;
-
-				width: 30%; 
-				height: 60%;
-				padding: 10px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: none;
-				opacity: 0;
-				
-				/*background-color: powderblue;*/
-				}
-
-				#text_13 
-				{	
-				position: relative;
-				left: 0%;
-				right: 0%;
-				bottom: 0%;
-				top: 55%;
-
-				width: 35%; 
-				height: 45%;
-				padding: 0px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: none;
-				opacity: 0;
-				}
-
-				#text_14
-				{	
-				position: relative;
-				left: 25%;
-				bottom: 10%;
-				top: 5%;
-
-				width: 32%; 
-				height: 70%;
-				padding: 10px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: none;
-				opacity: 0;
-				}
-
-				#text_21 
-				{	
-				color:black;
-				position: relative;
-				left: -2%;
-				right: 18%;
-				bottom: 10%;
-				top: 2%;
-
-				width: 82%; /*1400*/
-				height: 90%;
-				padding: 10px;
-				margin: auto;
-
-				unicode-bidi: bidi-override;
-
-				display: none;
-				opacity: 0;
-				}
-
-
-			body { margin: 0; }
-			canvas { display: block; }
 		</style>
 	</head>
+
 	<body>
-		<!--
-			<canvas id="canvas" width="10" height="100"></canvas>
-		-->
 
-
-		<video id="video11" loop="anonymous" playsinline style="display:none" width="512" height="512">
-			<source src="video/11_chamb.m4v" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-		</video>
-
-		<video id="video14" loop="anonymous" playsinline style="display:none" width="2048" height="2048">
-			<source src="video/14_moments.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-		</video>
-
-
-		<video id="white" loop="anonymous" playsinline style="display:none" width="64" height="64">
-			<source src="video/white.m4v" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-		</video>
-
-
-
-		<div id="all" >	
-			<iframe id="cr_text" src="text/copyright.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-		</div>
-
-		<div id="all" >	
-			<img src="img/intsruct.png" class="no" height="50%" id="instructions">
-		</div>
-
-		<div id="all" >
-
-		
-			<iframe id="text_02" src="text/text_02.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-
-
-			<iframe id="text_02" src="text/text_02.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-			
-			<iframe id="text_06" src="text/text_06.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-			
-			<iframe id="text_09" src="text/text_09.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-			
-			<iframe id="text_10" src="text/text_10.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-
-						
-			<iframe id="text_11" src="text/text_11.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-
-						
-			<iframe id="text_12" src="text/text_12.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-
-						
-			<iframe id="text_13" src="text/text_13.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-			
-									
-			<iframe id="text_14" src="text/text_14.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-			
-									
-			<iframe id="text_21" src="text/text_21.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-			
-
-		</div>
-
-	
-
-		<div id="permanent" class="permanent" >
-
-			<img src="img/startover.png" class="img" width="40" height="40" id="startover">
-			&nbsp;
-<!--
-			<img src="img/info2-01.png" class="img" width="36" height="36">
-			&nbsp;
-		<img src="img/i-01.png" class="img" width="40" height="40" id="copyright">
-			&nbsp;
--->	
-			<img src="img/copyright.png" class="img" width="40" height="40" id="copyright">
-			 
-		</div>
-
-
-		<div id="all2" >	
-			<iframe id="first_frame" src="text/first_frame.html" width="10%" height="300" style="border:0px solid gold;" >
-			</iframe>
-		</div>
-
-		<div id= "x_cr_frame">
-			<img src="img/x.png" class="img" width="36" height="36" id="x_cr_img">
-		</div>
-
-		<div id= "x_text_frame">
-			<img src="img/x.png" class="img" width="36" height="36" id="x_text_img">
-		</div>
-
-		
-		<!--<script src="js/lodash.js"></script>-->
-        <script src="js/three.js"></script>
-		<script src="js/tween.umd.js"></script>
-
-        <script  type="module" src="threejs/try4.js"></script>
+		<!--מלכת אמבטיה-->
+		<div id="left" >
+            <div id="inner" class="but">
+                        <a href="bath/">
+                            <img src="img/BATH.png"  id="full_img"  >
+                        </a>
+            </div>
+        </div>
         
-
+		<!--פורטפוליו-->    
+        <div id="right" >
+            <div id="inner" class="but">
+				<a href="Portfolio/">
+				   <img src="img/PORTFOLIO.png" id="full_img" >
+				</a>
+            </div>
+		</div>
+		
+		
+		<!--SCRIPT SCRIPT SCRIPT-->
 		<script>
-				var permanent = document.getElementById( 'permanent' );
-				permanent.pp = false;
-
-				// START OVER
-				function reload_fanc(p){
-					//location.reload();
-					reload.clicked = true;
-					return false;
-				}
-				var reload = document.getElementById( 'startover' );
-				reload.addEventListener( 'mousedown', reload_fanc, false );
-
-				// COPYRIGHTS
-				function cr_fanc(p){
-					permanent.pp = true;
-					var cr = document.getElementById( 'cr_text' );
-					var x_cr = document.getElementById( 'x_cr_frame' );
-					function fadeIn() {
-						if (opacity >= 1) { 
-							cr.style.opacity = 1;
-							x_cr.style.opacity = 1;
-							return; }
-						opacity += 0.05
-						cr.style.opacity = opacity ;
-						x_cr.style.opacity = opacity ;
-						setTimeout(fadeIn, 10);
-						}
-					var opacity = 0;
-					if (cr.style.opacity == 0) {fadeIn();}
-					return false;
-				}
-				var copyright = document.getElementById( 'copyright' );
-				copyright.addEventListener( 'mousedown', cr_fanc, false );
-
-
-				// X_COPYRIGHTS
-				function x_cr_fanc(p){
-					
-					var cr = document.getElementById( 'cr_text' );
-					var x_cr = document.getElementById( 'x_cr_frame' );
-					function fadeOut() {
-						if (opacity <= 0) { 
-							cr.style.opacity = 0;
-							x_cr.style.opacity = 0;
-							permanent.pp = false;
-							return; }
-						opacity -= 0.05
-						cr.style.opacity = opacity;
-						x_cr.style.opacity = opacity;
-						setTimeout(fadeOut, 10);
-						}
-					var opacity = 1;
-					if (cr.style.opacity == 1) {fadeOut();}
-					return false;
-				}
-				var x_copyright = document.getElementById( 'x_cr_img' );
-				x_copyright.addEventListener( 'mousedown', x_cr_fanc, false );
-
-
-
-
-
-
-
-
-
-
-				// X_TEXT
-				function x_text_fanc(p)
-				{
-					var x_text_frame = document.getElementById( 'x_text_frame' );
-					x_text_frame.clicked = true;
-					x_text_frame.style.opacity = 0;
-				}
-
-				var x_text = document.getElementById( 'x_text_img' );
-				x_text.addEventListener( 'mousedown', x_text_fanc, false );
-
-
-
 
 
 
 
 		</script>
+
+
 	</body>
 </html>
