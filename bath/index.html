@@ -79,7 +79,12 @@
 				unicode-bidi: bidi-override;
 
 				display: block;
+
+
 				opacity: 0;
+
+				/*opacity: 100;
+				z-index: -1;*/
 				}
 
 
@@ -345,12 +350,13 @@
 			<source src="video/white.m4v" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 		</video>
 
-
-
 		<div id="all" >	
 			<iframe id="cr_text" src="text/copyright.html" width="10%" height="300" style="border:0px solid gold;" >
 			</iframe>
 		</div>
+
+
+
 
 		<div id="all" >	
 			<img src="img/intsruct.png" class="no" height="50%" id="instructions">
@@ -428,6 +434,8 @@
 			<img src="img/x.png" class="img" width="36" height="36" id="x_text_img">
 		</div>
 
+
+
 		
 		<!--<script src="js/lodash.js"></script>-->
         <script src="js/three.js"></script>
@@ -456,6 +464,7 @@
 					var x_cr = document.getElementById( 'x_cr_frame' );
 					function fadeIn() {
 						if (opacity >= 1) { 
+							cr.style.zIndex = 1;
 							cr.style.opacity = 1;
 							x_cr.style.opacity = 1;
 							return; }
@@ -479,7 +488,9 @@
 					var x_cr = document.getElementById( 'x_cr_frame' );
 					function fadeOut() {
 						if (opacity <= 0) { 
+							cr.style.zIndex = 'auto';
 							cr.style.opacity = 0;
+							
 							x_cr.style.opacity = 0;
 							permanent.pp = false;
 							return; }
