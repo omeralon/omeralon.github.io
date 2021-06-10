@@ -1,0 +1,126 @@
+<html>
+	<head>
+
+
+		<link rel="shortcut icon" href="img/favicon.png">
+
+		<title>SecuroT</title>
+		
+
+		<style>
+			body
+			{
+				margin: 0;
+			}
+			div.sticky {
+				position: fixed;
+  				top: 0;
+			}
+			.stickyCube {
+				position: fixed;
+				z-index: -1;
+			}
+
+		
+		</style>
+	</head>
+	<body>
+		<div class="sticky" >
+			<img src="img/header.png"  width="100%">
+		</div>
+
+		<div>
+			<img class="stickyCube" id="CUBE" src="img/cube.png"  width="100%" style="top:-100">
+			<img src="img/long.png"  width="100%">
+
+			
+		</div>
+
+
+
+
+
+
+
+		<script>
+
+			var first = true;
+			var scroll = 0;
+
+			var cube = document.getElementById("CUBE");
+			cube.style.top = 0;
+			function sY() {
+				console.log(this.scrollY);
+				console.log(window.innerWidth);
+				console.log(this.scrollY/window.innerWidth);
+				if (this.scrollY/window.innerWidth < 0.13)
+				{
+					cube.style.top = 0;
+					first = true;
+				}
+				else
+				{
+					if (first)
+						{
+							first = false;
+							scroll = this.scrollY;
+						}
+					else
+					{
+						cube.style.top =  scroll - this.scrollY;
+					}
+				}
+				console.log("top",cube.style.top);
+
+				setTimeout(sY, 10);
+			}
+			sY();
+
+
+		</script>
+<!--
+
+
+			//scroll down after 25 seconds
+			function scroll() {
+				if ((this.scrollY > 0) && first)
+				{
+					console.log(this.scrollY);
+					console.log("not scrolling");
+					return false;
+				}
+
+				else
+				{
+					first = false;
+					window.scrollBy(0, 1);
+					i++;
+				
+					if (i < 300)
+					{
+						setTimeout(scroll, 10);
+					}
+				}
+			}
+			var first = true;
+			var i = 0;
+			setTimeout(scroll, 200000);
+
+
+
+			//
+			
+			function outFunc() {
+			var tooltip = document.getElementById("myTooltip");
+			tooltip.innerHTML = "Click to copy";
+			}
+			//
+			var startX = document.getElementById( 'mail' );
+			startX.addEventListener( 'mousedown', copyEmail, false );
+			startX.addEventListener( 'mouseout', outFunc, false );
+		-->
+
+
+		
+	</body>
+</html>
