@@ -1,12 +1,8 @@
 <html>
 	<head>
-
-
 		<link rel="shortcut icon" href="img/favicon.png">
-
-		<title>SecuroT</title>
+		<title>SecureoT</title>
 		
-
 		<style>
 			body
 			{
@@ -19,6 +15,7 @@
 			.stickyCube {
 				position: fixed;
 				z-index: -1;
+				top: 0;
 			}
 
 		
@@ -30,16 +27,9 @@
 		</div>
 
 		<div>
-			<img class="stickyCube" id="CUBE" src="img/cube.png"  width="100%" style="top:-100">
+			<img class="stickyCube" id="CUBE" src="img/cube.png"  width="100%">
 			<img src="img/long2.png"  width="100%">
-
-			
 		</div>
-
-
-
-
-
 
 
 		<script>
@@ -81,51 +71,7 @@
 			}
 			sY();
 
-
 		</script>
-<!--
 
-
-			//scroll down after 25 seconds
-			function scroll() {
-				if ((this.scrollY > 0) && first)
-				{
-					console.log(this.scrollY);
-					console.log("not scrolling");
-					return false;
-				}
-
-				else
-				{
-					first = false;
-					window.scrollBy(0, 1);
-					i++;
-				
-					if (i < 300)
-					{
-						setTimeout(scroll, 10);
-					}
-				}
-			}
-			var first = true;
-			var i = 0;
-			setTimeout(scroll, 200000);
-
-
-
-			//
-			
-			function outFunc() {
-			var tooltip = document.getElementById("myTooltip");
-			tooltip.innerHTML = "Click to copy";
-			}
-			//
-			var startX = document.getElementById( 'mail' );
-			startX.addEventListener( 'mousedown', copyEmail, false );
-			startX.addEventListener( 'mouseout', outFunc, false );
-		-->
-
-
-		
 	</body>
 </html>
