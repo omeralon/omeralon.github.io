@@ -31,7 +31,7 @@
 
 		<div>
 			<img class="stickyCube" id="CUBE" src="img/cube.png"  width="100%" style="top:-100">
-			<img src="img/long.png"  width="100%">
+			<img src="img/long2.png"  width="100%">
 
 			
 		</div>
@@ -50,13 +50,17 @@
 			var cube = document.getElementById("CUBE");
 			cube.style.top = 0;
 			function sY() {
-				console.log(this.scrollY);
-				console.log(window.innerWidth);
-				console.log(this.scrollY/window.innerWidth);
+				//console.log(this.scrollY);
+				//console.log(window.innerWidth);
+				//console.log(this.scrollY/window.innerWidth);
 				if (this.scrollY/window.innerWidth < 0.13)
 				{
-					cube.style.top = 0;
-					first = true;
+					if (!first)
+					{
+						cube.style.top = 0;
+						first = true;
+					}
+					
 				}
 				else
 				{
@@ -70,9 +74,10 @@
 						cube.style.top =  scroll - this.scrollY;
 					}
 				}
-				console.log("top",cube.style.top);
+				//console.log("top",cube.style.top);
 
-				setTimeout(sY, 10);
+				setTimeout(sY, 15);
+				return false;
 			}
 			sY();
 
