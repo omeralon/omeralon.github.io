@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About — Omer Alon">
+	<main>
+		<a class="home" href="/">← Home</a>
+
+		<h1>About</h1>
+
+		<p>
+			{/* TODO: replace with real bio text */}
+			Omer Alon is a designer working across branding, illustration, and interactive
+			3D — based in Israel, graduate of the Bezalel Academy of Art and Design in Jerusalem.
+		</p>
+
+		<div class="links">
+			<a href="/CV.pdf" target="_blank">CV →</a>
+			<a href="mailto:omeralon3@gmail.com">omeralon3@gmail.com</a>
+		</div>
+
+		<a class="home back" href="/">← Home</a>
+	</main>
+</Layout>
+
+<style>
+	main {
+		max-width: 40rem;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 5rem;
+	}
+
+	.home {
+		display: inline-block;
+		font-weight: 200;
+		text-decoration: none;
+		color: var(--ink);
+		margin: 1rem 0;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		font-weight: 200;
+		margin: 2rem 0 1.5rem;
+	}
+
+	p {
+		font-size: 1.15rem;
+		line-height: 1.6;
+		margin: 0 0 2.5rem;
+	}
+
+	.links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		font-size: 1.15rem;
+	}
+
+	.links a {
+		color: var(--ink);
+		font-weight: 200;
+	}
+
+	.back {
+		margin-top: 4rem;
+	}
+</style>

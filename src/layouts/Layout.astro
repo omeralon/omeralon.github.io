@@ -1,0 +1,56 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+		<script>
+			import '../scripts/squircle.js';
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	@font-face {
+		font-family: 'Inter';
+		src: url('/fonts/Inter-ExtraLight-slnt=0.ttf') format('truetype');
+		font-weight: 200;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	:root {
+		--bg: #e2fbe9;
+		--ink: #111111;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		margin: 0;
+		background: var(--bg);
+		color: var(--ink);
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 200;
+	}
+
+	/* iOS-style continuous corner. Usage: add class="squircle" plus
+	   data-squircle-radius="40" (px, no unit) and border-radius as a fallback
+	   matching the same value. /squircle.js applies a precise clip-path on
+	   load/resize; if JS fails for any reason the plain border-radius stands
+	   in — still rounded, just a circular arc instead of a superellipse. */
+</style>

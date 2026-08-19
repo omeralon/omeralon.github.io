@@ -1,0 +1,33 @@
+---
+interface Props {
+	items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="row">
+	{items.map((src) => <img class="squircle" data-squircle-radius="16" src={src} alt="" loading="lazy" />)}
+</div>
+
+<style>
+	.row {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		flex-wrap: wrap;
+		width: 100%;
+		margin: 1.75rem 0;
+	}
+	.row img {
+		width: 25%;
+		min-width: 140px;
+		border-radius: 1rem;
+	}
+
+	@media (max-width: 640px) {
+		.row img {
+			width: 40%;
+		}
+	}
+</style>

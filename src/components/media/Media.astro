@@ -1,0 +1,78 @@
+---
+interface Props {
+	src: string;
+	alt?: string;
+	size?: 'full' | 'wide' | 'medium' | 'small';
+	controls?: boolean;
+	rounded?: boolean;
+}
+
+const { src, alt = '', size = 'full', controls = false, rounded = true } = Astro.props;
+const isVideo = /\.(mp4|webm)$/i.test(src);
+const classList = ['media', { squircle: rounded }];
+const radius = rounded ? 20 : undefined;
+---
+
+{
+	isVideo ? (
+		<video
+			class:list={classList}
+			data-size={size}
+			data-squircle-radius={radius}
+			autoplay={!controls}
+			muted={!controls}
+			loop={!controls}
+			controls={controls}
+			playsinline
+		>
+			<source src={src} type="video/mp4" />
+		</video>
+	) : (
+		<img
+			class:list={classList}
+			data-size={size}
+			data-squircle-radius={radius}
+			src={src}
+			alt={alt}
+			loading="lazy"
+		/>
+	)
+}
+
+<style>
+	.media {
+		display: block;
+		margin: 1.75rem auto;
+	}
+
+	.media.squircle {
+		border-radius: 1.25rem;
+	}
+
+	.media[data-size='full'] {
+		width: 100%;
+	}
+	.media[data-size='wide'] {
+		width: 80%;
+	}
+	.media[data-size='medium'] {
+		width: 55%;
+	}
+	.media[data-size='small'] {
+		width: 30%;
+	}
+
+	@media (max-width: 640px) {
+		.media[data-size='wide'],
+		.media[data-size='medium'] {
+			width: 100%;
+		}
+		.media[data-size='full'] {
+			width: calc(100% + 3rem);
+			margin-left: -1.5rem;
+			margin-right: -1.5rem;
+			border-radius: 0;
+			clip-path: none !important;
+		}
+	}
+</style>

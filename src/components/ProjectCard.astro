@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const { title, cover, cardType } = entry.data;
+---
+
+<a class="card" data-type={cardType} href={`/work/${entry.id}/`}>
+	<div
+		class:list={['thumb', { squircle: cardType === 'media' }]}
+		data-squircle-radius={cardType === 'media' ? 56 : undefined}
+	>
+		{cover && <Image src={cover} alt={title} width={640} />}
+	</div>
+	<span class="title">{title}</span>
+</a>
+
+<style>
+	.card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		text-decoration: none;
+		color: var(--ink);
+	}
+
+	.thumb {
+		width: 100%;
+		aspect-ratio: 6 / 5;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.card[data-type='media'] .thumb {
+		border-radius: 3.5rem;
+		overflow: hidden;
+		background: #000;
+	}
+
+	.card[data-type='media'] .thumb :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.card[data-type='logomark'] .thumb :global(img) {
+		width: 70%;
+		height: 70%;
+		object-fit: contain;
+	}
+
+	.title {
+		font-weight: 200;
+		font-size: 1.25rem;
+		text-align: center;
+		line-height: 1.3;
+	}
+</style>

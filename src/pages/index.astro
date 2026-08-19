@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title="Omer Alon">
+	<main>
+		<nav>
+			<div>
+				<h1>Omer Alon</h1>
+				<p class="subtitle">UX/UI Designer & Developer</p>
+			</div>
+			<a class="about" href="/about">About</a>
+		</nav>
+		<ul class="grid">
+			{
+				projects.map((project) => (
+					<li>
+						<ProjectCard entry={project} />
+					</li>
+				))
+			}
+		</ul>
+	</main>
+</Layout>
+
+<style>
+	main {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 3rem 2rem 5rem;
+	}
+
+	nav {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		margin: 0 0 3rem;
+	}
+
+	h1 {
+		font-size: 2.75rem;
+		font-weight: 200;
+		margin: 0;
+	}
+
+	.subtitle {
+		font-size: 1.1rem;
+		font-weight: 200;
+		margin: 0.35rem 0 0;
+		opacity: 0.7;
+	}
+
+	.about {
+		font-size: 1.1rem;
+		font-weight: 200;
+		color: var(--ink);
+		text-decoration: none;
+		border-bottom: 1px solid currentColor;
+	}
+
+	.grid {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 3rem 2.5rem;
+	}
+
+	@media (max-width: 720px) {
+		.grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		h1 {
+			font-size: 2rem;
+		}
+	}
+</style>
