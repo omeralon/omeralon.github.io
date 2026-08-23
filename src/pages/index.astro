@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import AnimatedTitle from '../components/AnimatedTitle.astro';
 
 const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -10,7 +11,7 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
 	<main>
 		<nav>
 			<div>
-				<h1>Omer Alon</h1>
+				<h1><AnimatedTitle text="Omer Alon" /></h1>
 				<p class="subtitle">UX/UI Designer & Developer</p>
 			</div>
 			<a class="about" href="/about">About</a>
@@ -32,6 +33,7 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
 		max-width: 72rem;
 		margin: 0 auto;
 		padding: 3rem 2rem 5rem;
+		user-select: none;
 	}
 
 	nav {

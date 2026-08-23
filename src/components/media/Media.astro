@@ -5,18 +5,21 @@ interface Props {
 	size?: 'full' | 'wide' | 'medium' | 'small';
 	controls?: boolean;
 	rounded?: boolean;
+	bg?: string;
 }
 
-const { src, alt = '', size = 'full', controls = false, rounded = true } = Astro.props;
+const { src, alt = '', size = 'full', controls = false, rounded = true, bg } = Astro.props;
 const isVideo = /\.(mp4|webm)$/i.test(src);
 const classList = ['media', { squircle: rounded }];
 const radius = rounded ? 20 : undefined;
+const style = bg ? `background-color: ${bg};` : undefined;
 ---
 
 {
 	isVideo ? (
 		<video
 			class:list={classList}
+			style={style}
 			data-size={size}
 			data-squircle-radius={radius}
 			autoplay={!controls}
@@ -30,6 +33,7 @@ const radius = rounded ? 20 : undefined;
 	) : (
 		<img
 			class:list={classList}
+			style={style}
 			data-size={size}
 			data-squircle-radius={radius}
 			src={src}
@@ -42,7 +46,7 @@ const radius = rounded ? 20 : undefined;
 <style>
 	.media {
 		display: block;
-		margin: 1.75rem auto;
+		margin: 0 auto;
 	}
 
 	.media.squircle {

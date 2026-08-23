@@ -6,7 +6,7 @@ const work = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
-			summary: z.string(),
+			summary: z.string().optional(),
 			role: z.string().optional(),
 			tools: z.array(z.string()).default([]),
 			tags: z.array(z.string()).default([]),

@@ -1,0 +1,118 @@
+---
+// Recreates Portfolio/img/open.gif (each letter idly floating/rotating on its
+// own) as real CSS animation, plus a subtle cursor-proximity "push" layered on
+// top via JS. Two nested spans per letter so the two transforms don't collide:
+// the outer span carries the cursor-driven transform, the inner one the idle
+// keyframe animation.
+interface Props {
+	text: string;
+}
+
+const { text } = Astro.props;
+const chars = [...text];
+
+// Deterministic per-letter pseudo-randomness (stable across server/client, no
+// hydration flash) — small variation so letters don't all bob in lockstep.
+function hash(i: number, seed: number) {
+	const x = Math.sin(i * 12.9898 + seed * 78.233) * 43758.5453;
+	return x - Math.floor(x);
+}
+---
+
+<span class="animated-title">
+	{
+		chars.map((ch, i) =>
+			ch === ' ' ? (
+				<span class="letter-space"> </span>
+			) : (
+				<span
+					class="letter"
+					style={`--amp: ${(2.5 + hash(i, 1) * 2).toFixed(2)}px; --rot: ${(hash(i, 2) > 0.5 ? 1 : -1) * (1.5 + hash(i, 3) * 2).toFixed(2)}deg; --dur: ${(1900 + hash(i, 4) * 1200).toFixed(0)}ms; --delay: ${(hash(i, 5) * 1500).toFixed(0)}ms;`}
+				>
+					<span class="letter-inner">{ch}</span>
+				</span>
+			),
+		)
+	}
+</span>
+
+<script>
+	function initAnimatedTitles() {
+		document.querySelectorAll<HTMLElement>('.animated-title').forEach((title) => {
+			const letters = Array.from(title.querySelectorAll<HTMLElement>('.letter'));
+			const radius = 90;
+			const strength = 10;
+
+			const onMove = (clientX: number, clientY: number) => {
+				for (const el of letters) {
+					const rect = el.getBoundingClientRect();
+					const cx = rect.left + rect.width / 2;
+					const cy = rect.top + rect.height / 2;
+					const dx = cx - clientX;
+					const dy = cy - clientY;
+					const dist = Math.hypot(dx, dy);
+					if (dist > radius) {
+						el.style.transform = '';
+						continue;
+					}
+					const pull = (1 - dist / radius) * strength;
+					const angle = Math.atan2(dy, dx);
+					const tx = Math.cos(angle) * pull;
+					const ty = Math.sin(angle) * pull;
+					el.style.transform = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px)`;
+				}
+			};
+
+			const reset = () => {
+				for (const el of letters) el.style.transform = '';
+			};
+
+			title.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+			title.addEventListener('mouseleave', reset);
+		});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initAnimatedTitles);
+	} else {
+		initAnimatedTitles();
+	}
+</script>
+
+<style>
+	.animated-title {
+		display: inline-block;
+	}
+
+	.letter {
+		display: inline-block;
+		transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	.letter-inner {
+		display: inline-block;
+		animation: idle-float var(--dur, 2200ms) ease-in-out infinite;
+		animation-delay: calc(var(--delay, 0ms) * -1);
+	}
+
+	.letter-space {
+		display: inline-block;
+		width: 0.28em;
+	}
+
+	@keyframes idle-float {
+		0%,
+		100% {
+			transform: translateY(0) rotate(0deg);
+		}
+		50% {
+			transform: translateY(calc(var(--amp, 3px) * -1)) rotate(var(--rot, 2deg));
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.letter-inner {
+			animation: none;
+		}
+	}
+</style>
