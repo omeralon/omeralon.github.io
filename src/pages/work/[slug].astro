@@ -15,9 +15,9 @@ const { Content } = await render(entry);
 const { title, summary, credits } = entry.data;
 ---
 
-<Layout title={`${title} — Omer Alon`}>
+<Layout>
 	<main>
-		<a class="home" href="/">← Home</a>
+		<a class="home" href="/">← Omer Alon</a>
 
 		<header>
 			<h1>{title}</h1>
@@ -40,7 +40,7 @@ const { title, summary, credits } = entry.data;
 			)
 		}
 
-		<a class="home" href="/">← Home</a>
+		<a class="home bottom" href="/">← Omer Alon</a>
 	</main>
 </Layout>
 
@@ -78,6 +78,9 @@ const { title, summary, credits } = entry.data;
 		text-decoration: none;
 		color: var(--ink);
 		margin: 1rem 0;
+		&.bottom {
+			margin-top: 4rem;
+		}
 	}
 
 	header {
@@ -103,7 +106,7 @@ const { title, summary, credits } = entry.data;
 	}
 
 	footer {
-		margin-top: 3rem;
+		/* margin-top: 3rem; */
 		padding-top: 1.5rem;
 		border-top: 2px solid rgba(0, 0, 0, 0.1);
 		font-size: 0.9rem;

@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="About — Omer Alon">
+<Layout>
 	<main>
 		<a class="home" href="/">← Home</a>
 
@@ -10,18 +10,50 @@ import Layout from '../layouts/Layout.astro';
 
 		<p>
 			{/* TODO: replace with real bio text */}
-			Omer Alon is a designer working across branding, illustration, and interactive
-			3D — based in Israel, graduate of the Bezalel Academy of Art and Design in Jerusalem.
+			UX/UI Designer & Developer
+		<br/>
+			Graduate of both the Hebrew University of Jerusalem and the Bezalel Academy of Art and Design in Jerusalem
 		</p>
 
 		<div class="links">
 			<a href="/CV.pdf" target="_blank">CV →</a>
-			<a href="mailto:omeralon3@gmail.com">omeralon3@gmail.com</a>
+			<span class="email-row">
+				<a href="mailto:omeralon3@gmail.com">omeralon3@gmail.com</a>
+				<button class="copy-btn" type="button" data-copy="omeralon3@gmail.com" aria-label="Copy email address">
+					<svg class="icon-copy" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+						<rect x="7" y="7" width="10" height="10" rx="2" />
+						<path d="M4.5 13.5H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h8.5a1 1 0 0 1 1 1v.5" />
+					</svg>
+					<svg class="icon-check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+						<path
+							class="check-path"
+							d="M4 10.5 8 14.5 16 5.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							pathLength="1"
+						/>
+					</svg>
+				</button>
+			</span>
 		</div>
-
-		<a class="home back" href="/">← Home</a>
 	</main>
 </Layout>
+
+<script>
+	document.querySelectorAll<HTMLButtonElement>('.copy-btn').forEach((btn) => {
+		btn.addEventListener('click', async () => {
+			const text = btn.dataset.copy;
+			if (!text) return;
+			try {
+				await navigator.clipboard.writeText(text);
+				btn.classList.add('copied');
+				setTimeout(() => btn.classList.remove('copied'), 1500);
+			} catch {
+				// clipboard API unavailable — fail silently, the email link still works
+			}
+		});
+	});
+</script>
 
 <style>
 	main {
@@ -53,6 +85,7 @@ import Layout from '../layouts/Layout.astro';
 	.links {
 		display: flex;
 		flex-direction: column;
+		align-items: flex-start;
 		gap: 0.75rem;
 		font-size: 1.15rem;
 	}
@@ -60,6 +93,103 @@ import Layout from '../layouts/Layout.astro';
 	.links a {
 		color: var(--ink);
 		font-weight: 200;
+	}
+
+	.email-row {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.copy-btn {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		padding: 0;
+		border: none;
+		background: none;
+		color: var(--ink);
+		opacity: 0.55;
+		cursor: pointer;
+		transition: opacity 0.2s ease, transform 0.15s ease;
+	}
+
+	.copy-btn:hover {
+		opacity: 1;
+	}
+
+	.copy-btn:active {
+		transform: scale(0.8);
+	}
+
+	.copy-btn svg {
+		position: absolute;
+		inset: 0;
+		width: 1.1rem;
+		height: 1.1rem;
+		margin: auto;
+	}
+
+	.copy-btn.copied {
+		opacity: 1;
+	}
+
+	.icon-copy {
+		transition: opacity 0.15s ease, transform 0.15s ease;
+	}
+
+	.copy-btn.copied .icon-copy {
+		opacity: 0;
+		transform: scale(0.6) rotate(-15deg);
+	}
+
+	.icon-check {
+		opacity: 0;
+	}
+
+	.check-path {
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+	}
+
+	.copy-btn.copied .icon-check {
+		opacity: 1;
+		color: #00ff00;
+		animation: pop-in 0.3s ease-out 0.1s both;
+	}
+
+	.copy-btn.copied .check-path {
+		animation: draw-check 0.3s ease-out 0.1s forwards;
+	}
+
+	@keyframes draw-check {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	@keyframes pop-in {
+		0% {
+			transform: scale(0.4);
+		}
+		70% {
+			transform: scale(1.15);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.copy-btn.copied .icon-check,
+		.copy-btn.copied .check-path {
+			animation: none;
+			opacity: 1;
+			stroke-dashoffset: 0;
+		}
 	}
 
 	.back {

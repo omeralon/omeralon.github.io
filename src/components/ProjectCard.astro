@@ -30,6 +30,12 @@ const { title, cover, cardType } = entry.data;
 		color: var(--ink);
 	}
 
+	/* Cards get their own richer hover (image zoom) instead of the
+	   site-wide link fade — dimming a portfolio thumbnail feels backwards. */
+	.card:hover {
+		opacity: 1;
+	}
+
 	.thumb {
 		width: 100%;
 		aspect-ratio: 6 / 5;
@@ -48,12 +54,22 @@ const { title, cover, cardType } = entry.data;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		transition: transform 0.35s ease;
+	}
+
+	.card[data-type='media']:hover .thumb :global(img) {
+		transform: scale(1.05);
 	}
 
 	.card[data-type='logomark'] .thumb :global(img) {
 		width: 70%;
 		height: 70%;
 		object-fit: contain;
+		transition: transform 0.25s ease;
+	}
+
+	.card[data-type='logomark']:hover .thumb :global(img) {
+		transform: scale(1.06);
 	}
 
 	.title {

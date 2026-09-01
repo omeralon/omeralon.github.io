@@ -7,7 +7,11 @@ import { getSvgPath } from 'figma-squircle';
 // border-radius fallback instead of disappearing.
 
 function apply(el) {
-	const r = parseFloat(el.dataset.squircleRadius);
+	// A CSS custom property (--squircle-r) lets components override the
+	// radius responsively via media queries; the data attribute is the
+	// static default when no override is set.
+	const cssVar = getComputedStyle(el).getPropertyValue('--squircle-r').trim();
+	const r = parseFloat(cssVar) || parseFloat(el.dataset.squircleRadius);
 	if (!r || !el.clientWidth || !el.clientHeight) return;
 	const d = getSvgPath({
 		width: el.clientWidth,

@@ -7,14 +7,14 @@ import AnimatedTitle from '../components/AnimatedTitle.astro';
 const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Layout title="Omer Alon">
+<Layout>
 	<main>
 		<nav>
 			<div>
 				<h1><AnimatedTitle text="Omer Alon" /></h1>
 				<p class="subtitle">UX/UI Designer & Developer</p>
 			</div>
-			<a class="about" href="/about">About</a>
+			<a class="about" href="/about/">About</a>
 		</nav>
 		<ul class="grid">
 			{
@@ -60,8 +60,6 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
 		font-size: 1.1rem;
 		font-weight: 200;
 		color: var(--ink);
-		text-decoration: none;
-		border-bottom: 1px solid currentColor;
 	}
 
 	.grid {
