@@ -1,21 +1,46 @@
 ---
 title: LUZ
 summary: >
-  TODO — placeholder. No content provided yet: need a short description
-  (what it is, your role, tools used) and cover image / gallery assets.
+  Visual, calendar-first way to plan a trip:
+  every part of your vacation is a card you can drag, resize, and lay out at a glance.
+  It's just as fun being planned by hand as it is by asking its built-in AI chat to do it for you
 tools: []
 tags: []
-order: 7
+cover: ./luz-cover.png
+order: 3
 draft: true
+credits:
+  - Next.js
+  - TypeScript
+  - Tailwind CSS v4
+  - Supabase (Postgres / Auth / Realtime)
+  - Google Gemini
+  - Google Maps Platform
 ---
 
 import Media from '../../../components/media/Media.astro';
 import Gap from '../../../components/media/Gap.astro';
+import Cta from '../../../components/media/Cta.astro';
 
+<Gap size="md" />
+<Media src="/work/luz/logo.svg" size="small" rounded={false} />
+<Gap size="md" />
+<Cta href="https://luz-silk.vercel.app/" newTab>Start Planning Your Own Trip →</Cta>
+<Gap size="md" />
+<Media src="/work/luz/luz-austria-desktop.png" size="wide" rounded={false} />
+<Gap size="lg" />
 
-TODO: real project write-up and images go here once provided.
+A drag-and-drop calendar grid lets you move, resize, and reschedule items directly.
+It's responsive, personalized, and easy to use, with real-time collaborative editing and read-only share links for trips you want to show off.
+Live Google Places data keeps everything current.
 
-<Gap size="xl" />
+<Gap size="lg" />
+<Media src="/work/luz/luz-elements.png" size="wide" />
+<Gap size="lg" />
 
-<Media src="/work/luz/luz-logo.svg" size="medium" />
-<Gap size="xl" />
+## Upload a flight ticket or booking PDF/photo -
+## LUZ extracts a starting itinerary automatically
+
+<Gap size="lg" />
+<Media src="/work/luz/luz-mobile.mp4" size="medium" />
+<Gap size="lg" />

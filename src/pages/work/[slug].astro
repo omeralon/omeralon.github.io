@@ -40,9 +40,19 @@ const { title, summary, credits } = entry.data;
 			)
 		}
 
-		<a class="home bottom" href="/">← Omer Alon</a>
+		<div class="bottom-nav">
+			<a class="home" href="/">← Home</a>
+			<a class="home top-link" href="#">Top ↑</a>
+		</div>
 	</main>
 </Layout>
+
+<script>
+	document.querySelector('.top-link')?.addEventListener('click', (event) => {
+		event.preventDefault();
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	});
+</script>
 
 <style is:global>
 	.content h2 {
@@ -78,9 +88,21 @@ const { title, summary, credits } = entry.data;
 		text-decoration: none;
 		color: var(--ink);
 		margin: 1rem 0;
-		&.bottom {
-			margin-top: 4rem;
-		}
+	}
+
+	.bottom-nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 4rem;
+	}
+
+	.top-link {
+		outline: none;
+	}
+	.top-link:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
 	}
 
 	header {

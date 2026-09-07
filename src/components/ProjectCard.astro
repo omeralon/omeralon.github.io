@@ -1,4 +1,8 @@
 ---
+// Logomark-style homepage card (branding projects): a background color card
+// with the logo layered on top as its own element, so a hover micro-
+// animation can move/scale each independently. Every card is the same two
+// dimensions, transposed by orientation — see SHORT/LONG below.
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
@@ -7,15 +11,34 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, cover, cardType } = entry.data;
+const { title, cover, bg, bg2 } = entry.data;
+
+// bg2 present: hover transitions the actual background color to it.
+// bg2 absent: fall back to darkening the existing bg via a filter.
+const bgStyle = [
+	bg && `--bg: ${bg};`,
+	bg2 ? `--bg-hover: ${bg2};` : bg && `--hover-filter: brightness(0.85);`,
+]
+	.filter(Boolean)
+	.join(' ');
+
+// Every card is the exact same two dimensions, just transposed: landscape
+// logos get the long side as width, portrait logos get it as height. Sized
+// with clamp() (viewport-relative, not a fixed px) so it scales with the
+// page instead of being a hard-coded size that's only right at one width.
+const SHORT = 'clamp(11rem, 20vw, 17rem)';
+const LONG = 'clamp(13.2rem, 24vw, 20.4rem)';
+const RATIO = 20.4 / 17; // LONG:SHORT at their max, used for aspect-ratio
+const isLandscape = cover ? cover.width >= cover.height : true;
+const widthValue = isLandscape ? LONG : SHORT;
+const aspectRatio = isLandscape ? RATIO : 1 / RATIO;
+const thumbStyle = `width: ${widthValue}; aspect-ratio: ${aspectRatio.toFixed(4)};`;
 ---
 
-<a class="card" data-type={cardType} href={`/work/${entry.id}/`}>
-	<div
-		class:list={['thumb', { squircle: cardType === 'media' }]}
-		data-squircle-radius={cardType === 'media' ? 56 : undefined}
-	>
-		{cover && <Image src={cover} alt={title} width={640} />}
+<a class="card" href={`/work/${entry.id}/`}>
+	<div class="thumb squircle" data-squircle-radius="40" style={thumbStyle}>
+		<div class="bg" style={bgStyle || undefined}></div>
+		{cover && <Image class="logo" src={cover} alt={title} width={400} />}
 	</div>
 	<span class="title">{title}</span>
 </a>
@@ -30,46 +53,39 @@ const { title, cover, cardType } = entry.data;
 		color: var(--ink);
 	}
 
-	/* Cards get their own richer hover (image zoom) instead of the
-	   site-wide link fade — dimming a portfolio thumbnail feels backwards. */
-	.card:hover {
-		opacity: 1;
-	}
-
 	.thumb {
-		width: 100%;
-		aspect-ratio: 6 / 5;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.card[data-type='media'] .thumb {
-		border-radius: 3.5rem;
+		position: relative;
+		max-width: 100%;
 		overflow: hidden;
-		background: #000;
 	}
 
-	.card[data-type='media'] .thumb :global(img) {
+	.bg {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		background-color: var(--bg, transparent);
+		transition: background-color 0s ease, filter 0s ease;
+	}
+
+	.card:hover .bg {
+		background-color: var(--bg-hover, var(--bg, transparent));
+		filter: var(--hover-filter, none);
+	}
+
+	.card :global(.logo) {
+		position: relative;
+		z-index: 1;
+		display: block;
 		width: 100%;
 		height: 100%;
-		object-fit: cover;
-		transition: transform 0.35s ease;
-	}
-
-	.card[data-type='media']:hover .thumb :global(img) {
-		transform: scale(1.05);
-	}
-
-	.card[data-type='logomark'] .thumb :global(img) {
-		width: 70%;
-		height: 70%;
+		padding: 15%;
+		box-sizing: border-box;
 		object-fit: contain;
 		transition: transform 0.25s ease;
 	}
 
-	.card[data-type='logomark']:hover .thumb :global(img) {
-		transform: scale(1.06);
+	.card:hover :global(.logo) {
+		/* transform: scale(1.2); */
 	}
 
 	.title {

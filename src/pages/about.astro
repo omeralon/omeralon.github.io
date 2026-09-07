@@ -45,11 +45,26 @@ import Layout from '../layouts/Layout.astro';
 			const text = btn.dataset.copy;
 			if (!text) return;
 			try {
-				await navigator.clipboard.writeText(text);
+				if (navigator.clipboard) {
+					await navigator.clipboard.writeText(text);
+				} else {
+					// navigator.clipboard requires a secure context (HTTPS or
+					// localhost) — unavailable e.g. when testing on a phone
+					// against the dev server via its local network IP over http.
+					const textarea = document.createElement('textarea');
+					textarea.value = text;
+					textarea.style.position = 'fixed';
+					textarea.style.opacity = '0';
+					document.body.appendChild(textarea);
+					textarea.focus();
+					textarea.select();
+					document.execCommand('copy');
+					textarea.remove();
+				}
 				btn.classList.add('copied');
 				setTimeout(() => btn.classList.remove('copied'), 1500);
 			} catch {
-				// clipboard API unavailable — fail silently, the email link still works
+				// clipboard unavailable in this context — the email link still works
 			}
 		});
 	});

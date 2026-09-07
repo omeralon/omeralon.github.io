@@ -9,7 +9,7 @@ document.addEventListener('click', (event) => {
 	// another app) would otherwise stay green indefinitely instead of just
 	// flashing for the moment before navigation actually happens.
 	const href = link.getAttribute('href') || '';
-	const staysOnPage = link.target === '_blank' || href.startsWith('mailto:');
+	const staysOnPage = link.target === '_blank' || href.startsWith('mailto:') || href === '#';
 	if (staysOnPage) return;
 
 	link.classList.add('clicked');

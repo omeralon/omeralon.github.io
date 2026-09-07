@@ -9,7 +9,9 @@ interface Props {
 }
 
 const { src, alt = '', size = 'full', controls = false, rounded = true, bg } = Astro.props;
-const isVideo = /\.(mp4|webm)$/i.test(src);
+const videoTypes: Record<string, string> = { mp4: 'video/mp4', webm: 'video/webm', mov: 'video/quicktime' };
+const extension = src.split('.').pop()?.toLowerCase() ?? '';
+const isVideo = extension in videoTypes;
 const classList = ['media', { squircle: rounded }];
 const radius = rounded ? 20 : undefined;
 const style = bg ? `background-color: ${bg};` : undefined;
@@ -28,7 +30,7 @@ const style = bg ? `background-color: ${bg};` : undefined;
 			controls={controls}
 			playsinline
 		>
-			<source src={src} type="video/mp4" />
+			<source src={src} type={videoTypes[extension]} />
 		</video>
 	) : (
 		<img
@@ -47,6 +49,8 @@ const style = bg ? `background-color: ${bg};` : undefined;
 	.media {
 		display: block;
 		margin: 0 auto;
+		user-select: none;
+		-webkit-user-drag: none;
 	}
 
 	.media.squircle {

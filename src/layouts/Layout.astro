@@ -1,4 +1,5 @@
 ---
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -11,6 +12,7 @@
 	</head>
 	<body>
 		<slot />
+		<p class="copyright">© {year} Omer Alon</p>
 		<script>
 			import '../scripts/squircle.js';
 			import '../scripts/link-click.js';
@@ -21,8 +23,8 @@
 <style is:global>
 	@font-face {
 		font-family: 'Inter';
-		src: url('/fonts/Inter-ExtraLight-slnt=0.ttf') format('truetype');
-		font-weight: 200;
+		src: url('/fonts/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+		font-weight: 100 900;
 		font-style: normal;
 		font-display: swap;
 	}
@@ -37,12 +39,31 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 
+	html {
+		scroll-behavior: smooth;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+	}
+
 	body {
 		margin: 0;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
 		background: var(--bg);
 		color: var(--ink);
 		font-family: 'Inter', system-ui, sans-serif;
 		font-weight: 200;
+	}
+
+	/* Every page wraps its content in a single top-level <main>. Growing it
+	   pushes .copyright to the bottom of the viewport on short pages, while
+	   letting it sit right after the content (not pinned) on tall ones. */
+	body > main {
+		flex: 1 0 auto;
 	}
 
 	/* Site-wide hover for every link/CTA — one place instead of per-component.
@@ -57,6 +78,11 @@
 	a:hover {
 		opacity: 0.8;
 	}
+	/* Cards and hero rows get their own richer hover instead of the fade. */
+	a.card:hover,
+	a.hero:hover {
+		opacity: 1;
+	}
 	/* A nod to the old site's neon-green links (#00ff00) — flashes on click,
 	   then stays green (.clicked, added by link-click.js) for the rest of
 	   this page view. A fresh page load clears it automatically.
@@ -66,7 +92,7 @@
 	a.clicked {
 		color: #00ff00 !important;
 	}
-	a:not(.card)::after {
+	a:not(.card):not(.hero)::after {
 		content: '';
 		position: absolute;
 		left: 0;
@@ -77,7 +103,7 @@
 		transform: scaleX(1);
 		transform-origin: left;
 	}
-	a:not(.card):hover::after {
+	a:not(.card):not(.hero):hover::after {
 		animation: underline-refill 0.65s ease-in-out;
 	}
 	/* Empties from the right (0–45%), then sweeps back in from the left (46–100%). */
@@ -104,9 +130,19 @@
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		a:not(.card):hover::after {
+		a:not(.card):not(.hero):hover::after {
 			animation: none;
 		}
+	}
+
+	.copyright {
+		flex-shrink: 0;
+		margin: 0;
+		padding: 2rem 1.5rem;
+		text-align: center;
+		font-size: 0.8rem;
+		font-weight: 200;
+		opacity: 0.5;
 	}
 
 	/* iOS-style continuous corner. Usage: add class="squircle" plus
