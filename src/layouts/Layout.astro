@@ -1,0 +1,153 @@
+---
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>Omer Alon</title>
+	</head>
+	<body>
+		<slot />
+		<p class="copyright">© {year} Omer Alon</p>
+		<script>
+			import '../scripts/squircle.js';
+			import '../scripts/link-click.js';
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	@font-face {
+		font-family: 'Inter';
+		src: url('/fonts/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+		font-weight: 100 900;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	:root {
+		--bg: #e2fbe9;
+		--ink: #111111;
+	}
+
+	* {
+		box-sizing: border-box;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+	}
+
+	body {
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		background: var(--bg);
+		color: var(--ink);
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 200;
+	}
+
+	/* Every page wraps its content in a single top-level <main>. Growing it
+	   pushes .copyright to the bottom of the viewport on short pages, while
+	   letting it sit right after the content (not pinned) on tall ones. */
+	body > main {
+		flex: 1 0 auto;
+	}
+
+	/* Site-wide hover for every link/CTA — one place instead of per-component.
+	   Underline is always on at rest; hovering re-plays it emptying out and
+	   sweeping back in. Project cards opt out (they get their own image-zoom
+	   hover instead — see ProjectCard.astro). */
+	a {
+		position: relative;
+		text-decoration: none;
+		transition: opacity 0.2s ease;
+	}
+	a:hover {
+		opacity: 0.8;
+	}
+	/* Cards and hero rows get their own richer hover instead of the fade. */
+	a.card:hover,
+	a.hero:hover {
+		opacity: 1;
+	}
+	/* A nod to the old site's neon-green links (#00ff00) — flashes on click,
+	   then stays green (.clicked, added by link-click.js) for the rest of
+	   this page view. A fresh page load clears it automatically.
+	   !important: must win over every component's own scoped color rule,
+	   which Astro boosts with an extra attribute-selector specificity. */
+	a:active,
+	a.clicked {
+		color: #00ff00 !important;
+	}
+	a:not(.card):not(.hero)::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -0.1em;
+		height: 1px;
+		background: currentColor;
+		transform: scaleX(1);
+		transform-origin: left;
+	}
+	a:not(.card):not(.hero):hover::after {
+		animation: underline-refill 0.65s ease-in-out;
+	}
+	/* Empties from the right (0–45%), then sweeps back in from the left (46–100%). */
+	@keyframes underline-refill {
+		0% {
+			transform: scaleX(1);
+			transform-origin: right;
+		}
+		45% {
+			transform: scaleX(0);
+			transform-origin: right;
+		}
+		46% {
+			transform: scaleX(0);
+			transform-origin: left;
+		}
+		80% {
+			transform: scaleX(0.7);
+			transform-origin: left;
+		}
+		100% {
+			transform: scaleX(1);
+			transform-origin: left;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		a:not(.card):not(.hero):hover::after {
+			animation: none;
+		}
+	}
+
+	.copyright {
+		flex-shrink: 0;
+		margin: 0;
+		padding: 2rem 1.5rem;
+		text-align: center;
+		font-size: 0.8rem;
+		font-weight: 200;
+		opacity: 0.5;
+	}
+
+	/* iOS-style continuous corner. Usage: add class="squircle" plus
+	   data-squircle-radius="40" (px, no unit) and border-radius as a fallback
+	   matching the same value. /squircle.js applies a precise clip-path on
+	   load/resize; if JS fails for any reason the plain border-radius stands
+	   in — still rounded, just a circular arc instead of a superellipse. */
+</style>

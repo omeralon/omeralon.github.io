@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const { title, cover, summary } = entry.data;
+---
+
+<a class="hero" href={`/work/${entry.id}/`}>
+	<div class:list={['thumb', { squircle: !!cover }]} data-squircle-radius={cover ? 28 : undefined}>
+		{cover && <Image src={cover} alt={title} width={1400} />}
+	</div>
+	<p class="caption"><span class="title">{title}</span> {summary}</p>
+</a>
+
+<style>
+	.hero {
+		display: block;
+		text-decoration: none;
+		color: var(--ink);
+	}
+
+	.thumb {
+		display: block;
+		max-height: 32rem;
+		overflow: hidden;
+		border-radius: 1.5rem;
+	}
+
+	.thumb :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-height: 32rem;
+		object-fit: cover;
+		transition: transform 0.35s ease;
+	}
+
+	.hero:hover .thumb :global(img) {
+		transform: scale(1.05);
+	}
+
+	.caption {
+		margin: 1rem 0 0;
+		font-size: 1.25rem;
+		line-height: 1.5;
+	}
+
+	.title {
+		font-weight: 350;
+	}
+
+	@media (max-width: 640px) {
+		.thumb {
+			--squircle-r: 0px;
+			width: 100vw;
+			max-width: 100vw;
+			margin-left: calc(50% - 50vw);
+			margin-right: calc(50% - 50vw);
+			border-radius: 0;
+			clip-path: none !important;
+		}
+	}
+</style>

@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import HeroCard from '../components/HeroCard.astro';
+import AnimatedTitle from '../components/AnimatedTitle.astro';
+
+const projects = (await getCollection('work'))
+	.filter((project) => !project.data.hidden)
+	.sort((a, b) => a.data.order - b.data.order);
+
+// 'media' projects each get a full-width hero row; consecutive 'logomark'
+// projects are clustered into one compact row together — matching the
+// order projects are placed in, not split by type ahead of time.
+type Group =
+	| { kind: 'hero'; entry: CollectionEntry<'work'> }
+	| { kind: 'compact'; entries: CollectionEntry<'work'>[] };
+
+const groups: Group[] = [];
+for (const project of projects) {
+	if (project.data.cardType === 'media') {
+		groups.push({ kind: 'hero', entry: project });
+	} else {
+		const last = groups[groups.length - 1];
+		if (last?.kind === 'compact') {
+			last.entries.push(project);
+		} else {
+			groups.push({ kind: 'compact', entries: [project] });
+		}
+	}
+}
+---
+
+<Layout>
+	<main>
+		<nav>
+			<div>
+				<h1><AnimatedTitle text="Omer Alon" /></h1>
+				<p class="subtitle">UX/UI Designer & Developer</p>
+			</div>
+			<a class="about" href="/about/">About</a>
+		</nav>
+		<div class="stack">
+			{
+				groups.map((group) =>
+					group.kind === 'hero' ? (
+						<HeroCard entry={group.entry} />
+					) : (
+						<ul class="compact-row">
+							{group.entries.map((project) => (
+								<li>
+									<ProjectCard entry={project} />
+								</li>
+							))}
+						</ul>
+					),
+				)
+			}
+		</div>
+	</main>
+</Layout>
+
+<style>
+	main {
+		max-width: 76rem;
+		margin: 0 auto;
+		padding: 3rem 2rem 5rem;
+		user-select: none;
+	}
+
+	nav {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		margin: 0 0 3rem;
+	}
+
+	h1 {
+		font-size: 2.75rem;
+		font-weight: 200;
+		margin: 0;
+	}
+
+	.subtitle {
+		font-size: 1.1rem;
+		font-weight: 200;
+		margin: 0.35rem 0 0;
+		opacity: 0.7;
+	}
+
+	.about {
+		font-size: 1.1rem;
+		font-weight: 200;
+		color: var(--ink);
+	}
+
+	.stack {
+		display: flex;
+		flex-direction: column;
+		gap: 5rem;
+	}
+
+	.compact-row {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		align-items: center;
+		/* gap: 5rem; */
+	}
+
+	.compact-row li {
+		flex: 0 0 auto;
+	}
+
+	@media (max-width: 720px) {
+		h1 {
+			font-size: 2rem;
+		}
+
+		.compact-row li {
+			max-width: 45%;
+		}
+	}
+</style>

@@ -1,0 +1,70 @@
+---
+interface Props {
+	items: string[];
+}
+
+const { items } = Astro.props;
+const videoTypes: Record<string, string> = { mp4: 'video/mp4', webm: 'video/webm', mov: 'video/quicktime' };
+const extensionOf = (src: string) => src.split('.').pop()?.toLowerCase() ?? '';
+---
+
+<div class="row">
+	{
+		items.map((src) => {
+			const extension = extensionOf(src);
+			return extension in videoTypes ? (
+				<video class="squircle" data-squircle-radius="16" autoplay muted loop playsinline>
+					<source src={src} type={videoTypes[extension]} />
+				</video>
+			) : (
+				<img class="squircle" data-squircle-radius="16" src={src} alt="" loading="lazy" />
+			);
+		})
+	}
+</div>
+
+<style>
+	.row {
+		display: flex;
+		gap: 2rem;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		width: 100%;
+		margin: 0;
+	}
+	.row img,
+	.row video {
+		width: 26%;
+		min-width: 140px;
+		--squircle-r: 16px;
+		border-radius: 1rem;
+	}
+
+	/* When there are exactly 3 items, give the middle one more presence. */
+	.row img:nth-child(2):nth-last-child(2),
+	.row video:nth-child(2):nth-last-child(2) {
+		width: 28%;
+		min-width: 170px;
+	}
+
+	@media (max-width: 640px) {
+		.row {
+			/* flex-direction: column; */
+			gap: 0.5rem;
+		}
+		.row img,
+		.row video {
+			width: 30%;
+			min-width: unset;
+			--squircle-r: 10px;
+			border-radius: 0.6rem;
+		}
+		.row img:nth-child(2):nth-last-child(2),
+		.row video:nth-child(2):nth-last-child(2) {
+			width: 33%;
+			min-width: unset;
+			/* width: 60%; */
+		}
+	}
+</style>

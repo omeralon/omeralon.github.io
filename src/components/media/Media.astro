@@ -1,0 +1,95 @@
+---
+interface Props {
+	src: string;
+	alt?: string;
+	size?: 'full' | 'wide' | 'medium' | 'small';
+	controls?: boolean;
+	rounded?: boolean;
+	bg?: string;
+}
+
+const { src, alt = '', size = 'full', controls = false, rounded = true, bg } = Astro.props;
+const videoTypes: Record<string, string> = { mp4: 'video/mp4', webm: 'video/webm', mov: 'video/quicktime' };
+const extension = src.split('.').pop()?.toLowerCase() ?? '';
+const isVideo = extension in videoTypes;
+const classList = ['media', { squircle: rounded }];
+const radius = rounded ? 20 : undefined;
+const style = bg ? `background-color: ${bg};` : undefined;
+---
+
+{
+	isVideo ? (
+		<video
+			class:list={classList}
+			style={style}
+			data-size={size}
+			data-squircle-radius={radius}
+			autoplay={!controls}
+			muted={!controls}
+			loop={!controls}
+			controls={controls}
+			playsinline
+		>
+			<source src={src} type={videoTypes[extension]} />
+		</video>
+	) : (
+		<img
+			class:list={classList}
+			style={style}
+			data-size={size}
+			data-squircle-radius={radius}
+			src={src}
+			alt={alt}
+			loading="lazy"
+		/>
+	)
+}
+
+<style>
+	.media {
+		display: block;
+		margin: 0 auto;
+		user-select: none;
+		-webkit-user-drag: none;
+	}
+
+	.media.squircle {
+		--squircle-r: 20px;
+		border-radius: 1.25rem;
+	}
+
+	@media (max-width: 640px) {
+		.media.squircle {
+			--squircle-r: 12px;
+			border-radius: 0.75rem;
+		}
+	}
+
+	/* True edge-to-edge: breaks out of .content/main's max-width and padding
+	   to the actual viewport width, at every breakpoint — not just mobile. */
+	.media[data-size='full'] {
+		width: 100vw;
+		max-width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+		border-radius: 0;
+		clip-path: none !important;
+	}
+	.media[data-size='wide'] {
+		width: 100%;
+	}
+	.media[data-size='medium'] {
+		max-width: 65%;
+		max-height: 80vh;
+	}
+	.media[data-size='small'] {
+		width: 30%;
+	}
+
+	/* @media (max-width: 640px) {
+		.media[data-size='wide'],
+		.media[data-size='medium'] {
+			width: 100%;
+		}
+	} */
+</style>

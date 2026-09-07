@@ -1,0 +1,24 @@
+---
+interface Props {
+	size?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+const { size = 'md' } = Astro.props;
+---
+
+<div class="gap" data-size={size}></div>
+
+<style>
+	.gap[data-size='sm'] {
+		height: 1rem;
+	}
+	.gap[data-size='md'] {
+		height: 2rem;
+	}
+	.gap[data-size='lg'] {
+		height: 4rem;
+	}
+	.gap[data-size='xl'] {
+		height: 7rem;
+	}
+</style>

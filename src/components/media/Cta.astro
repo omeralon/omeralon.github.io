@@ -1,0 +1,27 @@
+---
+interface Props {
+	href: string;
+	newTab?: boolean;
+}
+
+const { href, newTab = false } = Astro.props;
+const external = href.startsWith('http');
+---
+
+<p class="cta">
+	<a href={href} target={external || newTab ? '_blank' : undefined}>
+		<slot />
+	</a>
+</p>
+
+<style>
+	.cta {
+		text-align: center;
+		margin: 0;
+	}
+	.cta a {
+		font-size: 1.2rem;
+		font-weight: 200;
+		color: var(--ink);
+	}
+</style>
